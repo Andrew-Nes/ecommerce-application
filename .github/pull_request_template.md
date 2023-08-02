@@ -8,6 +8,7 @@
 * Performance Improvements
 * Build
 * Revert
+* Other
 
 2. **Description**
 
