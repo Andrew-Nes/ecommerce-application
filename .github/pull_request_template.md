@@ -12,13 +12,11 @@
 
 2. **Description**
 
-3. **Related Tickets & Documents**
-
-4. **Added tests?**
+3. **Added tests?**
 * yes
 * no, because they aren't needed
 * no, because I need help
 
-5. **Added to documentation?**
+4. **Added to documentation?**
 * README
 * no documentation needed
