@@ -9,6 +9,10 @@ Application has sigh up, log in, item search and sorting features.
 
 The application is powered by CommerceTools, a leading provider of commerce solutions for B2C and B2B enterprises.
 
+# Project  purpose
+
+Provide customers with a convenient and personalized way to purchase a product.
+
 # Technology Stack
 * TypeScript
 * React
