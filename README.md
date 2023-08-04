@@ -1,8 +1,6 @@
 # Ecommerce-application
 ## RSSchool 2023Q1 final task, YellowDuckProgrammers team
 
-You are on "develop" branch, here you can follow our work progress
-
 # Description
 The project is an animal online store. It allows users to explore catalog, description of goods, add them to a shopping cart and proceed to checkout. 
 Application has sigh up, log in, item search and sorting features.
