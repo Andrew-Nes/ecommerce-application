@@ -17,7 +17,11 @@ Provide customers with a convenient and personalized way to purchase a product.
 * Jest
 
 # Available Scripts
-
+ * dev - Run dev server
+ * build - Build project
+ * lint - Run Es-lint
+ * preview - Locally preview the production build
+    
 # Authors
 * [katerina-kor](https://github.com/katerina-kor)
 * [andrew-nes](https://github.com/andrew-nes)
