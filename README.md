@@ -16,6 +16,15 @@ Provide customers with a convenient and personalized way to purchase a product.
 * React
 * Jest
 
+# Instructions
+## To be able to use this project follow the instructions below:
+1. Fork this repository (You can learn how to fork a repository here: https://docs.github.com/en/get-started/quickstart/fork-a-repo);
+2. Open your forked repository in your IDE (VSCode, WebStorm etc.);
+3. Run terminal;
+4. Go to project folder (run "cd ecommerce-application/" in terminal);
+5. Install dependencies (run "npm install" in terminal);
+6. Use one of the scripts below depending on your purpose.
+
 # Available Scripts
  * npm run start:dev - Run dev server
  * npm run start:build - Build project
