@@ -9,7 +9,7 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "prettier": "prettier . --write",
-    "prepare": "cd .. && husky install ecommerce-application/.husky"
+    "prepare": "cd .. && husky install ecommerce-application/.husky",
     "test": "jest"
   },
   "dependencies": {
