@@ -19,4 +19,4 @@ module.exports = {
     curly: 2,
     'prettier/prettier': 'error',
   },
-}
+};
