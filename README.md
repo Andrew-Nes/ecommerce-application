@@ -23,6 +23,7 @@ Provide customers with a convenient and personalized way to purchase a product.
  * npm run test - Run Jest (tests)
  * npm run preview - Locally preview the production build
  * npm run prettier - Apply Prettier to all project files
+ * npm run prepare - Initial Husky installation
     
 # Authors
 * [katerina-kor](https://github.com/katerina-kor)
