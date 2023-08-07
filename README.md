@@ -17,8 +17,8 @@ Provide customers with a convenient and personalized way to purchase a product.
 * Jest
 
 # Available Scripts
- * npm run dev - Run dev server
- * npm run build - Build project
+ * npm run start:dev - Run dev server
+ * npm run start:build - Build project
  * npm run lint - Run Es-lint
  * npm run test - Run Jest (tests)
  * npm run preview - Locally preview the production build
