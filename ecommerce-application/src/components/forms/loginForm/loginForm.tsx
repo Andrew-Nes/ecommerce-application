@@ -65,13 +65,14 @@ export default function LoginForm() {
           className={`error__message ${
             errors.email ? 'error__message_visible' : ''
           }`}
+          data-testid="email-error"
         >
           {errors.email?.message}
         </span>
         <div className="password_wrapper">
           <input
             {...register('password', {
-              required: 'This field is required',
+              required: errorsMessage.PASSWORD_REQUIRED,
               minLength: {
                 value: 8,
                 message: errorsMessage.PASSWORD_LENGTH,
@@ -107,6 +108,7 @@ export default function LoginForm() {
           className={`error__message ${
             errors.password ? 'error__message_visible' : ''
           }`}
+          data-testid="password-error"
         >
           {errors.password?.message}
         </span>
