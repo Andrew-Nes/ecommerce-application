@@ -1,0 +1,87 @@
+.login {
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(138, 135, 181, 0.55);
+  border-radius: 5px;
+  margin: 0 auto;
+}
+
+.login__form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.login_heading {
+  margin: 0;
+  padding: 20px;
+}
+
+.login__input {
+  box-sizing: border-box;
+  padding: 5px;
+  /* margin: 5px 0; */
+  width: 250px;
+  border-radius: 15px;
+  border: 1px solid transparent;
+}
+
+.login__input:focus {
+  outline: none;
+  border-color: blue;
+}
+
+.input__error,
+.input__error:focus {
+  border-color: red;
+}
+
+.error__message {
+  color: red;
+  font-size: 10px;
+  height: 12px;
+  padding: 3px 5px 5px;
+  visibility: hidden;
+}
+
+.error__message_visible {
+  visibility: visible;
+}
+
+.login__button {
+  box-sizing: border-box;
+  width: 250px;
+  border-radius: 15px;
+  border: 1px solid transparent;
+  padding: 5px;
+  margin: 10px 0;
+  background-color: green;
+  font-variant: small-caps;
+}
+
+.login__anchor {
+  color: green;
+  text-decoration: none;
+}
+
+.login__anchor:hover {
+  color: rgba(0, 128, 0, 0.5);
+}
+
+.password_wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  position: relative;
+}
+
+.icon_eye {
+  width: 15px;
+  height: 15px;
+  position: absolute;
+  left: 220px;
+}
