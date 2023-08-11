@@ -11,4 +11,7 @@ enum errorsMessage {
   PASSWORD_REQUIRED = 'Password is required',
 }
 
+type PasswordType = 'password' | 'text';
+
 export { errorsMessage };
+export type { PasswordType };

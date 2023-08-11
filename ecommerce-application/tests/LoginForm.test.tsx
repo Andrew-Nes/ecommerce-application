@@ -1,7 +1,7 @@
 import { cleanup, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import LoginForm from '../src/components/forms/loginForm/loginForm';
-import { errorsMessage } from '../src/types/errorTypes';
+import { errorsMessage } from '../src/types/formTypes';
 
 beforeEach(() => {
   render(<LoginForm />);

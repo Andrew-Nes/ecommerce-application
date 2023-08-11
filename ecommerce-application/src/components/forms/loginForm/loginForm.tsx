@@ -1,9 +1,9 @@
-import './LoginForm.css';
+import './loginForm.scss';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useState } from 'react';
 import closeEyeIcon from '../../../../assets/img/close-eye.png';
 import openEyeIcon from '../../../../assets/img/open-eye.png';
-import { errorsMessage } from '../../../types/errorTypes';
+import { PasswordType, errorsMessage } from '../../../types/formTypes';
 
 interface LoginFormData {
   email: string;
@@ -11,7 +11,7 @@ interface LoginFormData {
 }
 
 export default function LoginForm() {
-  const [passwordType, setPasswordType] = useState('password');
+  const [passwordType, setPasswordType] = useState<PasswordType>('password');
   const [iconPath, setIconPath] = useState(closeEyeIcon);
 
   const togglePassword = () => {
@@ -33,8 +33,7 @@ export default function LoginForm() {
     mode: 'onTouched',
   });
 
-  const onSubmit: SubmitHandler<LoginFormData> = (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<LoginFormData> = () => {
     reset();
   };
 
@@ -116,9 +115,8 @@ export default function LoginForm() {
           login
         </button>
         <p>
-          Not a registered?
+          {`Not a registered? `}
           <span>
-            {' '}
             <a className="login__anchor">Create your account</a>
           </span>
         </p>

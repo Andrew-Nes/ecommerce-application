@@ -24,7 +24,6 @@
 .login__input {
   box-sizing: border-box;
   padding: 5px;
-  /* margin: 5px 0; */
   width: 250px;
   border-radius: 15px;
   border: 1px solid transparent;
@@ -66,6 +65,7 @@
 .login__anchor {
   color: green;
   text-decoration: none;
+  cursor: default;
 }
 
 .login__anchor:hover {
