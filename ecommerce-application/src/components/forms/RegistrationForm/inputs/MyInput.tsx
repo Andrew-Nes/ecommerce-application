@@ -1,4 +1,4 @@
-import classes from '../MyInput.module.scss';
+import classes from './MyInput.module.scss';
 import type { MyInputProps } from '../../../../types/registrationFormTypes';
 
 export default function MyInput(props: MyInputProps) {
