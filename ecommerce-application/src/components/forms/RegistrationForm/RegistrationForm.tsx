@@ -23,8 +23,7 @@ export default function RegistrationForm() {
 
   const [isChoose, setSameAddress] = useState(false);
 
-  const onSubmit: SubmitHandler<RegistrationFormData> = (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<RegistrationFormData> = () => {
     reset();
   };
 
