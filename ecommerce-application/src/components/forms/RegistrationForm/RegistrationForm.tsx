@@ -8,10 +8,8 @@ import MyCountrySelect from './inputs/MyCountrySelect';
 import MyCheckBox from './inputs/myCheckBox/MyCheckBox';
 import MyPassInput from './inputs/MyPassInput';
 
-
 const COUNTRIES: string[] = ['US'];
-const defaultCountryIndex: number = 0
-
+const defaultCountryIndex: number = 0;
 
 export default function RegistrationForm() {
   const {
@@ -66,10 +64,10 @@ export default function RegistrationForm() {
           <MyPassInput
             register={register}
             errors={errors}
-            name='password'
-            title='Password'
+            name="password"
+            title="Password"
             validate={validateFields.PASSWORD_VALIDATE}
-            />
+          />
           <MyInput
             register={register}
             errors={errors}

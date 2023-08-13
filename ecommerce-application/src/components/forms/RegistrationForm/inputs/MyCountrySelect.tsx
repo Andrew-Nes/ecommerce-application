@@ -1,8 +1,6 @@
 import classes from './MyInput.module.scss';
 import type { MyInputProps } from '../../../../types/registrationFormTypes';
 
-
-
 export default function MyCountrySelect(props: MyInputProps) {
   return (
     <div className={classes.myInput__container}>

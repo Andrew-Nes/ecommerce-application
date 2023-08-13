@@ -27,7 +27,7 @@ interface MyInputProps {
     | Record<string, Validate<string, RegistrationFormData>>
     | undefined;
   type?: string;
-  countries?: string[]
+  countries?: string[];
 }
 type InputRegistration =
   | 'email'
