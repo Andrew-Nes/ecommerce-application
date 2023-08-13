@@ -6,14 +6,13 @@ function checkAge(date: string): boolean | string {
   const [ctrlYear, curMonth, curDay]: number[] = [
     curDate.getFullYear() - AGE_LIMIT,
     curDate.getMonth(),
-    curDate.getDay(),
+    curDate.getDate(),
   ];
   const [cusYear, cusMonth, cusDay]: number[] = [
     cusDate.getFullYear(),
     cusDate.getMonth(),
-    cusDate.getDay(),
+    cusDate.getDate(),
   ];
-
   if (cusYear > ctrlYear) {
     return false;
   } else if (cusYear === ctrlYear && cusMonth < curMonth) {
