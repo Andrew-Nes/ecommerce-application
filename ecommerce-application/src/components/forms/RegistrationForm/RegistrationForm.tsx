@@ -8,6 +8,11 @@ import MyCountrySelect from './inputs/MyCountrySelect';
 import MyCheckBox from './inputs/myCheckBox/MyCheckBox';
 import MyPassInput from './inputs/MyPassInput';
 
+
+const COUNTRIES: string[] = ['US'];
+const defaultCountryIndex: number = 0
+
+
 export default function RegistrationForm() {
   const {
     register,
@@ -36,6 +41,7 @@ export default function RegistrationForm() {
       setValue('cityBilling', '');
       setValue('streetBilling', '');
       setValue('postalCodeBilling', '');
+      setValue('countryBilling', COUNTRIES[defaultCountryIndex]);
       setSameAddress(false);
     }
   }
@@ -121,6 +127,7 @@ export default function RegistrationForm() {
             errors={errors}
             name="countryShipping"
             title="Country"
+            countries={COUNTRIES}
           />
 
           <div className={classes.checkbox__container}>
@@ -166,6 +173,7 @@ export default function RegistrationForm() {
             errors={errors}
             name="countryBilling"
             title="Country"
+            countries={COUNTRIES}
           />
         </fieldset>
 
