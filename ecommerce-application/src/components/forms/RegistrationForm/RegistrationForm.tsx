@@ -6,6 +6,7 @@ import classes from './RegistrationForm.module.scss';
 import { validateFields } from './validateFields';
 import MyCountrySelect from './inputs/MyCountrySelect';
 import MyCheckBox from './inputs/myCheckBox/MyCheckBox';
+import MyPassInput from './inputs/MyPassInput';
 
 export default function RegistrationForm() {
   const {
@@ -55,6 +56,14 @@ export default function RegistrationForm() {
             title="Email"
             validate={validateFields.EMAIL_VALIDATE}
           />
+
+          <MyPassInput
+            register={register}
+            errors={errors}
+            name='password'
+            title='Password'
+            validate={validateFields.PASSWORD_VALIDATE}
+            />
           <MyInput
             register={register}
             errors={errors}
