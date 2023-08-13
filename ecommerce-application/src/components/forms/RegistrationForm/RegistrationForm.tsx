@@ -5,6 +5,8 @@ import MyInput from './inputs/MyInput'
 import classes from './RegistrationForm.module.scss';
 import { validateFields } from './validateFields';
 import MyCountrySelect from './inputs/MyCountrySelect';
+import MyCheckBox from './inputs/myCheckBox/MyCheckBox';
+
 
 
 
@@ -25,6 +27,24 @@ export default function RegistrationForm() {
         reset();
       };
 
+      function setBillingAddress() {
+        if (!isChoose) {
+          setValue('cityBilling', getValues('cityShipping'));
+          setValue('streetBilling', getValues('streetShipping'));
+          setValue('postalCodeBilling', getValues('postalCodeShipping'));
+          setValue('countryBilling', getValues('countryShipping'));
+          setSameAddress(true);
+          if (isValid) {
+            console.log('lox');
+          }
+        } else {
+          setValue('cityBilling', '');
+          setValue('streetBilling', '');
+          setValue('postalCodeBilling', '');
+          setSameAddress(false);
+        }
+      }
+    
 
       return (
         <div className={classes.registration}>
@@ -65,6 +85,88 @@ export default function RegistrationForm() {
               validate={validateFields.DATE_OF_BIRTH_VALIDATE}
             />
           </fieldset>
+
+          <fieldset>
+          <legend className={classes.legend_fieldset}>Shipping address</legend>
+          <MyCheckBox
+            register={register}
+            errors={errors}
+            name="defaultShippingAddress"
+            title="Set as default address:"
+          />
+          <MyInput
+            register={register}
+            errors={errors}
+            name="streetShipping"
+            title="Street"
+          />
+          <MyInput
+            register={register}
+            errors={errors}
+            name="cityShipping"
+            title="City"
+            validate={validateFields.CITY_VALIDATE}
+          />
+          <MyInput
+            register={register}
+            errors={errors}
+            name="postalCodeShipping"
+            title="Postal code"
+            validate={validateFields.POSTAL_CODE_VALIDATE}
+          />
+          <MyCountrySelect
+            register={register}
+            errors={errors}
+            name="countryShipping"
+            title="Country"
+          />
+
+          <div className={classes.checkbox__container}>
+            <label>Set the same address for billing:</label>
+            <input
+              type="checkbox"
+              onChange={setBillingAddress}
+              title="sameAddressToBilling"
+            />
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend className={classes.legend_fieldset}>Billing address</legend>
+          <MyCheckBox
+            register={register}
+            errors={errors}
+            name="defaultBillingAddress"
+            title="Set as default address:"
+          />
+          <MyInput
+            register={register}
+            errors={errors}
+            name="streetBilling"
+            title="Street"
+          />
+          <MyInput
+            register={register}
+            errors={errors}
+            name="cityBilling"
+            title="City"
+            validate={validateFields.CITY_VALIDATE}
+          />
+          <MyInput
+            register={register}
+            errors={errors}
+            name="postalCodeBilling"
+            title="Postal code"
+            validate={validateFields.POSTAL_CODE_VALIDATE}
+          />
+          <MyCountrySelect
+            register={register}
+            errors={errors}
+            name="countryBilling"
+            title="Country"
+          />
+        </fieldset>
+
 
           <button
           className={classes.submit_button}
