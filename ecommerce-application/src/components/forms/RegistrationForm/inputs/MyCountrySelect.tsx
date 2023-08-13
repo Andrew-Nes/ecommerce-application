@@ -11,7 +11,7 @@ export default function MyCountrySelect(props: MyInputProps) {
       <select {...props.register(props.name)} title={props.name}>
         {countries.map((country) => {
             return (
-                <option>{country}</option>
+                <option key={country}>{country}</option>
             )
         } )}
       </select>
