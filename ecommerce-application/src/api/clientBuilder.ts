@@ -1,0 +1,62 @@
+import {
+  ClientBuilder,
+  AuthMiddlewareOptions,
+  HttpMiddlewareOptions,
+  PasswordAuthMiddlewareOptions,
+  Client,
+} from '@commercetools/sdk-client-v2';
+
+const scopes = import.meta.env.VITE_CTP_SCOPES.split(' ');
+const projectKey = import.meta.env.VITE_CTP_PROJECT_KEY;
+
+const authMiddlewareOptions: AuthMiddlewareOptions = {
+  host: import.meta.env.VITE_CTP_AUTH_URL,
+  projectKey,
+  credentials: {
+    clientId: import.meta.env.VITE_CTP_CLIENT_ID,
+    clientSecret: import.meta.env.VITE_CTP_CLIENT_SECRET,
+  },
+  scopes,
+  fetch,
+};
+
+const httpMiddlewareOptions: HttpMiddlewareOptions = {
+  host: import.meta.env.VITE_CTP_API_URL,
+  fetch,
+};
+
+function getPasswordAuthMiddlewareOptions(
+  username: string,
+  password: string
+): PasswordAuthMiddlewareOptions {
+  return {
+    host: import.meta.env.VITE_CTP_AUTH_URL,
+    projectKey,
+    credentials: {
+      clientId: import.meta.env.VITE_CTP_CLIENT_ID,
+      clientSecret: import.meta.env.VITE_CTP_CLIENT_SECRET,
+      user: {
+        username,
+        password,
+      },
+    },
+    scopes,
+    fetch,
+  };
+}
+
+function getPasswordAuthClient(username: string, password: string): Client {
+  return new ClientBuilder()
+    .withPasswordFlow(getPasswordAuthMiddlewareOptions(username, password))
+    .withHttpMiddleware(httpMiddlewareOptions)
+    .build();
+}
+
+function getAuthClient(): Client {
+  return new ClientBuilder()
+    .withClientCredentialsFlow(authMiddlewareOptions)
+    .withHttpMiddleware(httpMiddlewareOptions)
+    .build();
+}
+
+export { getAuthClient, getPasswordAuthClient, projectKey };
