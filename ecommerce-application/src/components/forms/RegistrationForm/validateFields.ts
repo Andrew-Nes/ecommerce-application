@@ -15,9 +15,9 @@ function checkAge(date: string): boolean {
   ];
   if (cusYear > ctrlYear) {
     return false;
-  } else if (cusYear === ctrlYear && cusMonth < curMonth) {
+  } else if (cusYear === ctrlYear && cusMonth > curMonth) {
     return false;
-  } else if (cusYear === ctrlYear && cusMonth === curMonth && cusDay < curDay) {
+  } else if (cusYear === ctrlYear && cusMonth === curMonth && cusDay > curDay) {
     return false;
   }
   return true;
