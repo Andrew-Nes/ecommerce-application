@@ -1,5 +1,7 @@
 import { cleanup, render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import RegistrationForm from '../../src/components/forms/RegistrationForm/RegistrationForm';
+import { errorsMessage } from '../../src/types/formTypes';
 
 beforeEach(() => {
   render(<RegistrationForm />);
@@ -9,97 +11,204 @@ afterEach(() => {
   cleanup();
 });
 
-describe('Registration form exists in the DOM', () => {
-  test('Email field exists in the DOM', () => {
-    expect(screen.getByTitle<HTMLInputElement>('email')).toBeInTheDocument();
-  });
+describe('Email validation', () => {
+  test('Email is required', async () => {
+    const user = userEvent.setup();
+    await user.click(screen.getByTitle<HTMLInputElement>('email'));
+    await user.click(screen.getByTitle<HTMLInputElement>('password'));
 
-  test('Password field exists in the DOM', () => {
-    expect(screen.getByTitle<HTMLInputElement>('password')).toBeInTheDocument();
-  });
-
-  test('First Name field exists in the DOM', () => {
     expect(
-      screen.getByTitle<HTMLInputElement>('firstName')
-    ).toBeInTheDocument();
+      screen.getByTitle<HTMLParagraphElement>('emailError').textContent
+    ).toBe(errorsMessage.EMAIL_REQUIRED);
   });
 
-  test('Last Name field exists in the DOM', () => {
-    expect(screen.getByTitle<HTMLInputElement>('lastName')).toBeInTheDocument();
-  });
+  test('Email must contain @', async () => {
+    const user = userEvent.setup();
+    await user.type(screen.getByTitle<HTMLInputElement>('email'), 'some');
+    await user.click(screen.getByTitle<HTMLInputElement>('password'));
 
-  test('Date of birth field exists in the DOM', () => {
     expect(
-      screen.getByTitle<HTMLInputElement>('dateOfBirth')
-    ).toBeInTheDocument();
+      screen.getByTitle<HTMLParagraphElement>('emailError').textContent
+    ).toBe(errorsMessage.EMAIL_AT_SYMBOL);
   });
 
-  test('Default shipping address checkbox exists in the DOM', () => {
+  test('Email must contain domain', async () => {
+    const user = userEvent.setup();
+    await user.type(screen.getByTitle<HTMLInputElement>('email'), 'some@');
+    await user.click(screen.getByTitle<HTMLInputElement>('password'));
+
     expect(
-      screen.getByTitle<HTMLInputElement>('defaultShippingAddress')
-    ).toBeInTheDocument();
+      screen.getByTitle<HTMLParagraphElement>('emailError').textContent
+    ).toBe(errorsMessage.EMAIL_DOMAIN_EXIST);
   });
 
-  test('Street shipping field exists in the DOM', () => {
+  test('Email must be valid', async () => {
+    const user = userEvent.setup();
+    await user.type(screen.getByTitle<HTMLInputElement>('email'), 'some@some');
+    await user.click(screen.getByTitle<HTMLInputElement>('password'));
+
     expect(
-      screen.getByTitle<HTMLInputElement>('streetShipping')
-    ).toBeInTheDocument();
+      screen.getByTitle<HTMLParagraphElement>('emailError').textContent
+    ).toBe(errorsMessage.EMAIL_VALID);
+  });
+});
+
+describe('Password validation', () => {
+  test('Password is required', async () => {
+    const user = userEvent.setup();
+    await user.click(screen.getByTitle<HTMLInputElement>('password'));
+    await user.click(screen.getByTitle<HTMLInputElement>('email'));
+
+    expect(
+      screen.getByTitle<HTMLParagraphElement>('passwordError').textContent
+    ).toBe(errorsMessage.PASSWORD_REQUIRED);
   });
 
-  test('City shipping field exists in the DOM', () => {
+  test('Password length', async () => {
+    const user = userEvent.setup();
+    await user.type(screen.getByTitle<HTMLInputElement>('password'), 'some');
+    await user.click(screen.getByTitle<HTMLInputElement>('email'));
+
     expect(
-      screen.getByTitle<HTMLInputElement>('cityShipping')
-    ).toBeInTheDocument();
+      screen.getByTitle<HTMLParagraphElement>('passwordError').textContent
+    ).toBe(errorsMessage.PASSWORD_LENGTH);
   });
 
-  test('Postal code shipping field exists in the DOM', () => {
+  test('Password must contain uppercase letter', async () => {
+    const user = userEvent.setup();
+    await user.type(
+      screen.getByTitle<HTMLInputElement>('password'),
+      'asdasdasd'
+    );
+    await user.click(screen.getByTitle<HTMLInputElement>('email'));
+
     expect(
-      screen.getByTitle<HTMLInputElement>('postalCodeShipping')
-    ).toBeInTheDocument();
+      screen.getByTitle<HTMLParagraphElement>('passwordError').textContent
+    ).toBe(errorsMessage.PASSWORD_UPPERCASE_LETTER);
   });
 
-  test('Country shipping field exists in the DOM', () => {
+  test('Password must contain lowercase letter', async () => {
+    const user = userEvent.setup();
+    await user.type(
+      screen.getByTitle<HTMLInputElement>('password'),
+      'ASDASDASD'
+    );
+    await user.click(screen.getByTitle<HTMLInputElement>('email'));
+
     expect(
-      screen.getByTitle<HTMLInputElement>('countryShipping')
-    ).toBeInTheDocument();
-  });
-  test('Set same address to billing checkbox exists in the DOM', () => {
-    expect(
-      screen.getByTitle<HTMLInputElement>('sameAddressToBilling')
-    ).toBeInTheDocument();
+      screen.getByTitle<HTMLParagraphElement>('passwordError').textContent
+    ).toBe(errorsMessage.PASSWORD_LOWERCASE_LETTER);
   });
 
-  test('Default billing address checkbox exists in the DOM', () => {
+  test('Password must contain digit', async () => {
+    const user = userEvent.setup();
+    await user.type(
+      screen.getByTitle<HTMLInputElement>('password'),
+      'ASDASDasd'
+    );
+    await user.click(screen.getByTitle<HTMLInputElement>('email'));
+
     expect(
-      screen.getByTitle<HTMLInputElement>('defaultBillingAddress')
-    ).toBeInTheDocument();
+      screen.getByTitle<HTMLParagraphElement>('passwordError').textContent
+    ).toBe(errorsMessage.PASSWORD_DIGIT);
   });
 
-  test('Street billing field exists in the DOM', () => {
+  test('Password must contain special character', async () => {
+    const user = userEvent.setup();
+    await user.type(
+      screen.getByTitle<HTMLInputElement>('password'),
+      'ASDasd123'
+    );
+    await user.click(screen.getByTitle<HTMLInputElement>('email'));
     expect(
-      screen.getByTitle<HTMLInputElement>('streetBilling')
-    ).toBeInTheDocument();
+      screen.getByTitle<HTMLParagraphElement>('passwordError').textContent
+    ).toBe(errorsMessage.PASSWORD_SPECIAL_CHARACTER);
+  });
+});
+
+describe('First name validation', () => {
+  test('First name is required', async () => {
+    const user = userEvent.setup();
+    await user.click(screen.getByTitle<HTMLInputElement>('firstName'));
+    await user.click(screen.getByTitle<HTMLInputElement>('lastName'));
+
+    expect(
+      screen.getByTitle<HTMLParagraphElement>('firstNameError').textContent
+    ).toBe(errorsMessage.FIRST_NAME_REQUIRED);
   });
 
-  test('City billing field exists in the DOM', () => {
+  test('First name must not contain special character', async () => {
+    const user = userEvent.setup();
+    await user.type(screen.getByTitle<HTMLInputElement>('firstName'), 'name$');
+    await user.click(screen.getByTitle<HTMLInputElement>('email'));
     expect(
-      screen.getByTitle<HTMLInputElement>('cityBilling')
-    ).toBeInTheDocument();
+      screen.getByTitle<HTMLParagraphElement>('firstNameError').textContent
+    ).toBe(errorsMessage.FIRST_NAME_SPECIAL_CHARACTER);
   });
 
-  test('Postal code billing field exists in the DOM', () => {
+  test('First name must not contain numbers', async () => {
+    const user = userEvent.setup();
+    await user.type(
+      screen.getByTitle<HTMLInputElement>('firstName'),
+      'name777'
+    );
+    await user.click(screen.getByTitle<HTMLInputElement>('email'));
     expect(
-      screen.getByTitle<HTMLInputElement>('postalCodeBilling')
-    ).toBeInTheDocument();
+      screen.getByTitle<HTMLParagraphElement>('firstNameError').textContent
+    ).toBe(errorsMessage.FIRST_NAME_NUMBERS);
+  });
+});
+
+describe('Last name validation', () => {
+  test('Last name is required', async () => {
+    const user = userEvent.setup();
+    await user.click(screen.getByTitle<HTMLInputElement>('lastName'));
+    await user.click(screen.getByTitle<HTMLInputElement>('firstName'));
+
+    expect(
+      screen.getByTitle<HTMLParagraphElement>('lastNameError').textContent
+    ).toBe(errorsMessage.LAST_NAME_REQUIRED);
   });
 
-  test('Country billing field exists in the DOM', () => {
+  test('Last name must not contain special character', async () => {
+    const user = userEvent.setup();
+    await user.type(screen.getByTitle<HTMLInputElement>('lastName'), 'name$');
+    await user.click(screen.getByTitle<HTMLInputElement>('email'));
     expect(
-      screen.getByTitle<HTMLInputElement>('countryBilling')
-    ).toBeInTheDocument();
+      screen.getByTitle<HTMLParagraphElement>('lastNameError').textContent
+    ).toBe(errorsMessage.LAST_NAME_SPECIAL_CHARACTER);
   });
 
-  test('Button exists in the DOM', () => {
-    expect(screen.getByRole<HTMLButtonElement>('button')).toBeInTheDocument();
+  test('Last name must not contain numbers', async () => {
+    const user = userEvent.setup();
+    await user.type(screen.getByTitle<HTMLInputElement>('lastName'), 'name777');
+    await user.click(screen.getByTitle<HTMLInputElement>('email'));
+    expect(
+      screen.getByTitle<HTMLParagraphElement>('lastNameError').textContent
+    ).toBe(errorsMessage.LAST_NAME_NUMBERS);
+  });
+});
+
+describe('Date of birth validation', () => {
+  test('Date of birth is required', async () => {
+    const user = userEvent.setup();
+    await user.click(screen.getByTitle<HTMLInputElement>('dateOfBirth'));
+    await user.click(screen.getByTitle<HTMLInputElement>('firstName'));
+
+    expect(
+      screen.getByTitle<HTMLParagraphElement>('dateOfBirthError').textContent
+    ).toBe(errorsMessage.DATE_OF_BIRTH_REQUIRED);
+  });
+
+  test('Date of birth must be 13 years of age or older', async () => {
+    const user = userEvent.setup();
+    await user.type(
+      screen.getByTitle<HTMLInputElement>('dateOfBirth'),
+      '2018-07-22'
+    );
+    await user.click(screen.getByTitle<HTMLInputElement>('email'));
+    expect(
+      screen.getByTitle<HTMLParagraphElement>('dateOfBirthError').textContent
+    ).toBe(errorsMessage.DATE_OF_BIRTH_AGE);
   });
 });

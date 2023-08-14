@@ -1,5 +1,7 @@
 import { cleanup, render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import RegistrationForm from '../../src/components/forms/RegistrationForm/RegistrationForm';
+import { errorsMessage } from '../../src/types/formTypes';
 
 beforeEach(() => {
   render(<RegistrationForm />);
@@ -9,97 +11,144 @@ afterEach(() => {
   cleanup();
 });
 
-describe('Registration form exists in the DOM', () => {
-  test('Email field exists in the DOM', () => {
-    expect(screen.getByTitle<HTMLInputElement>('email')).toBeInTheDocument();
-  });
+describe('Street validation', () => {
+  test('Street is required', async () => {
+    const user = userEvent.setup();
+    await user.click(screen.getByTitle<HTMLInputElement>('streetShipping'));
+    await user.click(screen.getByTitle<HTMLInputElement>('firstName'));
 
-  test('Password field exists in the DOM', () => {
-    expect(screen.getByTitle<HTMLInputElement>('password')).toBeInTheDocument();
-  });
-
-  test('First Name field exists in the DOM', () => {
     expect(
-      screen.getByTitle<HTMLInputElement>('firstName')
-    ).toBeInTheDocument();
+      screen.getByTitle<HTMLParagraphElement>('streetShippingError').textContent
+    ).toBe(errorsMessage.STREET_REQUIRED);
   });
+});
 
-  test('Last Name field exists in the DOM', () => {
-    expect(screen.getByTitle<HTMLInputElement>('lastName')).toBeInTheDocument();
-  });
+describe('City validation', () => {
+  test('City is required', async () => {
+    const user = userEvent.setup();
+    await user.click(screen.getByTitle<HTMLInputElement>('cityShipping'));
+    await user.click(screen.getByTitle<HTMLInputElement>('firstName'));
 
-  test('Date of birth field exists in the DOM', () => {
     expect(
-      screen.getByTitle<HTMLInputElement>('dateOfBirth')
-    ).toBeInTheDocument();
+      screen.getByTitle<HTMLParagraphElement>('cityShippingError').textContent
+    ).toBe(errorsMessage.CITY_REQUIRED);
   });
 
-  test('Default shipping address checkbox exists in the DOM', () => {
+  test('City must not contain numbers', async () => {
+    const user = userEvent.setup();
+    await user.type(screen.getByTitle<HTMLInputElement>('cityShipping'), '123');
+    await user.click(screen.getByTitle<HTMLInputElement>('email'));
     expect(
-      screen.getByTitle<HTMLInputElement>('defaultShippingAddress')
-    ).toBeInTheDocument();
+      screen.getByTitle<HTMLParagraphElement>('cityShippingError').textContent
+    ).toBe(errorsMessage.CITY_NUMBERS);
   });
 
-  test('Street shipping field exists in the DOM', () => {
+  test('City must not contain special character', async () => {
+    const user = userEvent.setup();
+    await user.type(
+      screen.getByTitle<HTMLInputElement>('cityShipping'),
+      'city$'
+    );
+    await user.click(screen.getByTitle<HTMLInputElement>('email'));
     expect(
-      screen.getByTitle<HTMLInputElement>('streetShipping')
-    ).toBeInTheDocument();
+      screen.getByTitle<HTMLParagraphElement>('cityShippingError').textContent
+    ).toBe(errorsMessage.CITY_SPECIAL_CHARACTER);
+  });
+});
+
+describe('Postal code validation', () => {
+  test('Postal code is required', async () => {
+    const user = userEvent.setup();
+    await user.click(screen.getByTitle<HTMLInputElement>('postalCodeShipping'));
+    await user.click(screen.getByTitle<HTMLInputElement>('firstName'));
+
+    expect(
+      screen.getByTitle<HTMLParagraphElement>('postalCodeShippingError')
+        .textContent
+    ).toBe(errorsMessage.POSTAL_CODE_REQUIRED);
   });
 
-  test('City shipping field exists in the DOM', () => {
+  test('Postal code format', async () => {
+    const user = userEvent.setup();
+    await user.type(
+      screen.getByTitle<HTMLInputElement>('postalCodeShipping'),
+      '123'
+    );
+    await user.click(screen.getByTitle<HTMLInputElement>('email'));
     expect(
-      screen.getByTitle<HTMLInputElement>('cityShipping')
-    ).toBeInTheDocument();
+      screen.getByTitle<HTMLParagraphElement>('postalCodeShippingError')
+        .textContent
+    ).toBe(errorsMessage.POSTAL_CODE_FORMAT);
+  });
+});
+
+describe('Street validation', () => {
+  test('Street is required', async () => {
+    const user = userEvent.setup();
+    await user.click(screen.getByTitle<HTMLInputElement>('streetBilling'));
+    await user.click(screen.getByTitle<HTMLInputElement>('firstName'));
+
+    expect(
+      screen.getByTitle<HTMLParagraphElement>('streetBillingError').textContent
+    ).toBe(errorsMessage.STREET_REQUIRED);
+  });
+});
+
+describe('City validation', () => {
+  test('City is required', async () => {
+    const user = userEvent.setup();
+    await user.click(screen.getByTitle<HTMLInputElement>('cityBilling'));
+    await user.click(screen.getByTitle<HTMLInputElement>('firstName'));
+
+    expect(
+      screen.getByTitle<HTMLParagraphElement>('cityBillingError').textContent
+    ).toBe(errorsMessage.CITY_REQUIRED);
   });
 
-  test('Postal code shipping field exists in the DOM', () => {
+  test('City must not contain numbers', async () => {
+    const user = userEvent.setup();
+    await user.type(screen.getByTitle<HTMLInputElement>('cityBilling'), '123');
+    await user.click(screen.getByTitle<HTMLInputElement>('email'));
     expect(
-      screen.getByTitle<HTMLInputElement>('postalCodeShipping')
-    ).toBeInTheDocument();
+      screen.getByTitle<HTMLParagraphElement>('cityBillingError').textContent
+    ).toBe(errorsMessage.CITY_NUMBERS);
   });
 
-  test('Country shipping field exists in the DOM', () => {
+  test('City must not contain special character', async () => {
+    const user = userEvent.setup();
+    await user.type(
+      screen.getByTitle<HTMLInputElement>('cityBilling'),
+      'city$'
+    );
+    await user.click(screen.getByTitle<HTMLInputElement>('email'));
     expect(
-      screen.getByTitle<HTMLInputElement>('countryShipping')
-    ).toBeInTheDocument();
+      screen.getByTitle<HTMLParagraphElement>('cityBillingError').textContent
+    ).toBe(errorsMessage.CITY_SPECIAL_CHARACTER);
   });
-  test('Set same address to billing checkbox exists in the DOM', () => {
+});
+
+describe('Postal code validation', () => {
+  test('Postal code is required', async () => {
+    const user = userEvent.setup();
+    await user.click(screen.getByTitle<HTMLInputElement>('postalCodeBilling'));
+    await user.click(screen.getByTitle<HTMLInputElement>('firstName'));
+
     expect(
-      screen.getByTitle<HTMLInputElement>('sameAddressToBilling')
-    ).toBeInTheDocument();
+      screen.getByTitle<HTMLParagraphElement>('postalCodeBillingError')
+        .textContent
+    ).toBe(errorsMessage.POSTAL_CODE_REQUIRED);
   });
 
-  test('Default billing address checkbox exists in the DOM', () => {
+  test('Postal code format', async () => {
+    const user = userEvent.setup();
+    await user.type(
+      screen.getByTitle<HTMLInputElement>('postalCodeBilling'),
+      '123'
+    );
+    await user.click(screen.getByTitle<HTMLInputElement>('email'));
     expect(
-      screen.getByTitle<HTMLInputElement>('defaultBillingAddress')
-    ).toBeInTheDocument();
-  });
-
-  test('Street billing field exists in the DOM', () => {
-    expect(
-      screen.getByTitle<HTMLInputElement>('streetBilling')
-    ).toBeInTheDocument();
-  });
-
-  test('City billing field exists in the DOM', () => {
-    expect(
-      screen.getByTitle<HTMLInputElement>('cityBilling')
-    ).toBeInTheDocument();
-  });
-
-  test('Postal code billing field exists in the DOM', () => {
-    expect(
-      screen.getByTitle<HTMLInputElement>('postalCodeBilling')
-    ).toBeInTheDocument();
-  });
-
-  test('Country billing field exists in the DOM', () => {
-    expect(
-      screen.getByTitle<HTMLInputElement>('countryBilling')
-    ).toBeInTheDocument();
-  });
-
-  test('Button exists in the DOM', () => {
-    expect(screen.getByRole<HTMLButtonElement>('button')).toBeInTheDocument();
+      screen.getByTitle<HTMLParagraphElement>('postalCodeBillingError')
+        .textContent
+    ).toBe(errorsMessage.POSTAL_CODE_FORMAT);
   });
 });
