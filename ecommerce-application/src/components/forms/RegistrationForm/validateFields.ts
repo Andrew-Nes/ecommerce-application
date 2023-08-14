@@ -1,6 +1,6 @@
 import { errorsMessage } from '../../../types/formTypes';
 const AGE_LIMIT: number = 13;
-function checkAge(date: string): boolean | string {
+function checkAge(date: string): boolean {
   const curDate: Date = new Date();
   const cusDate: Date = new Date(date);
   const [ctrlYear, curMonth, curDay]: number[] = [
