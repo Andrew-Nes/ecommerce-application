@@ -19,6 +19,7 @@ export default function RegistrationForm() {
     formState: { errors, isValid },
     getValues,
     setValue,
+    trigger
   } = useForm<RegistrationFormData>({ mode: 'all' });
 
   const [isChoose, setSameAddress] = useState(false);
@@ -33,12 +34,15 @@ export default function RegistrationForm() {
       setValue('streetBilling', getValues('streetShipping'));
       setValue('postalCodeBilling', getValues('postalCodeShipping'));
       setValue('countryBilling', getValues('countryShipping'));
+      trigger(['cityBilling','streetBilling', 'postalCodeBilling', 'countryBilling'])
       setSameAddress(true);
+     
     } else {
       setValue('cityBilling', '');
       setValue('streetBilling', '');
       setValue('postalCodeBilling', '');
       setValue('countryBilling', COUNTRIES[defaultCountryIndex]);
+      trigger(['cityBilling','streetBilling', 'postalCodeBilling', 'countryBilling'])
       setSameAddress(false);
     }
   }
