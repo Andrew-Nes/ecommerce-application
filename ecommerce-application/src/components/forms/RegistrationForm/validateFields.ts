@@ -1,6 +1,6 @@
 import { errorsMessage } from '../../../types/formTypes';
 const AGE_LIMIT: number = 13;
-function checkAge(date: string): boolean {
+function isAboveAgeLimit(date: string): boolean {
   const curDate: Date = new Date();
   const cusDate: Date = new Date(date);
   const [ctrlYear, curMonth, curDay]: number[] = [
@@ -62,7 +62,7 @@ export const validateFields = {
   },
   DATE_OF_BIRTH_VALIDATE: {
     testYearsOld: (value: string) =>
-      checkAge(value) || errorsMessage.DATE_OF_BIRTH_AGE,
+    isAboveAgeLimit(value) || errorsMessage.DATE_OF_BIRTH_AGE,
   },
   CITY_VALIDATE: {
     specialCharacter: (value: string) =>
