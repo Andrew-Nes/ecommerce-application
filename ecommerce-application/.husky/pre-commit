@@ -3,4 +3,4 @@
 
 cd ./ecommerce-application && npm run prettier
 npm run lint
-git add .
+
