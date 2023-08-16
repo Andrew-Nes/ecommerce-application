@@ -3,6 +3,12 @@ import userEvent from '@testing-library/user-event';
 import LoginForm from '../src/components/forms/loginForm/loginForm';
 import { errorsMessage } from '../src/types/formTypes';
 
+global.fetch = jest.fn(() =>
+  Promise.resolve({
+    json: () => Promise.resolve({ test: 100 }),
+  })
+) as jest.Mock;
+
 beforeEach(() => {
   render(<LoginForm />);
 });
@@ -156,3 +162,23 @@ describe('Password validation', () => {
     ).toBe(errorsMessage.PASSWORD_SPECIAL_CHARACTER);
   });
 });
+
+// describe('Failed login', () => {
+//   test('Failed login message exists', async () => {
+//     const user = userEvent.setup();
+//     await user.type(
+//       screen.getByPlaceholderText<HTMLInputElement>('Email'),
+//       'login@example.com'
+//     );
+//     await user.type(
+//       screen.getByPlaceholderText<HTMLInputElement>('Password'),
+//       'exampleA1!'
+//     );
+//     await user.click(screen.getByRole<HTMLButtonElement>('button'));
+
+//     expect(
+//       screen.getByTestId<HTMLSpanElement>('email-error').textContent
+//     ).toBe(errorsMessage.WRONG_LOGIN);
+//   });
+
+// });
