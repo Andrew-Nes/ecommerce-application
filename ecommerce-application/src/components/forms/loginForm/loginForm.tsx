@@ -3,7 +3,11 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { useState } from 'react';
 import closeEyeIcon from '../../../../assets/img/close-eye.png';
 import openEyeIcon from '../../../../assets/img/open-eye.png';
-import { PasswordType, errorsMessage } from '../../../types/formTypes';
+import {
+  PasswordType,
+  errorsMessage,
+  serviceErrors,
+} from '../../../types/formTypes';
 import { loginClient } from '../../../api/apiFunctions';
 import { ClientResponse, ErrorResponse } from '@commercetools/platform-sdk';
 
@@ -39,6 +43,7 @@ export default function LoginForm() {
 
   const onSubmit: SubmitHandler<LoginFormData> = async (data) => {
     clearErrors();
+
     try {
       await loginClient(data.email, data.password);
       reset();
@@ -46,13 +51,15 @@ export default function LoginForm() {
       const errorResponse = JSON.parse(
         JSON.stringify(error)
       ) as ClientResponse<ErrorResponse>;
-      console.log('err3', errorResponse, errorResponse.body.statusCode);
 
-      if (errorResponse.body.statusCode === 400) {
+      if (
+        errorResponse.body.statusCode ===
+        serviceErrors.INVALID_CUSTOMER_CREDENTIALS
+      ) {
         reset({ password: '' });
         setError('root.serverError', {
           type: `${errorResponse.body.statusCode}`,
-          message: 'Wrong email or password',
+          message: errorsMessage.WRONG_LOGIN,
         });
       }
     }
