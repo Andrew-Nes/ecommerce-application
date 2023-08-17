@@ -15,7 +15,7 @@ enum errorsMessage {
   LAST_NAME_REQUIRED = 'Last Name is required',
   LAST_NAME_SPECIAL_CHARACTER = 'Last Name must not contain special characters',
   LAST_NAME_NUMBERS = 'Last Name must not contain numbers',
-  DATE_OF_BIRTH_REQUIRED = 'Date of birth is required',
+  DATE_OF_BIRTH_REQUIRED = 'Field is empty or invalid date entered',
   DATE_OF_BIRTH_AGE = 'You must be 13 years of age or older',
   STREET_REQUIRED = 'Street is required',
   CITY_REQUIRED = 'City is required',
