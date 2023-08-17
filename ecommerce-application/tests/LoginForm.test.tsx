@@ -8,17 +8,6 @@ jest.mock('../src/api/apiFunctions', () => ({
   loginClient: jest.fn(),
 }));
 
-// jest.mocked(loginClient).mockReturnValue(Promise.resolve())
-// jest.mocked(loginClient).mockRejectedValueOnce(Promise.reject({body: {statusCode: 400, message: 'error'}}))
-
-// beforeEach(() => {
-//   render(<LoginForm />);
-// });
-
-// afterEach(() => {
-//   cleanup();
-// });
-
 describe('Login form exists in the DOM', () => {
   test('Password field exists in the DOM', () => {
     render(<LoginForm />);
@@ -178,14 +167,11 @@ describe('Password validation', () => {
   });
 });
 
-// jest.mocked(loginClient).mockRejectedValueOnce(Promise.reject({body: {statusCode: 400, message: 'error'}}));
 describe('Failed login', () => {
   test('Failed login message exists', async () => {
     jest
       .mocked(loginClient)
-      .mockRejectedValueOnce(
-        Promise.reject({ body: { statusCode: 400, message: 'error' } })
-      );
+      .mockRejectedValueOnce({ body: { statusCode: 400, message: 'error' } });
     render(<LoginForm />);
 
     const user = userEvent.setup();
