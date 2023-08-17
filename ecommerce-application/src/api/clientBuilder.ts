@@ -80,13 +80,6 @@ function getAnonymousAuthClient(): Client {
     .build();
 }
 
-// function getExistingAuthClient(): Client {
-//   return clientObject
-//     .withExistingTokenFlow()
-//     .withHttpMiddleware(httpMiddlewareOptions)
-//     .build();
-// }
-
 export {
   getAuthClient,
   getPasswordAuthClient,
