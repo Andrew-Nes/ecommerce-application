@@ -1,17 +1,9 @@
 import { Link } from 'react-router-dom';
 import { routes } from '../../types/routes';
-import { useNavigate } from 'react-router-dom';
 import './header.scss';
-import { MouseEventHandler } from 'react';
+import RedirectButton from '../redirect-button/redirect-button';
 
 function Header() {
-  const redirect = useNavigate();
-  const redirectToRegister: MouseEventHandler = () => {
-    redirect(routes.REGISTER);
-  };
-  const redirectToLogIn: MouseEventHandler = () => {
-    redirect(routes.LOGIN);
-  };
   return (
     <header className="header">
       <Link to={routes.MAIN}>
@@ -27,20 +19,8 @@ function Header() {
           </li>
         </ul>
         <div className="navigation__buttons">
-          <button
-            className="navigation__button-register"
-            key="login"
-            onClick={redirectToLogIn}
-          >
-            LogIn
-          </button>
-          <button
-            className="navigation__button-register"
-            key="register"
-            onClick={redirectToRegister}
-          >
-            Register
-          </button>
+          <RedirectButton text="LogIn" route={routes.LOGIN} />
+          <RedirectButton text="Register" route={routes.REGISTER} />
         </div>
       </nav>
     </header>
