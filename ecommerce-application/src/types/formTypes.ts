@@ -9,9 +9,14 @@ enum errorsMessage {
   PASSWORD_DIGIT = 'Password must contain at least 1 digit',
   PASSWORD_SPECIAL_CHARACTER = 'Password must contain at least 1 special character: !@#$%^&*',
   PASSWORD_REQUIRED = 'Password is required',
+  WRONG_LOGIN = 'Wrong email or password',
+}
+
+enum serviceErrors {
+  INVALID_CUSTOMER_CREDENTIALS = 400,
 }
 
 type PasswordType = 'password' | 'text';
 
-export { errorsMessage };
+export { errorsMessage, serviceErrors };
 export type { PasswordType };
