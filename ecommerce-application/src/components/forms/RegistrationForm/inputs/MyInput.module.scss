@@ -1,0 +1,47 @@
+.myInput__container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.myInput_label {
+  margin: 0;
+}
+
+.myInput_input {
+  box-sizing: border-box;
+  padding: 5px;
+  width: 250px;
+  border-radius: 15px;
+  border: 1px solid transparent;
+}
+.myInput_input:focus {
+  outline: none;
+}
+
+.myInput_errorText {
+  padding: 0;
+  color: red;
+  font-size: 10px;
+  font-weight: 400;
+  position: relative;
+  top: 0px;
+  align-self: center;
+}
+
+.myPass_labelLine {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.showPass__container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.input_error,
+.input_error:focus {
+  border-color: red;
+}

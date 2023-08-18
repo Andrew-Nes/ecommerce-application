@@ -1,0 +1,49 @@
+.registration {
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(138, 135, 181, 0.55);
+  border-radius: 5px;
+  margin: 0 auto;
+}
+
+.register__form {
+  display: flex;
+  flex-direction: column;
+  max-width: 300px;
+  margin: auto;
+  align-items: center;
+  gap: 20px;
+}
+
+.submit_button {
+  box-sizing: border-box;
+  width: 250px;
+  border-radius: 15px;
+  border: 1px solid transparent;
+  padding: 5px;
+  margin: 10px 0;
+  background-color: green;
+  font-variant: small-caps;
+}
+
+.fieldset {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+}
+
+.legend_fieldset {
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.checkbox__container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
