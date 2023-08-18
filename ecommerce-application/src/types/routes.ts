@@ -4,3 +4,9 @@ export enum routes {
   REGISTER = '/register',
   NOTFOUND = '*',
 }
+
+export interface buttonProps {
+  text: string;
+  route: string;
+  className?: string;
+}
