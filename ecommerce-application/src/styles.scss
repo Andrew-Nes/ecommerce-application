@@ -1,0 +1,41 @@
+body {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  min-height: 100vh;
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  color: black;
+}
+
+#root {
+  background-color: #ffffff;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100vh;
+}
+
+li {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+.wrapper {
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+.button {
+  margin: 0;
+  padding: 8px 15px;
+  font-weight: 500;
+  border-radius: 20px;
+  border: 1px solid transparent;
+  font-variant: small-caps;
+}
