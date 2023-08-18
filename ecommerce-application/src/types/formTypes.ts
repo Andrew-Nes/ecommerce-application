@@ -23,9 +23,14 @@ enum errorsMessage {
   CITY_NUMBERS = 'City must not contain numbers',
   POSTAL_CODE_REQUIRED = 'Postal code is required',
   POSTAL_CODE_FORMAT = 'Must follow the format 12345 or 12345-1234!',
+  WRONG_LOGIN = 'Wrong email or password',
+}
+
+enum serviceErrors {
+  INVALID_CUSTOMER_CREDENTIALS = 400,
 }
 
 type PasswordType = 'password' | 'text';
 
-export { errorsMessage };
+export { errorsMessage, serviceErrors };
 export type { PasswordType };

@@ -3,7 +3,13 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { useState } from 'react';
 import closeEyeIcon from '../../../../assets/img/close-eye.png';
 import openEyeIcon from '../../../../assets/img/open-eye.png';
-import { PasswordType, errorsMessage } from '../../../types/formTypes';
+import {
+  PasswordType,
+  errorsMessage,
+  serviceErrors,
+} from '../../../types/formTypes';
+import { loginClient } from '../../../api/apiFunctions';
+import { ClientResponse, ErrorResponse } from '@commercetools/platform-sdk';
 
 interface LoginFormData {
   email: string;
@@ -28,13 +34,39 @@ export default function LoginForm() {
     register,
     handleSubmit,
     reset,
+    setError,
+    clearErrors,
     formState: { errors, isValid },
   } = useForm<LoginFormData>({
     mode: 'onTouched',
   });
 
-  const onSubmit: SubmitHandler<LoginFormData> = () => {
-    reset();
+  const onSubmit: SubmitHandler<LoginFormData> = async (data) => {
+    clearErrors();
+
+    try {
+      await loginClient(data.email, data.password);
+      reset();
+    } catch (error) {
+      const errorResponse = JSON.parse(
+        JSON.stringify(error)
+      ) as ClientResponse<ErrorResponse>;
+
+      if (
+        errorResponse.body.statusCode ===
+        serviceErrors.INVALID_CUSTOMER_CREDENTIALS
+      ) {
+        reset({ password: '' });
+        setError('root.serverError', {
+          type: `${errorResponse.body.statusCode}`,
+          message: errorsMessage.WRONG_LOGIN,
+        });
+      }
+    }
+  };
+
+  const onInput = () => {
+    clearErrors('root.serverError');
   };
 
   return (
@@ -56,17 +88,22 @@ export default function LoginForm() {
                 errorsMessage.EMAIL_VALID,
             },
           })}
-          className={`login__input ${errors.email ? 'input__error' : ''}`}
+          className={`login__input ${
+            errors.email || errors.root?.serverError ? 'input__error' : ''
+          }`}
           type="email"
           placeholder="Email"
+          onInput={onInput}
         />
         <span
           className={`error__message ${
-            errors.email ? 'error__message_visible' : ''
+            errors.email || errors.root?.serverError
+              ? 'error__message_visible'
+              : ''
           }`}
           data-testid="email-error"
         >
-          {errors.email?.message}
+          {errors.email?.message || errors.root?.serverError.message}
         </span>
         <div className="password_wrapper">
           <input
@@ -93,9 +130,12 @@ export default function LoginForm() {
                   errorsMessage.PASSWORD_SPECIAL_CHARACTER,
               },
             })}
-            className={`login__input ${errors.password ? 'input__error' : ''}`}
+            className={`login__input ${
+              errors.password || errors.root?.serverError ? 'input__error' : ''
+            }`}
             type={passwordType}
             placeholder="Password"
+            onInput={onInput}
           />
           <img
             src={iconPath}
