@@ -1,0 +1,20 @@
+.login-page__wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 30px;
+}
+
+.login__anchor {
+  color: green;
+  text-decoration: none;
+  cursor: default;
+}
+
+.login__anchor:hover {
+  color: rgba(0, 128, 0, 0.5);
+}
+
+.login__text {
+  text-align: center;
+}

@@ -1,4 +1,4 @@
-import './pages.scss';
+// import './pages.scss';
 import RedirectButton from '../redirect-button/redirect-button';
 import { routes } from '../../types/routes';
 

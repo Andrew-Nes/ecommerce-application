@@ -32,13 +32,13 @@ function Header() {
             />
           </div>
         </div>
-      </div>
-      <div className="header__block header__block_logo">
-        <div className="logo">
-          <Link className="logo__link" to={routes.MAIN}>
-            <img src={Logo} alt="Logo" className="logo__image" />
-            <p className="logo__text">{logoText.LOGO}</p>
-          </Link>
+        <div className="header__block header__block_logo">
+          <div className="logo">
+            <Link className="logo__link" to={routes.MAIN}>
+              <img src={Logo} alt="Logo" className="logo__image" />
+              <p className="logo__text">{logoText.LOGO}</p>
+            </Link>
+          </div>
         </div>
       </div>
     </header>

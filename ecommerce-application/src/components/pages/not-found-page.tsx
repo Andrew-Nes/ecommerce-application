@@ -1,5 +1,5 @@
 import RedirectButton from '../redirect-button/redirect-button';
-import './pages.scss';
+// import './pages.scss';
 import { routes } from '../../types/routes';
 
 function NotFoundPage() {
