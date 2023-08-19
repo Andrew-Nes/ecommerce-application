@@ -20,7 +20,7 @@ export default function RegistrationForm() {
     getValues,
     setValue,
     trigger
-  } = useForm<RegistrationFormData>({ mode: 'onTouched' });
+  } = useForm<RegistrationFormData>({ mode: 'onChange' });
 
   const [isSetSameAddress, setSameAddress] = useState(false);
 
