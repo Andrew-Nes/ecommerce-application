@@ -7,7 +7,9 @@ import { validateFields } from './validateFields';
 import MyCountrySelect from './inputs/MyCountrySelect';
 import MyCheckBox from './inputs/myCheckBox/MyCheckBox';
 import MyPassInput from './inputs/MyPassInput';
-
+import { CreateClient, loginClient } from '../../../api/apiFunctions';
+import convertDataForm from '../../../types/registrationFormTypes';
+import { ClientResponse, ErrorResponse } from '@commercetools/platform-sdk';
 const COUNTRIES: string[] = ['US'];
 const defaultCountryIndex: number = 0;
 
@@ -24,8 +26,21 @@ export default function RegistrationForm() {
 
   const [isSetSameAddress, setSameAddress] = useState(false);
 
-  const onSubmit: SubmitHandler<RegistrationFormData> = () => {
-    reset();
+  const onSubmit: SubmitHandler<RegistrationFormData> = async (data: RegistrationFormData) => {
+    try {
+      await CreateClient(convertDataForm(data, isSetSameAddress))
+      await loginClient(data.email, data.password)
+      reset()
+    }
+    catch(error) {
+      const errorResponse = JSON.parse(
+        JSON.stringify(error)
+      ) as ClientResponse<ErrorResponse>;
+
+      const errorCode = errorResponse.body.statusCode
+      const errorMessage = errorResponse.body.message
+      console.log(errorCode, errorMessage)
+    }
   };
 
   function setBillingAddress() {
