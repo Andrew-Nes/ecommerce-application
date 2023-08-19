@@ -10,7 +10,7 @@ import {
 } from '../../../types/formTypes';
 import { loginClient } from '../../../api/apiFunctions';
 import { ClientResponse, ErrorResponse } from '@commercetools/platform-sdk';
-import { buttonsText } from '../../../types/elementsText';
+import { buttonsText, headingText } from '../../../types/elementsText';
 
 interface LoginFormData {
   email: string;
@@ -72,7 +72,9 @@ export default function LoginForm() {
 
   return (
     <div className="login">
-      <h3 className="heading login__heading">Account Login</h3>
+      <h3 className="heading login__heading">
+        {headingText.LOGIN_PAGE_HEADING}
+      </h3>
       <form className="login__form" onSubmit={handleSubmit(onSubmit)}>
         <input
           {...register('email', {

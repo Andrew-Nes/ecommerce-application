@@ -1,3 +1,8 @@
+.main-page__wrapper {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
 .main__heading {
   text-align: center;
   font-size: 24px;
@@ -22,7 +27,7 @@
 
 .main__button {
   background-color: #909096;
-  transition: .5s;
+  transition: 0.5s;
 }
 
 .main__button:hover {

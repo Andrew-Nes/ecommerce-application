@@ -1,0 +1,14 @@
+.registration-page__wrapper {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.registration__anchor {
+  color: green;
+  text-decoration: none;
+  cursor: default;
+}
+
+.registration__anchor:hover {
+  color: rgba(0, 128, 0, 0.5);
+}
