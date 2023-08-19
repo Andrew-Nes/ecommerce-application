@@ -22,14 +22,14 @@ export default function RegistrationForm() {
     trigger
   } = useForm<RegistrationFormData>({ mode: 'onTouched' });
 
-  const [isChoose, setSameAddress] = useState(false);
+  const [isSetSameAddress, setSameAddress] = useState(false);
 
   const onSubmit: SubmitHandler<RegistrationFormData> = () => {
     reset();
   };
 
   function setBillingAddress() {
-    if (!isChoose) {
+    if (!isSetSameAddress) {
       setValue('cityBilling', getValues('cityShipping'));
       setValue('streetBilling', getValues('streetShipping'));
       setValue('postalCodeBilling', getValues('postalCodeShipping'));
