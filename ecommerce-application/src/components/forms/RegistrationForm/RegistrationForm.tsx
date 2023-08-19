@@ -10,6 +10,11 @@ import MyPassInput from './inputs/MyPassInput';
 import { CreateClient, loginClient } from '../../../api/apiFunctions';
 import convertDataForm from '../../../types/registrationFormTypes';
 import { ClientResponse, ErrorResponse } from '@commercetools/platform-sdk';
+import { serviceErrors } from '../../../types/formTypes';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { errorsMessage } from '../../../types/formTypes';
+
 const COUNTRIES: string[] = ['US'];
 const defaultCountryIndex: number = 0;
 
@@ -21,7 +26,8 @@ export default function RegistrationForm() {
     formState: { errors, isValid },
     getValues,
     setValue,
-    trigger
+    trigger,
+    setError,
   } = useForm<RegistrationFormData>({ mode: 'onChange' });
 
   const [isSetSameAddress, setSameAddress] = useState(false);
@@ -31,6 +37,9 @@ export default function RegistrationForm() {
       await CreateClient(convertDataForm(data, isSetSameAddress))
       await loginClient(data.email, data.password)
       reset()
+      toast.success('Registration completed successfully! You Log In.', {
+        position: 'bottom-center'
+      })
     }
     catch(error) {
       const errorResponse = JSON.parse(
@@ -39,7 +48,25 @@ export default function RegistrationForm() {
 
       const errorCode = errorResponse.body.statusCode
       const errorMessage = errorResponse.body.message
-      console.log(errorCode, errorMessage)
+
+      if (errorMessage === serviceErrors.DUPLICATE_FIELD) {
+        setError('email', {
+          type: 'existEmail',
+          message: errorsMessage.EXIST_EMAIL
+        })
+        toast.error(errorsMessage.TOAST_EMAIL_EXIST, {
+          position: 'bottom-center'
+        })
+      } else if (errorCode === serviceErrors.INVALID_CUSTOMER_CREDENTIALS && errorMessage !== serviceErrors.DUPLICATE_FIELD) {
+        toast.error(errorsMessage.TOAST_INVALID_INPUT, {
+          position: 'bottom-center'
+        })
+      }
+      if (errorCode === serviceErrors.SERVICE_UNAVAILABLE || errorCode === serviceErrors.BAD_GATEWAY || errorCode === serviceErrors.INTERNAL_SERVER_ERROR) {
+        toast.info(errorsMessage.TOAST_SERVER_ERROR, {
+          position: 'bottom-center'
+        })
+      }
     }
   };
 
