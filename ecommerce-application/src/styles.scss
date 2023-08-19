@@ -2,10 +2,13 @@
   box-sizing: border-box;
 }
 
+.main {
+  width: 100%;
+}
+
 body {
   margin: 0;
   padding: 0;
-  width: 100vw;
   min-height: 100vh;
   font-family: 'Roboto', sans-serif;
   font-size: 16px;
@@ -16,7 +19,7 @@ body {
   background-color: #ffffff;
   margin: 0;
   padding: 0;
-  width: 100%;
+  width: calc(100vw - 17px);
   min-height: 100vh;
 }
 
@@ -32,6 +35,8 @@ a {
 .wrapper {
   padding-left: 40px;
   padding-right: 40px;
+  padding-top: 25px;
+  padding-bottom: 15px;
 }
 
 .button {

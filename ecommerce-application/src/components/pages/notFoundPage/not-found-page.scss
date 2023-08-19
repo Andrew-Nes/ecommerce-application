@@ -1,0 +1,39 @@
+.not-found-page__wrapper {
+  display: flex;
+  width: 100%;
+}
+
+.block_text {
+  width: 55%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.block_image {
+  width: 45%;
+}
+
+.not-found-page__image {
+  width: 100%;
+}
+
+.not-found__heading {
+  padding-top: 25px;
+  font-size: 32px;
+}
+
+.not-found__text {
+  padding: 5px 0 10px;
+  font-size: 20px;
+}
+
+.not-found__anchor {
+  color: #cba662;
+  font-size: 20px;
+  transition: 0.5s;
+}
+
+.not-found__anchor:hover {
+  color: rgba(203, 166, 98, 0.5);
+}
