@@ -24,6 +24,10 @@ enum errorsMessage {
   POSTAL_CODE_REQUIRED = 'Postal code is required',
   POSTAL_CODE_FORMAT = 'Must follow the format 12345 or 12345-1234!',
   WRONG_LOGIN = 'Wrong email or password',
+  EXIST_EMAIL = 'An email address that already exists in the system',
+  TOAST_EMAIL_EXIST = 'An email address that already exists in the system. Log in or use another email address.',
+  TOAST_INVALID_INPUT = 'Invalid input that bypasses client-side validation.',
+  TOAST_SERVER_ERROR = 'Server problems. Please try to register later.',
 }
 
 enum serviceErrors {
