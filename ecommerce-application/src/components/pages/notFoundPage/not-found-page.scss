@@ -40,3 +40,25 @@
 .not-found__anchor:hover {
   color: rgba(203, 166, 98, 0.5);
 }
+
+@media screen and (max-width: 550px) {
+  .not-found__heading {
+    font-size: 28px;
+  }
+
+  .not-found__text {
+    font-size: 18px;
+  }
+
+  .not-found__anchor {
+    font-size: 18px;
+  }
+
+  .block_image {
+    display: none;
+  }
+
+  .block_text {
+    width: 100%;
+  }
+}
