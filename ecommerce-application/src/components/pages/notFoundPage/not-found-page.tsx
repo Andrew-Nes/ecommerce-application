@@ -7,35 +7,31 @@ import {
   paragraphText,
 } from '../../../types/elementsText';
 import { Link } from 'react-router-dom';
-import HeaderMini from '../../header/headerMini';
 
 function NotFoundPage() {
   return (
-    <div>
-      <HeaderMini />
-      <main className="main not-found-page">
-        <div className="wrapper not-found-page__wrapper">
-          <div className="not-found-page__block block_text">
-            <h1 className="heading not-found__heading">
-              {headingText.NOT_FOUND_PAGE_HEADING}
-            </h1>
-            <p className="text not-found__text">
-              {paragraphText.NOT_FOUND_PAGE_PARAGRAPH_1}
-            </p>
-            <Link className="not-found__anchor" to={routes.MAIN}>
-              {anchorsText.NOT_FOUND}
-            </Link>
-          </div>
-          <div className="not-found-page__block block_image">
-            <img
-              src={notFountImage}
-              alt="Not found image"
-              className="not-found-page__image"
-            />
-          </div>
+    <main className="main not-found-page">
+      <div className="wrapper not-found-page__wrapper">
+        <div className="not-found-page__block block_text">
+          <h1 className="heading not-found__heading">
+            {headingText.NOT_FOUND_PAGE_HEADING}
+          </h1>
+          <p className="text not-found__text">
+            {paragraphText.NOT_FOUND_PAGE_PARAGRAPH_1}
+          </p>
+          <Link className="not-found__anchor" to={routes.MAIN}>
+            {anchorsText.NOT_FOUND}
+          </Link>
         </div>
-      </main>
-    </div>
+        <div className="not-found-page__block block_image">
+          <img
+            src={notFountImage}
+            alt="Not found image"
+            className="not-found-page__image"
+          />
+        </div>
+      </div>
+    </main>
   );
 }
 
