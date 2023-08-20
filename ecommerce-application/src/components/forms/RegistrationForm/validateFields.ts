@@ -36,6 +36,10 @@ export const validateFields = {
   },
 
   PASSWORD_VALIDATE: {
+    noSpace: (value: string) =>
+    !/^\s[\w+]\s$/.test(value) || 'space',
+
+
     uppercaseLetter: (value: string) =>
       /[A-Z]/.test(value) || errorsMessage.PASSWORD_UPPERCASE_LETTER,
 
@@ -49,12 +53,17 @@ export const validateFields = {
       /[!@#$%^&*]/.test(value) || errorsMessage.PASSWORD_SPECIAL_CHARACTER,
   },
   FIRST_NAME_VALIDATE: {
+    oneCharacter: (value: string) => 
+    /\w/.test(value) || errorsMessage.FIRST_NAME_ONE_CHARACTER,
+
     specialCharacter: (value: string) =>
       !/[!@#$%^&*]/.test(value) || errorsMessage.FIRST_NAME_SPECIAL_CHARACTER,
     digitExisting: (value: string) =>
       !/[0-9]/.test(value) || errorsMessage.FIRST_NAME_NUMBERS,
   },
   LAST_NAME_VALIDATE: {
+    oneCharacter: (value: string) => 
+    /\w/.test(value) || errorsMessage.LAST_NAME_ONE_CHARACTER,
     specialCharacter: (value: string) =>
       !/[!@#$%^&*]/.test(value) || errorsMessage.LAST_NAME_SPECIAL_CHARACTER,
     digitExisting: (value: string) =>
@@ -64,7 +73,14 @@ export const validateFields = {
     testYearsOld: (value: string) =>
     isAboveAgeLimit(value) || errorsMessage.DATE_OF_BIRTH_AGE,
   },
+  STREET_VALIDATE: {
+    oneCharacter: (value: string) => 
+    /\w[!@#$%^&*]/.test(value) || errorsMessage.STREET_ONE_CHARACTER,
+  },
+
   CITY_VALIDATE: {
+    oneCharacter: (value: string) => 
+    /\w/.test(value) || errorsMessage.CITY_ONE_CHARACTER,
     specialCharacter: (value: string) =>
       !/[!@#$%^&*]/.test(value) || errorsMessage.CITY_SPECIAL_CHARACTER,
     digitExisting: (value: string) =>

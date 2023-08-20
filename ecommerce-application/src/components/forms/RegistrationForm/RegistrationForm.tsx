@@ -150,6 +150,7 @@ export default function RegistrationForm() {
             errors={errors}
             name="streetShipping"
             title="Street"
+            validate={validateFields.STREET_VALIDATE}
           />
           <MyInput
             register={register}
@@ -196,6 +197,7 @@ export default function RegistrationForm() {
             errors={errors}
             name="streetBilling"
             title="Street"
+            validate={validateFields.STREET_VALIDATE}
           />
           <MyInput
             register={register}
