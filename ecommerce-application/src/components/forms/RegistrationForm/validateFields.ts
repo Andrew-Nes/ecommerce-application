@@ -37,8 +37,7 @@ export const validateFields = {
 
   PASSWORD_VALIDATE: {
     noSpace: (value: string) =>
-    !/^\s[\w+]\s$/.test(value) || 'space',
-
+    !/\s/.test(value) || errorsMessage.PASSWORD_WHITESPACE,
 
     uppercaseLetter: (value: string) =>
       /[A-Z]/.test(value) || errorsMessage.PASSWORD_UPPERCASE_LETTER,
@@ -75,7 +74,7 @@ export const validateFields = {
   },
   STREET_VALIDATE: {
     oneCharacter: (value: string) => 
-    /\w[!@#$%^&*]/.test(value) || errorsMessage.STREET_ONE_CHARACTER,
+    /(\w)|([!@#$%^&*])/.test(value) || errorsMessage.STREET_ONE_CHARACTER,
   },
 
   CITY_VALIDATE: {

@@ -9,9 +9,9 @@ enum errorsMessage {
   PASSWORD_DIGIT = 'Password must contain at least 1 digit',
   PASSWORD_SPECIAL_CHARACTER = 'Password must contain at least 1 special character: !@#$%^&*',
   PASSWORD_REQUIRED = 'Password is required',
+  PASSWORD_WHITESPACE = 'Password must not contain whitespace',
   FIRST_NAME_REQUIRED = 'First Name is required',
   FIRST_NAME_ONE_CHARACTER = 'First name must contain at least one character',
-
   FIRST_NAME_SPECIAL_CHARACTER = 'First name must not contain special characters',
   FIRST_NAME_NUMBERS = 'First Name must not contain numbers',
   LAST_NAME_REQUIRED = 'Last Name is required',
