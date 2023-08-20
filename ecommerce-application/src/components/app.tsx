@@ -9,9 +9,12 @@ import { createContext, useState } from 'react';
 export const LogInContext = createContext(false);
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(
+    window.localStorage.getItem('isLoggedIn') === 'true' || false
+  );
   function logInStateChange(newValue: boolean): void {
     setIsLoggedIn(newValue);
+    window.localStorage.setItem('isLoggedIn', newValue.toString());
   }
   return (
     <LogInContext.Provider value={isLoggedIn}>

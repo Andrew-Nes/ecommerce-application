@@ -9,12 +9,13 @@ function Header({ loginStateChange }: loginStateChangeProp) {
   const isLoggedIn = useContext(LogInContext);
   const logout: MouseEventHandler = () => {
     loginStateChange(false);
+    window.localStorage.clear();
   };
+  console.log(window.localStorage);
   const path = useLocation();
   const location = window.location.pathname;
   const existingPaths = Object.values(routes).join('-').split('-');
   useEffect(() => {}, [path]);
-
   if (existingPaths.includes(location)) {
     return (
       <header className="header">
