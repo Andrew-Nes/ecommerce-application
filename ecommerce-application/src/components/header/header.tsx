@@ -1,9 +1,15 @@
 import { Link } from 'react-router-dom';
-import { routes } from '../../types/routes';
+import { loginStateChangeProp, routes } from '../../types/routingTypes';
 import './header.scss';
 import RedirectButton from '../redirect-button/redirect-button';
+import { LogInContext } from '../app';
+import { MouseEventHandler, useContext } from 'react';
 
-function Header() {
+function Header({ loginStateChange }: loginStateChangeProp) {
+  const isLoggedIn = useContext(LogInContext);
+  const logout: MouseEventHandler = () => {
+    loginStateChange(false);
+  };
   return (
     <header className="header">
       <Link to={routes.MAIN}>
@@ -19,7 +25,11 @@ function Header() {
           </li>
         </ul>
         <div className="navigation__buttons">
-          <RedirectButton text="LogIn" route={routes.LOGIN} />
+          {!isLoggedIn ? (
+            <RedirectButton text="LogIn" route={routes.LOGIN} />
+          ) : (
+            <button onClick={logout}>LogOut</button>
+          )}
           <RedirectButton text="Register" route={routes.REGISTER} />
         </div>
       </nav>
