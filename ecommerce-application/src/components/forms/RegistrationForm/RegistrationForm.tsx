@@ -30,7 +30,7 @@ export default function RegistrationForm() {
     setValue,
     trigger,
     setError,
-  } = useForm<RegistrationFormData>({ mode: 'onChange' });
+  } = useForm<RegistrationFormData>({ mode: 'all' });
 
   const [isSetSameAddress, setSameAddress] = useState(false);
 
