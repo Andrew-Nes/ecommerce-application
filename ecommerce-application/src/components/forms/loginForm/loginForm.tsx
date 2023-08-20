@@ -10,6 +10,7 @@ import {
 } from '../../../types/formTypes';
 import { loginClient } from '../../../api/apiFunctions';
 import { ClientResponse, ErrorResponse } from '@commercetools/platform-sdk';
+import { buttonsText, headingText } from '../../../types/elementsText';
 
 interface LoginFormData {
   email: string;
@@ -71,7 +72,9 @@ export default function LoginForm() {
 
   return (
     <div className="login">
-      <h3 className="login_heading">Account Login</h3>
+      <h3 className="heading login__heading">
+        {headingText.LOGIN_PAGE_HEADING}
+      </h3>
       <form className="login__form" onSubmit={handleSubmit(onSubmit)}>
         <input
           {...register('email', {
@@ -88,7 +91,7 @@ export default function LoginForm() {
                 errorsMessage.EMAIL_VALID,
             },
           })}
-          className={`login__input ${
+          className={`input login__input ${
             errors.email || errors.root?.serverError ? 'input__error' : ''
           }`}
           type="email"
@@ -97,15 +100,13 @@ export default function LoginForm() {
         />
         <span
           className={`error__message ${
-            errors.email || errors.root?.serverError
-              ? 'error__message_visible'
-              : ''
+            errors.email ? 'error__message_visible' : ''
           }`}
           data-testid="email-error"
         >
-          {errors.email?.message || errors.root?.serverError.message}
+          {errors.email?.message}
         </span>
-        <div className="password_wrapper">
+        <div className="password__wrapper">
           <input
             {...register('password', {
               required: errorsMessage.PASSWORD_REQUIRED,
@@ -130,7 +131,7 @@ export default function LoginForm() {
                   errorsMessage.PASSWORD_SPECIAL_CHARACTER,
               },
             })}
-            className={`login__input ${
+            className={`input login__input input_password ${
               errors.password || errors.root?.serverError ? 'input__error' : ''
             }`}
             type={passwordType}
@@ -151,15 +152,21 @@ export default function LoginForm() {
         >
           {errors.password?.message}
         </span>
-        <button className="login__button" type="submit" disabled={!isValid}>
-          login
+        <span
+          className={`error__message ${
+            errors.root?.serverError ? 'error__message_visible' : ''
+          }`}
+          data-testid="server-error"
+        >
+          {errors.root?.serverError.message}
+        </span>
+        <button
+          className="button login__button"
+          type="submit"
+          disabled={!isValid}
+        >
+          {buttonsText.LOGIN}
         </button>
-        <p>
-          {`Not a registered? `}
-          <span>
-            <a className="login__anchor">Create your account</a>
-          </span>
-        </p>
       </form>
     </div>
   );

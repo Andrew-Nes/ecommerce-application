@@ -1,12 +1,13 @@
+import './RegistrationForm.scss';
 import { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import type { RegistrationFormData } from '../../../types/registrationFormTypes';
 import MyInput from './inputs/MyInput';
-import classes from './RegistrationForm.module.scss';
 import { validateFields } from './validateFields';
 import MyCountrySelect from './inputs/MyCountrySelect';
 import MyCheckBox from './inputs/myCheckBox/MyCheckBox';
 import MyPassInput from './inputs/MyPassInput';
+import { buttonsText, headingText } from '../../../types/elementsText';
 
 const COUNTRIES: string[] = ['US'];
 const defaultCountryIndex: number = 0;
@@ -19,7 +20,7 @@ export default function RegistrationForm() {
     formState: { errors, isValid },
     getValues,
     setValue,
-    trigger
+    trigger,
   } = useForm<RegistrationFormData>({ mode: 'onTouched' });
 
   const [isChoose, setSameAddress] = useState(false);
@@ -34,28 +35,38 @@ export default function RegistrationForm() {
       setValue('streetBilling', getValues('streetShipping'));
       setValue('postalCodeBilling', getValues('postalCodeShipping'));
       setValue('countryBilling', getValues('countryShipping'));
-      trigger(['cityBilling','streetBilling', 'postalCodeBilling', 'countryBilling'])
+      trigger([
+        'cityBilling',
+        'streetBilling',
+        'postalCodeBilling',
+        'countryBilling',
+      ]);
       setSameAddress(true);
-     
     } else {
       setValue('cityBilling', '');
       setValue('streetBilling', '');
       setValue('postalCodeBilling', '');
       setValue('countryBilling', COUNTRIES[defaultCountryIndex]);
-      trigger(['cityBilling','streetBilling', 'postalCodeBilling', 'countryBilling'])
+      trigger([
+        'cityBilling',
+        'streetBilling',
+        'postalCodeBilling',
+        'countryBilling',
+      ]);
       setSameAddress(false);
     }
   }
 
   return (
-    <div className={classes.registration}>
-      <h3>Registration form:</h3>
-      <form
-        className={classes.register__form}
-        onSubmit={handleSubmit(onSubmit)}
-      >
-        <fieldset>
-          <legend className={classes.legend_fieldset}>Customer</legend>
+    <div className="registration">
+      <h3 className="heading registration__heading">
+        {headingText.REGISTRATION_PAGE_HEADING}
+      </h3>
+      <form className="registration__form" onSubmit={handleSubmit(onSubmit)}>
+        <fieldset className="registration__form__fieldset fieldset">
+          <legend className="fieldset__heading">
+            {headingText.CUSTOMER_FORM}
+          </legend>
           <MyInput
             register={register}
             errors={errors}
@@ -95,8 +106,10 @@ export default function RegistrationForm() {
           />
         </fieldset>
 
-        <fieldset>
-          <legend className={classes.legend_fieldset}>Shipping address</legend>
+        <fieldset className="registration__form__fieldset fieldset">
+          <legend className="fieldset__heading">
+            {headingText.SHIPPING_ADDRESS_FORM}
+          </legend>
           <MyCheckBox
             register={register}
             errors={errors}
@@ -131,7 +144,7 @@ export default function RegistrationForm() {
             countries={COUNTRIES}
           />
 
-          <div className={classes.checkbox__container}>
+          <div className="checkbox__container">
             <label>Set the same address for billing:</label>
             <input
               type="checkbox"
@@ -141,8 +154,10 @@ export default function RegistrationForm() {
           </div>
         </fieldset>
 
-        <fieldset>
-          <legend className={classes.legend_fieldset}>Billing address</legend>
+        <fieldset className="registration__form__fieldset fieldset">
+          <legend className="fieldset__heading">
+            {headingText.BILLING_ADDRESS_FORM}
+          </legend>
           <MyCheckBox
             register={register}
             errors={errors}
@@ -178,13 +193,23 @@ export default function RegistrationForm() {
           />
         </fieldset>
 
-        <button
-          className={classes.submit_button}
-          disabled={!isValid}
-          type="submit"
-        >
-          register
-        </button>
+        <div className="registration__button-wrapper">
+          <span
+            className={`error__message ${
+              errors.root?.serverError ? 'error__message_visible' : ''
+            }`}
+            data-testid="server-error"
+          >
+            {errors.root?.serverError.message}
+          </span>
+          <button
+            className="button registration__button"
+            disabled={!isValid}
+            type="submit"
+          >
+            {buttonsText.REGISTER}
+          </button>
+        </div>
       </form>
     </div>
   );

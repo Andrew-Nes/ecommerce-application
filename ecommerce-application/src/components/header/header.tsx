@@ -1,30 +1,60 @@
-import { Link } from 'react-router-dom';
-import { routes } from '../../types/routes';
 import './header.scss';
+import { Link, useLocation } from 'react-router-dom';
+import { routes } from '../../types/routes';
 import RedirectButton from '../redirect-button/redirect-button';
+import Logo from '../../../assets/img/shopLogo.png';
+import { buttonsText, anchorsText, logoText } from '../../types/elementsText';
+import BurgerMenu from './BurgerMenu/BurgerMenu';
+import HeaderMini from './headerMini';
+import { useEffect } from 'react';
 
 function Header() {
-  return (
-    <header className="header">
-      <Link to={routes.MAIN}>
-        <div className="logo">
-          <img src="" alt="LOGO image here" className="logo__image" />
-          <p className="logo__text">LOGO text here</p>
+  const path = useLocation();
+  const location = window.location.pathname;
+  const existingPaths = Object.values(routes) as string[];
+  useEffect(() => {}, [path]);
+  if (existingPaths.includes(location)) {
+    return (
+      <header className="header">
+        <div className="wrapper header__wrapper">
+          <div className="header__block header__block_links">
+            <nav className="nav">
+              <ul className="nav__list list">
+                <li className="list__item" key="main">
+                  <Link className="list__link" to={routes.MAIN}>
+                    {anchorsText.MAIN}
+                  </Link>
+                </li>
+              </ul>
+            </nav>
+            <div className="header__buttons">
+              <RedirectButton
+                className="button header__button header__button_login"
+                text={buttonsText.LOGIN}
+                route={routes.LOGIN}
+              />
+              <RedirectButton
+                className="button header__button header__button_signup"
+                text={buttonsText.SIGNUP}
+                route={routes.REGISTER}
+              />
+            </div>
+          </div>
+          <div className="header__block header__block_logo">
+            <BurgerMenu />
+            <div className="logo">
+              <Link className="logo__link" to={routes.MAIN}>
+                <img src={Logo} alt="Logo" className="logo__image" />
+                <p className="logo__text">{logoText.LOGO}</p>
+              </Link>
+            </div>
+          </div>
         </div>
-      </Link>
-      <nav className="navigation">
-        <ul className="navigation__list">
-          <li className="navigation__list-item" key="main">
-            <Link to={routes.MAIN}>Main</Link>
-          </li>
-        </ul>
-        <div className="navigation__buttons">
-          <RedirectButton text="LogIn" route={routes.LOGIN} />
-          <RedirectButton text="Register" route={routes.REGISTER} />
-        </div>
-      </nav>
-    </header>
-  );
+      </header>
+    );
+  } else {
+    return <HeaderMini />;
+  }
 }
 
 export default Header;

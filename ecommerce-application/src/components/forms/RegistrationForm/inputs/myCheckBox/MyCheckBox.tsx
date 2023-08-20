@@ -1,9 +1,9 @@
 import { MyInputProps } from '../../../../../types/registrationFormTypes';
-import classes from './MyCheckBox.module.scss';
+import '../../RegistrationForm.scss';
 
 export default function MyCheckBox(props: MyInputProps) {
   return (
-    <div className={classes.checkbox__container}>
+    <div className="checkbox__container">
       <label>{props.title}</label>
       <input
         type="checkbox"
