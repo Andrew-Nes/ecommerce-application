@@ -11,7 +11,6 @@ function Header({ loginStateChange }: loginStateChangeProp) {
     loginStateChange(false);
     window.localStorage.clear();
   };
-  console.log(window.localStorage);
   const path = useLocation();
   const location = window.location.pathname;
   const existingPaths = Object.values(routes).join('-').split('-');
