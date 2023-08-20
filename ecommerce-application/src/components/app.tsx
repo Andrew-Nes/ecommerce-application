@@ -4,18 +4,30 @@ import LoginPage from './pages/login-page';
 import RegistrationPage from './pages/registration-page';
 import NotFoundPage from './pages/not-found-page';
 import Header from './header/header';
+import { createContext, useState } from 'react';
+
+export const LogInContext = createContext(false);
 
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  function logInStateChange(newValue: boolean): void {
+    setIsLoggedIn(newValue);
+  }
   return (
-    <BrowserRouter>
-      <Header />
-      <Routes>
-        <Route path="/" element={<MainPage />} />
-        <Route path="login" element={<LoginPage />} />
-        <Route path="register" element={<RegistrationPage />} />
-        <Route path="*" element={<NotFoundPage />} />
-      </Routes>
-    </BrowserRouter>
+    <LogInContext.Provider value={isLoggedIn}>
+      <BrowserRouter>
+        <Header loginStateChange={logInStateChange} />
+        <Routes>
+          <Route path="/" element={<MainPage />} />
+          <Route
+            path="login"
+            element={<LoginPage loginStateChange={logInStateChange} />}
+          />
+          <Route path="register" element={<RegistrationPage />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+      </BrowserRouter>
+    </LogInContext.Provider>
   );
 }
 
