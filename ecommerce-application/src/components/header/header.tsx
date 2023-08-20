@@ -4,6 +4,7 @@ import { routes } from '../../types/routes';
 import RedirectButton from '../redirect-button/redirect-button';
 import Logo from '../../../assets/img/shopLogo.png';
 import { buttonsText, anchorsText, logoText } from '../../types/elementsText';
+import BurgerMenu from './BurgerMenu/BurgerMenu';
 
 function Header() {
   return (
@@ -33,6 +34,7 @@ function Header() {
           </div>
         </div>
         <div className="header__block header__block_logo">
+          <BurgerMenu />
           <div className="logo">
             <Link className="logo__link" to={routes.MAIN}>
               <img src={Logo} alt="Logo" className="logo__image" />
