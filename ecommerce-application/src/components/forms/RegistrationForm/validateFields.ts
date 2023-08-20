@@ -25,6 +25,8 @@ function isAboveAgeLimit(date: string): boolean {
 
 export const validateFields = {
   EMAIL_VALIDATE: {
+    noSpace: (value: string) =>
+    !/\s/.test(value) || errorsMessage.EMAIL_WHITESPACE,
     domainExisting: (value: string) =>
       !value.endsWith('@') || errorsMessage.EMAIL_DOMAIN_EXIST,
     atSymbolExisting: (value: string) =>
@@ -38,6 +40,8 @@ export const validateFields = {
   PASSWORD_VALIDATE: {
     noSpace: (value: string) =>
     !/\s/.test(value) || errorsMessage.PASSWORD_WHITESPACE,
+    length: (value: string) => 
+    value.length > 8 || errorsMessage.PASSWORD_LENGTH,
 
     uppercaseLetter: (value: string) =>
       /[A-Z]/.test(value) || errorsMessage.PASSWORD_UPPERCASE_LETTER,

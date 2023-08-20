@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import classes from './MyInput.module.scss';
 import type { MyInputProps } from '../../../../types/registrationFormTypes';
-import { errorsMessage } from '../../../../types/formTypes';
+//import { errorsMessage } from '../../../../types/formTypes';
 
 export default function MyPassInput(props: MyInputProps) {
   const [isShown, setIsSHown] = useState(false);
@@ -27,10 +27,10 @@ export default function MyPassInput(props: MyInputProps) {
         {...props.register(props.name, {
           required: `${props.title} is required`,
           validate: props.validate,
-          minLength: {
+          /*minLength: {
             value: 8,
             message: errorsMessage.PASSWORD_LENGTH,
-          },
+          },*/
         })}
         title={props.name}
       />

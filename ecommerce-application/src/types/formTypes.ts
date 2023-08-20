@@ -3,6 +3,7 @@ enum errorsMessage {
   EMAIL_VALID = 'Email address must be a valid address: user@example.com',
   EMAIL_DOMAIN_EXIST = 'Email must contain a domain name: @example.com',
   EMAIL_AT_SYMBOL = 'Email must contain an "@" symbol',
+  EMAIL_WHITESPACE = 'Email must not contain whitespace',
   PASSWORD_LENGTH = 'Password should have at least 8 characters',
   PASSWORD_UPPERCASE_LETTER = 'Password must contain at least 1 Latin uppercase letter',
   PASSWORD_LOWERCASE_LETTER = 'Password must contain at least 1 Latin lowercase letter',
