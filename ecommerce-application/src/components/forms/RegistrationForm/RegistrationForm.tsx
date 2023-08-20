@@ -36,41 +36,49 @@ export default function RegistrationForm() {
 
   const redirect = useNavigate();
 
-  const onSubmit: SubmitHandler<RegistrationFormData> = async (data: RegistrationFormData) => {
+  const onSubmit: SubmitHandler<RegistrationFormData> = async (
+    data: RegistrationFormData
+  ) => {
     try {
-      await CreateClient(convertDataForm(data, isSetSameAddress))
-      await loginClient(data.email, data.password)
-      reset()
-      redirect(routes.MAIN)
+      await CreateClient(convertDataForm(data, isSetSameAddress));
+      await loginClient(data.email, data.password);
+      reset();
+      redirect(routes.MAIN);
       toast.success('Registration completed successfully! You Log In.', {
-        position: 'bottom-center'
-      })
-    }
-    catch(error) {
+        position: 'bottom-center',
+      });
+    } catch (error) {
       const errorResponse = JSON.parse(
         JSON.stringify(error)
       ) as ClientResponse<ErrorResponse>;
 
-      const errorCode = errorResponse.body.statusCode
-      const errorMessage = errorResponse.body.message
+      const errorCode = errorResponse.body.statusCode;
+      const errorMessage = errorResponse.body.message;
 
       if (errorMessage === serviceErrors.DUPLICATE_FIELD) {
         setError('email', {
           type: 'existEmail',
-          message: errorsMessage.EXIST_EMAIL
-        })
+          message: errorsMessage.EXIST_EMAIL,
+        });
         toast.error(errorsMessage.TOAST_EMAIL_EXIST, {
-          position: 'bottom-center'
-        })
-      } else if (errorCode === serviceErrors.INVALID_CUSTOMER_CREDENTIALS && errorMessage !== serviceErrors.DUPLICATE_FIELD) {
+          position: 'bottom-center',
+        });
+      } else if (
+        errorCode === serviceErrors.INVALID_CUSTOMER_CREDENTIALS &&
+        errorMessage !== serviceErrors.DUPLICATE_FIELD
+      ) {
         toast.error(errorsMessage.TOAST_INVALID_INPUT, {
-          position: 'bottom-center'
-        })
+          position: 'bottom-center',
+        });
       }
-      if (errorCode === serviceErrors.SERVICE_UNAVAILABLE || errorCode === serviceErrors.BAD_GATEWAY || errorCode === serviceErrors.INTERNAL_SERVER_ERROR) {
+      if (
+        errorCode === serviceErrors.SERVICE_UNAVAILABLE ||
+        errorCode === serviceErrors.BAD_GATEWAY ||
+        errorCode === serviceErrors.INTERNAL_SERVER_ERROR
+      ) {
         toast.info(errorsMessage.TOAST_SERVER_ERROR, {
-          position: 'bottom-center'
-        })
+          position: 'bottom-center',
+        });
       }
     }
   };
@@ -81,15 +89,24 @@ export default function RegistrationForm() {
       setValue('streetBilling', getValues('streetShipping'));
       setValue('postalCodeBilling', getValues('postalCodeShipping'));
       setValue('countryBilling', getValues('countryShipping'));
-      trigger(['cityBilling','streetBilling', 'postalCodeBilling', 'countryBilling'])
+      trigger([
+        'cityBilling',
+        'streetBilling',
+        'postalCodeBilling',
+        'countryBilling',
+      ]);
       setSameAddress(true);
-     
     } else {
       setValue('cityBilling', '');
       setValue('streetBilling', '');
       setValue('postalCodeBilling', '');
       setValue('countryBilling', COUNTRIES[defaultCountryIndex]);
-      trigger(['cityBilling','streetBilling', 'postalCodeBilling', 'countryBilling'])
+      trigger([
+        'cityBilling',
+        'streetBilling',
+        'postalCodeBilling',
+        'countryBilling',
+      ]);
       setSameAddress(false);
     }
   }

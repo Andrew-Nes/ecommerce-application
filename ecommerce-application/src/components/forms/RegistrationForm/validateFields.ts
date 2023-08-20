@@ -26,7 +26,7 @@ function isAboveAgeLimit(date: string): boolean {
 export const validateFields = {
   EMAIL_VALIDATE: {
     noSpace: (value: string) =>
-    !/\s/.test(value) || errorsMessage.EMAIL_WHITESPACE,
+      !/\s/.test(value) || errorsMessage.EMAIL_WHITESPACE,
     domainExisting: (value: string) =>
       !value.endsWith('@') || errorsMessage.EMAIL_DOMAIN_EXIST,
     atSymbolExisting: (value: string) =>
@@ -39,9 +39,9 @@ export const validateFields = {
 
   PASSWORD_VALIDATE: {
     noSpace: (value: string) =>
-    !/\s/.test(value) || errorsMessage.PASSWORD_WHITESPACE,
-    length: (value: string) => 
-    value.length > 8 || errorsMessage.PASSWORD_LENGTH,
+      !/\s/.test(value) || errorsMessage.PASSWORD_WHITESPACE,
+    length: (value: string) =>
+      value.length > 8 || errorsMessage.PASSWORD_LENGTH,
 
     uppercaseLetter: (value: string) =>
       /[A-Z]/.test(value) || errorsMessage.PASSWORD_UPPERCASE_LETTER,
@@ -56,8 +56,8 @@ export const validateFields = {
       /[!@#$%^&*]/.test(value) || errorsMessage.PASSWORD_SPECIAL_CHARACTER,
   },
   FIRST_NAME_VALIDATE: {
-    oneCharacter: (value: string) => 
-    /\w/.test(value) || errorsMessage.FIRST_NAME_ONE_CHARACTER,
+    oneCharacter: (value: string) =>
+      /\w/.test(value) || errorsMessage.FIRST_NAME_ONE_CHARACTER,
 
     specialCharacter: (value: string) =>
       !/[!@#$%^&*]/.test(value) || errorsMessage.FIRST_NAME_SPECIAL_CHARACTER,
@@ -65,8 +65,8 @@ export const validateFields = {
       !/[0-9]/.test(value) || errorsMessage.FIRST_NAME_NUMBERS,
   },
   LAST_NAME_VALIDATE: {
-    oneCharacter: (value: string) => 
-    /\w/.test(value) || errorsMessage.LAST_NAME_ONE_CHARACTER,
+    oneCharacter: (value: string) =>
+      /\w/.test(value) || errorsMessage.LAST_NAME_ONE_CHARACTER,
     specialCharacter: (value: string) =>
       !/[!@#$%^&*]/.test(value) || errorsMessage.LAST_NAME_SPECIAL_CHARACTER,
     digitExisting: (value: string) =>
@@ -74,16 +74,16 @@ export const validateFields = {
   },
   DATE_OF_BIRTH_VALIDATE: {
     testYearsOld: (value: string) =>
-    isAboveAgeLimit(value) || errorsMessage.DATE_OF_BIRTH_AGE,
+      isAboveAgeLimit(value) || errorsMessage.DATE_OF_BIRTH_AGE,
   },
   STREET_VALIDATE: {
-    oneCharacter: (value: string) => 
-    /(\w)|([!@#$%^&*])/.test(value) || errorsMessage.STREET_ONE_CHARACTER,
+    oneCharacter: (value: string) =>
+      /(\w)|([!@#$%^&*])/.test(value) || errorsMessage.STREET_ONE_CHARACTER,
   },
 
   CITY_VALIDATE: {
-    oneCharacter: (value: string) => 
-    /\w/.test(value) || errorsMessage.CITY_ONE_CHARACTER,
+    oneCharacter: (value: string) =>
+      /\w/.test(value) || errorsMessage.CITY_ONE_CHARACTER,
     specialCharacter: (value: string) =>
       !/[!@#$%^&*]/.test(value) || errorsMessage.CITY_SPECIAL_CHARACTER,
     digitExisting: (value: string) =>
