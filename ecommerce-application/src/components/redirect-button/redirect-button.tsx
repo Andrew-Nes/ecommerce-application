@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { MouseEventHandler } from 'react';
-import { buttonProps } from '../../types/routes';
+import { buttonProps } from '../../types/routingTypes';
 
 function RedirectButton({ text, route, className }: buttonProps) {
   const redirect = useNavigate();

@@ -1,6 +1,6 @@
 import './pages.scss';
 import RedirectButton from '../redirect-button/redirect-button';
-import { routes } from '../../types/routes';
+import { routes } from '../../types/routingTypes';
 
 function MainPage() {
   return (
