@@ -15,7 +15,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { errorsMessage } from '../../../types/formTypes';
 import { useNavigate } from 'react-router-dom';
-import { routes } from '../../../types/routes';
+import { routes } from '../../../types/routingTypes';
 import { buttonsText, headingText } from '../../../types/elementsText';
 
 
