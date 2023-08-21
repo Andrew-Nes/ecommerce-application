@@ -11,6 +11,7 @@ import {
 import { loginClient } from '../../../api/apiFunctions';
 import { ClientResponse, ErrorResponse } from '@commercetools/platform-sdk';
 import { buttonsText, headingText } from '../../../types/elementsText';
+import { validateFields } from '../RegistrationForm/validateFields';
 
 interface LoginFormData {
   email: string;
@@ -80,22 +81,12 @@ export default function LoginForm({ logIn }: { logIn(): void }) {
         <input
           {...register('email', {
             required: errorsMessage.EMAIL_REQUIRED,
-            validate: {
-              domainExisting: (value) =>
-                !value.endsWith('@') || errorsMessage.EMAIL_DOMAIN_EXIST,
-
-              atSymbolExisting: (value) =>
-                value.includes('@') || errorsMessage.EMAIL_AT_SYMBOL,
-
-              matchPattern: (value) =>
-                /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value) ||
-                errorsMessage.EMAIL_VALID,
-            },
+            validate: validateFields.EMAIL_VALIDATE,
           })}
           className={`input login__input ${
             errors.email || errors.root?.serverError ? 'input__error' : ''
           }`}
-          type="email"
+          type="text"
           placeholder="Email"
           onInput={onInput}
         />
@@ -111,26 +102,7 @@ export default function LoginForm({ logIn }: { logIn(): void }) {
           <input
             {...register('password', {
               required: errorsMessage.PASSWORD_REQUIRED,
-              minLength: {
-                value: 8,
-                message: errorsMessage.PASSWORD_LENGTH,
-              },
-              validate: {
-                uppercaseLetter: (value) =>
-                  /[A-Z]/.test(value) ||
-                  errorsMessage.PASSWORD_UPPERCASE_LETTER,
-
-                lowercaseLetter: (value) =>
-                  /[a-z]/.test(value) ||
-                  errorsMessage.PASSWORD_LOWERCASE_LETTER,
-
-                digitExisting: (value) =>
-                  /[0-9]/.test(value) || errorsMessage.PASSWORD_DIGIT,
-
-                specialCharacter: (value) =>
-                  /[!@#$%^&*]/.test(value) ||
-                  errorsMessage.PASSWORD_SPECIAL_CHARACTER,
-              },
+              validate: validateFields.PASSWORD_VALIDATE
             })}
             className={`input login__input input_password ${
               errors.password || errors.root?.serverError ? 'input__error' : ''
