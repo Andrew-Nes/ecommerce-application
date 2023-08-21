@@ -1,15 +1,18 @@
 enum buttonsText {
   LOGIN = 'login',
-  LOGOUT = 'log out',
+  LOGOUT = 'logout',
   SIGNUP = 'sign up',
   REGISTER = 'register',
 }
 
 enum anchorsText {
   MAIN = 'Main',
+  LOGIN = 'Login',
+  LOGOUT = 'Logout',
+  SIGNUP = 'Sign up',
   CREATE_NEW_ACCOUNT = 'Create your account',
-  LOGIN = 'Click to login',
-  NOT_FOUND = 'Go back to main',
+  LOGIN_CLICK = 'Click to login',
+  NOT_FOUND_CLICK = 'Go back to main',
 }
 
 enum logoText {
@@ -33,4 +36,17 @@ enum paragraphText {
   NOT_FOUND_PAGE_PARAGRAPH_1 = "We can't find the page you're looking for.",
 }
 
-export { buttonsText, anchorsText, logoText, headingText, paragraphText };
+enum popupText {
+  REGISTRATION_SUCCESS = 'Registration completed successfully! You are logged in.',
+  REGISTRATION_FAIL = 'This email address already exists in the system. Log in or use another email address.',
+  LOGIN_SUCCESS = 'Login completed successfully!',
+}
+
+export {
+  buttonsText,
+  anchorsText,
+  logoText,
+  headingText,
+  paragraphText,
+  popupText,
+};

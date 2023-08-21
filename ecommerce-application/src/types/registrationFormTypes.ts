@@ -30,7 +30,7 @@ interface MyInputProps {
     | undefined;
   type?: string;
   countries?: string[];
-  stateSameAddress?: boolean
+  stateSameAddress?: boolean;
 }
 type InputRegistration =
   | 'email'
@@ -49,33 +49,42 @@ type InputRegistration =
   | 'countryBilling'
   | 'defaultBillingAddress';
 
-  export default function convertDataForm (data: RegistrationFormData, setAddressState: boolean): CustomerDraft {
-    const shippingAddress: BaseAddress = {
-      country: data.countryShipping,
-      city: data.cityShipping,
-      streetName: data.streetShipping,
-      postalCode: data.postalCodeShipping
-    }
+export default function convertDataForm(
+  data: RegistrationFormData,
+  setAddressState: boolean
+): CustomerDraft {
+  const shippingAddress: BaseAddress = {
+    country: data.countryShipping,
+    city: data.cityShipping,
+    streetName: data.streetShipping,
+    postalCode: data.postalCodeShipping,
+  };
 
-    const billingAddress: BaseAddress = {
-      country: data.countryBilling,
-      city: data.cityBilling,
-      streetName: data.streetBilling,
-      postalCode: data.postalCodeBilling
-    }
-    const customer: CustomerDraft = {
-      email: data.email,
-      password: data.password,
-      firstName: data.firstName,
-      lastName: data.lastName,
-      dateOfBirth: data.dateOfBirth,
-      shippingAddresses: [0],
-      billingAddresses: [setAddressState ? 0 : 1],
-      addresses: setAddressState ? [shippingAddress] : [shippingAddress, billingAddress],
-      defaultShippingAddress: data.defaultShippingAddress ? 0 : undefined,
-      defaultBillingAddress: data.defaultBillingAddress ? (setAddressState ? 0 : 1) : undefined
-    }
-    return customer
-  }
-  
+  const billingAddress: BaseAddress = {
+    country: data.countryBilling,
+    city: data.cityBilling,
+    streetName: data.streetBilling,
+    postalCode: data.postalCodeBilling,
+  };
+  const customer: CustomerDraft = {
+    email: data.email,
+    password: data.password,
+    firstName: data.firstName,
+    lastName: data.lastName,
+    dateOfBirth: data.dateOfBirth,
+    shippingAddresses: [0],
+    billingAddresses: [setAddressState ? 0 : 1],
+    addresses: setAddressState
+      ? [shippingAddress]
+      : [shippingAddress, billingAddress],
+    defaultShippingAddress: data.defaultShippingAddress ? 0 : undefined,
+    defaultBillingAddress: data.defaultBillingAddress
+      ? setAddressState
+        ? 0
+        : 1
+      : undefined,
+  };
+  return customer;
+}
+
 export type { RegistrationFormData, InputRegistration, MyInputProps };

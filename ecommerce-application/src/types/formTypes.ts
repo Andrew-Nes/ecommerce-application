@@ -30,8 +30,8 @@ enum errorsMessage {
   POSTAL_CODE_REQUIRED = 'Postal code is required',
   POSTAL_CODE_FORMAT = 'Must follow the format 12345 or 12345-1234!',
   WRONG_LOGIN = 'Wrong email or password',
-  EXIST_EMAIL = 'An email address that already exists in the system',
-  TOAST_EMAIL_EXIST = 'An email address that already exists in the system. Log in or use another email address.',
+  EXIST_EMAIL = 'This email address already exists in the system',
+  TOAST_EMAIL_EXIST = 'This email address already exists in the system. Log in or use another email address.',
   TOAST_INVALID_INPUT = 'Invalid input that bypasses client-side validation.',
   TOAST_SERVER_ERROR = 'Server problems. Please try to register later.',
 }
@@ -41,7 +41,7 @@ enum serviceErrors {
   DUPLICATE_FIELD = 'There is already an existing customer with the provided email.',
   SERVICE_UNAVAILABLE = 503,
   BAD_GATEWAY = 502,
-  INTERNAL_SERVER_ERROR = 500
+  INTERNAL_SERVER_ERROR = 500,
 }
 
 type PasswordType = 'password' | 'text';

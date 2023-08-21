@@ -9,7 +9,6 @@ import { createContext, useState } from 'react';
 
 export const LogInContext = createContext(false);
 
-
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(
     window.localStorage.getItem('isLoggedIn') === 'true' || false
@@ -22,14 +21,17 @@ function App() {
     <LogInContext.Provider value={isLoggedIn}>
       <BrowserRouter>
         <Header loginStateChange={logInStateChange} />
-         <ToastContainer/>
+        <ToastContainer />
         <Routes>
           <Route path="/" element={<MainPage />} />
           <Route
             path="login"
             element={<LoginPage loginStateChange={logInStateChange} />}
           />
-          <Route path="register" element={<RegistrationPage loginStateChange={logInStateChange}/>} />
+          <Route
+            path="register"
+            element={<RegistrationPage loginStateChange={logInStateChange} />}
+          />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </BrowserRouter>

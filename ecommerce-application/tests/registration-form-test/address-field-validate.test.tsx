@@ -3,9 +3,15 @@ import userEvent from '@testing-library/user-event';
 import RegistrationForm from '../../src/components/forms/RegistrationForm/RegistrationForm';
 import { errorsMessage } from '../../src/types/formTypes';
 
-beforeEach(() => {
-  render(<RegistrationForm />);
-});
+jest.mock('../../src/api/apiFunctions', () => ({
+  loginClient: jest.fn(),
+}));
+
+jest.mock('../../src/api/apiFunctions', () => ({
+  CreateCustomer: jest.fn(),
+}));
+
+const registrationTest = () => {};
 
 afterEach(() => {
   cleanup();
@@ -13,6 +19,7 @@ afterEach(() => {
 
 describe('Street validation', () => {
   test('Street is required', async () => {
+    render(<RegistrationForm logIn={registrationTest} />);
     const user = userEvent.setup();
     await user.click(screen.getByTitle<HTMLInputElement>('streetShipping'));
     await user.click(screen.getByTitle<HTMLInputElement>('firstName'));
@@ -25,6 +32,7 @@ describe('Street validation', () => {
 
 describe('City validation', () => {
   test('City is required', async () => {
+    render(<RegistrationForm logIn={registrationTest} />);
     const user = userEvent.setup();
     await user.click(screen.getByTitle<HTMLInputElement>('cityShipping'));
     await user.click(screen.getByTitle<HTMLInputElement>('firstName'));
@@ -35,6 +43,7 @@ describe('City validation', () => {
   });
 
   test('City must not contain numbers', async () => {
+    render(<RegistrationForm logIn={registrationTest} />);
     const user = userEvent.setup();
     await user.type(screen.getByTitle<HTMLInputElement>('cityShipping'), '123');
     await user.click(screen.getByTitle<HTMLInputElement>('email'));
@@ -44,6 +53,7 @@ describe('City validation', () => {
   });
 
   test('City must not contain special character', async () => {
+    render(<RegistrationForm logIn={registrationTest} />);
     const user = userEvent.setup();
     await user.type(
       screen.getByTitle<HTMLInputElement>('cityShipping'),
@@ -58,6 +68,7 @@ describe('City validation', () => {
 
 describe('Postal code validation', () => {
   test('Postal code is required', async () => {
+    render(<RegistrationForm logIn={registrationTest} />);
     const user = userEvent.setup();
     await user.click(screen.getByTitle<HTMLInputElement>('postalCodeShipping'));
     await user.click(screen.getByTitle<HTMLInputElement>('firstName'));
@@ -69,6 +80,7 @@ describe('Postal code validation', () => {
   });
 
   test('Postal code format', async () => {
+    render(<RegistrationForm logIn={registrationTest} />);
     const user = userEvent.setup();
     await user.type(
       screen.getByTitle<HTMLInputElement>('postalCodeShipping'),
@@ -84,6 +96,7 @@ describe('Postal code validation', () => {
 
 describe('Street validation', () => {
   test('Street is required', async () => {
+    render(<RegistrationForm logIn={registrationTest} />);
     const user = userEvent.setup();
     await user.click(screen.getByTitle<HTMLInputElement>('streetBilling'));
     await user.click(screen.getByTitle<HTMLInputElement>('firstName'));
@@ -96,6 +109,7 @@ describe('Street validation', () => {
 
 describe('City validation', () => {
   test('City is required', async () => {
+    render(<RegistrationForm logIn={registrationTest} />);
     const user = userEvent.setup();
     await user.click(screen.getByTitle<HTMLInputElement>('cityBilling'));
     await user.click(screen.getByTitle<HTMLInputElement>('firstName'));
@@ -106,6 +120,7 @@ describe('City validation', () => {
   });
 
   test('City must not contain numbers', async () => {
+    render(<RegistrationForm logIn={registrationTest} />);
     const user = userEvent.setup();
     await user.type(screen.getByTitle<HTMLInputElement>('cityBilling'), '123');
     await user.click(screen.getByTitle<HTMLInputElement>('email'));
@@ -115,6 +130,7 @@ describe('City validation', () => {
   });
 
   test('City must not contain special character', async () => {
+    render(<RegistrationForm logIn={registrationTest} />);
     const user = userEvent.setup();
     await user.type(
       screen.getByTitle<HTMLInputElement>('cityBilling'),
@@ -129,6 +145,7 @@ describe('City validation', () => {
 
 describe('Postal code validation', () => {
   test('Postal code is required', async () => {
+    render(<RegistrationForm logIn={registrationTest} />);
     const user = userEvent.setup();
     await user.click(screen.getByTitle<HTMLInputElement>('postalCodeBilling'));
     await user.click(screen.getByTitle<HTMLInputElement>('firstName'));
@@ -140,6 +157,7 @@ describe('Postal code validation', () => {
   });
 
   test('Postal code format', async () => {
+    render(<RegistrationForm logIn={registrationTest} />);
     const user = userEvent.setup();
     await user.type(
       screen.getByTitle<HTMLInputElement>('postalCodeBilling'),

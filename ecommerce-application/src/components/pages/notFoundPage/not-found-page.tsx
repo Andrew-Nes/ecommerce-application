@@ -20,7 +20,7 @@ function NotFoundPage() {
             {paragraphText.NOT_FOUND_PAGE_PARAGRAPH_1}
           </p>
           <Link className="not-found__anchor" to={routes.MAIN}>
-            {anchorsText.NOT_FOUND}
+            {anchorsText.NOT_FOUND_CLICK}
           </Link>
         </div>
         <div className="not-found-page__block block_image">

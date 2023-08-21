@@ -1,5 +1,13 @@
-import { cleanup, fireEvent, render, screen } from '@testing-library/react';
+import { cleanup, render, fireEvent, screen } from '@testing-library/react';
 import App from '../src/components/app';
+
+jest.mock('../src/api/apiFunctions', () => ({
+  loginClient: jest.fn(),
+}));
+
+jest.mock('../src/api/apiFunctions', () => ({
+  CreateCustomer: jest.fn(),
+}));
 
 test('Header', () => {
   render(<App />);
@@ -10,24 +18,20 @@ test('Header', () => {
 describe('testing registration page routing (useNAvigate())', () => {
   test('Renders the RegistrationPage component', async () => {
     render(<App />);
-    const button = screen.findByText('Register');
-    const buttonElement = await button;
+    const buttons = document.getElementsByClassName('header__button_signup');
+    const buttonElement = buttons[0];
     expect(buttonElement).toBeInTheDocument();
     fireEvent.click(buttonElement);
-    expect(
-      document.getElementsByClassName('registration-page')[0]
-    ).toBeInTheDocument();
+    expect(await screen.findByText('Registration Form')).toBeInTheDocument();
     cleanup();
   });
   test('Renders the LogInPage component', async () => {
     render(<App />);
-    const button = screen.findByText('LogIn');
+    const button = screen.findByText('login');
     const buttonElement = await button;
     expect(buttonElement).toBeInTheDocument();
     fireEvent.click(buttonElement);
-    expect(
-      document.getElementsByClassName('login-page')[0]
-    ).toBeInTheDocument();
+    expect(await screen.findByText('Account Login')).toBeInTheDocument();
     cleanup();
   });
 });

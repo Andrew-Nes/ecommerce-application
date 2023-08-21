@@ -14,10 +14,11 @@ import { serviceErrors } from '../../../types/formTypes';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { errorsMessage } from '../../../types/formTypes';
-import { useNavigate } from 'react-router-dom';
-import { routes } from '../../../types/routingTypes';
-import { buttonsText, headingText } from '../../../types/elementsText';
-
+import {
+  buttonsText,
+  headingText,
+  popupText,
+} from '../../../types/elementsText';
 
 const COUNTRIES: string[] = ['US'];
 const defaultCountryIndex: number = 0;
@@ -32,11 +33,9 @@ export default function RegistrationForm({ logIn }: { logIn(): void }) {
     setValue,
     trigger,
     setError,
-  } = useForm<RegistrationFormData>({ mode: 'onTouched' });
+  } = useForm<RegistrationFormData>({ mode: 'all' });
 
   const [isSetSameAddress, setSameAddress] = useState(false);
-
-  const redirect = useNavigate();
 
   const onSubmit: SubmitHandler<RegistrationFormData> = async (
     data: RegistrationFormData
@@ -45,9 +44,8 @@ export default function RegistrationForm({ logIn }: { logIn(): void }) {
       await CreateCustomer(convertDataForm(data, isSetSameAddress));
       await loginClient(data.email, data.password);
       reset();
-      logIn()
-      redirect(routes.MAIN);
-      toast.success('Registration completed successfully! You Log In.', {
+      logIn();
+      toast.success(popupText.REGISTRATION_SUCCESS, {
         position: 'bottom-center',
       });
     } catch (error) {
@@ -70,7 +68,7 @@ export default function RegistrationForm({ logIn }: { logIn(): void }) {
         errorCode === serviceErrors.INVALID_CUSTOMER_CREDENTIALS &&
         errorMessage !== serviceErrors.DUPLICATE_FIELD
       ) {
-        toast.error(errorsMessage.TOAST_INVALID_INPUT, {
+        toast.error(popupText.REGISTRATION_FAIL, {
           position: 'bottom-center',
         });
       }
@@ -257,14 +255,6 @@ export default function RegistrationForm({ logIn }: { logIn(): void }) {
         </fieldset>
 
         <div className="registration__button-wrapper">
-          <span
-            className={`error__message ${
-              errors.root?.serverError ? 'error__message_visible' : ''
-            }`}
-            data-testid="server-error"
-          >
-            {errors.root?.serverError.message}
-          </span>
           <button
             className="button registration__button"
             disabled={!isValid}

@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { cleanup, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import LoginForm from '../src/components/forms/loginForm/loginForm';
 import { errorsMessage } from '../src/types/formTypes';
@@ -8,30 +8,36 @@ jest.mock('../src/api/apiFunctions', () => ({
   loginClient: jest.fn(),
 }));
 
+const loginTest = () => {};
+
+afterEach(() => {
+  cleanup();
+});
+
 describe('Login form exists in the DOM', () => {
   test('Password field exists in the DOM', () => {
-    render(<LoginForm />);
+    render(<LoginForm logIn={loginTest} />);
     expect(
       screen.getByPlaceholderText<HTMLInputElement>('Password')
     ).toBeInTheDocument();
   });
 
   test('Email field exists in the DOM', () => {
-    render(<LoginForm />);
+    render(<LoginForm logIn={loginTest} />);
     expect(
       screen.getByPlaceholderText<HTMLInputElement>('Email')
     ).toBeInTheDocument();
   });
 
   test('Button exists in the DOM', () => {
-    render(<LoginForm />);
+    render(<LoginForm logIn={loginTest} />);
     expect(screen.getByRole<HTMLButtonElement>('button')).toBeInTheDocument();
   });
 });
 
 describe('Email validation', () => {
   test('Email is required', async () => {
-    render(<LoginForm />);
+    render(<LoginForm logIn={loginTest} />);
     const user = userEvent.setup();
     await user.click(screen.getByPlaceholderText<HTMLInputElement>('Email'));
     await user.click(screen.getByPlaceholderText<HTMLInputElement>('Password'));
@@ -42,7 +48,7 @@ describe('Email validation', () => {
   });
 
   test('Email must contain @', async () => {
-    render(<LoginForm />);
+    render(<LoginForm logIn={loginTest} />);
     const user = userEvent.setup();
     await user.type(
       screen.getByPlaceholderText<HTMLInputElement>('Email'),
@@ -56,7 +62,7 @@ describe('Email validation', () => {
   });
 
   test('Email must contain domain', async () => {
-    render(<LoginForm />);
+    render(<LoginForm logIn={loginTest} />);
     const user = userEvent.setup();
     await user.type(
       screen.getByPlaceholderText<HTMLInputElement>('Email'),
@@ -70,7 +76,7 @@ describe('Email validation', () => {
   });
 
   test('Email must be valid ', async () => {
-    render(<LoginForm />);
+    render(<LoginForm logIn={loginTest} />);
     const user = userEvent.setup();
     await user.type(
       screen.getByPlaceholderText<HTMLInputElement>('Email'),
@@ -86,7 +92,7 @@ describe('Email validation', () => {
 
 describe('Password validation', () => {
   test('Password is required', async () => {
-    render(<LoginForm />);
+    render(<LoginForm logIn={loginTest} />);
     const user = userEvent.setup();
     await user.click(screen.getByPlaceholderText<HTMLInputElement>('Password'));
     await user.click(screen.getByPlaceholderText<HTMLInputElement>('Email'));
@@ -97,7 +103,7 @@ describe('Password validation', () => {
   });
 
   test('Password length', async () => {
-    render(<LoginForm />);
+    render(<LoginForm logIn={loginTest} />);
     const user = userEvent.setup();
     await user.type(
       screen.getByPlaceholderText<HTMLInputElement>('Password'),
@@ -111,7 +117,7 @@ describe('Password validation', () => {
   });
 
   test('Password must contain uppercase letter', async () => {
-    render(<LoginForm />);
+    render(<LoginForm logIn={loginTest} />);
     const user = userEvent.setup();
     await user.type(
       screen.getByPlaceholderText<HTMLInputElement>('Password'),
@@ -125,7 +131,7 @@ describe('Password validation', () => {
   });
 
   test('Password must contain lowercase letter', async () => {
-    render(<LoginForm />);
+    render(<LoginForm logIn={loginTest} />);
     const user = userEvent.setup();
     await user.type(
       screen.getByPlaceholderText<HTMLInputElement>('Password'),
@@ -139,7 +145,7 @@ describe('Password validation', () => {
   });
 
   test('Password must contain digit', async () => {
-    render(<LoginForm />);
+    render(<LoginForm logIn={loginTest} />);
     const user = userEvent.setup();
     await user.type(
       screen.getByPlaceholderText<HTMLInputElement>('Password'),
@@ -153,7 +159,7 @@ describe('Password validation', () => {
   });
 
   test('Password must contain special character', async () => {
-    render(<LoginForm />);
+    render(<LoginForm logIn={loginTest} />);
     const user = userEvent.setup();
     await user.type(
       screen.getByPlaceholderText<HTMLInputElement>('Password'),
@@ -172,7 +178,7 @@ describe('Failed login', () => {
     jest
       .mocked(loginClient)
       .mockRejectedValueOnce({ body: { statusCode: 400, message: 'error' } });
-    render(<LoginForm />);
+    render(<LoginForm logIn={loginTest} />);
 
     const user = userEvent.setup();
     await user.type(
@@ -185,8 +191,8 @@ describe('Failed login', () => {
     );
     await user.click(screen.getByRole<HTMLButtonElement>('button'));
 
-    expect(screen.getByTestId<HTMLSpanElement>('email-error').textContent).toBe(
-      errorsMessage.WRONG_LOGIN
-    );
+    expect(
+      screen.getByTestId<HTMLSpanElement>('server-error').textContent
+    ).toBe(errorsMessage.WRONG_LOGIN);
   });
 });

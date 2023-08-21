@@ -8,7 +8,7 @@ export default function MyInput(props: MyInputProps) {
     ? (requiredErrorText = errorsMessage.DATE_OF_BIRTH_REQUIRED)
     : (requiredErrorText = `${props.title} is required`);
   return (
-    <div className="input-wrapper">
+    <div className={`${props.stateSameAddress ? 'close-field' : ''} input-wrapper`}>
       <label className="label">{props.title}:</label>
       <input
         className={`input registration__input ${
@@ -20,7 +20,6 @@ export default function MyInput(props: MyInputProps) {
           validate: props.validate,
         })}
         title={props.name}
-        disabled={props.stateSameAddress}
       />
       <span className="error__message" title={`${props.name}Error`}>
         {props.errors[props.name]?.message}

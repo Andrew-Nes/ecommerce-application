@@ -3,9 +3,15 @@ import userEvent from '@testing-library/user-event';
 import RegistrationForm from '../../src/components/forms/RegistrationForm/RegistrationForm';
 import { errorsMessage } from '../../src/types/formTypes';
 
-beforeEach(() => {
-  render(<RegistrationForm />);
-});
+jest.mock('../../src/api/apiFunctions', () => ({
+  loginClient: jest.fn(),
+}));
+
+jest.mock('../../src/api/apiFunctions', () => ({
+  CreateCustomer: jest.fn(),
+}));
+
+const registrationTest = () => {};
 
 afterEach(() => {
   cleanup();
@@ -13,6 +19,7 @@ afterEach(() => {
 
 describe('Email validation', () => {
   test('Email is required', async () => {
+    render(<RegistrationForm logIn={registrationTest} />);
     const user = userEvent.setup();
     await user.click(screen.getByTitle<HTMLInputElement>('email'));
     await user.click(screen.getByTitle<HTMLInputElement>('password'));
@@ -23,6 +30,7 @@ describe('Email validation', () => {
   });
 
   test('Email must contain @', async () => {
+    render(<RegistrationForm logIn={registrationTest} />);
     const user = userEvent.setup();
     await user.type(screen.getByTitle<HTMLInputElement>('email'), 'some');
     await user.click(screen.getByTitle<HTMLInputElement>('password'));
@@ -33,6 +41,7 @@ describe('Email validation', () => {
   });
 
   test('Email must contain domain', async () => {
+    render(<RegistrationForm logIn={registrationTest} />);
     const user = userEvent.setup();
     await user.type(screen.getByTitle<HTMLInputElement>('email'), 'some@');
     await user.click(screen.getByTitle<HTMLInputElement>('password'));
@@ -43,6 +52,7 @@ describe('Email validation', () => {
   });
 
   test('Email must be valid', async () => {
+    render(<RegistrationForm logIn={registrationTest} />);
     const user = userEvent.setup();
     await user.type(screen.getByTitle<HTMLInputElement>('email'), 'some@some');
     await user.click(screen.getByTitle<HTMLInputElement>('password'));
@@ -55,6 +65,7 @@ describe('Email validation', () => {
 
 describe('Password validation', () => {
   test('Password is required', async () => {
+    render(<RegistrationForm logIn={registrationTest} />);
     const user = userEvent.setup();
     await user.click(screen.getByTitle<HTMLInputElement>('password'));
     await user.click(screen.getByTitle<HTMLInputElement>('email'));
@@ -65,6 +76,7 @@ describe('Password validation', () => {
   });
 
   test('Password length', async () => {
+    render(<RegistrationForm logIn={registrationTest} />);
     const user = userEvent.setup();
     await user.type(screen.getByTitle<HTMLInputElement>('password'), 'some');
     await user.click(screen.getByTitle<HTMLInputElement>('email'));
@@ -75,6 +87,7 @@ describe('Password validation', () => {
   });
 
   test('Password must contain uppercase letter', async () => {
+    render(<RegistrationForm logIn={registrationTest} />);
     const user = userEvent.setup();
     await user.type(
       screen.getByTitle<HTMLInputElement>('password'),
@@ -88,6 +101,7 @@ describe('Password validation', () => {
   });
 
   test('Password must contain lowercase letter', async () => {
+    render(<RegistrationForm logIn={registrationTest} />);
     const user = userEvent.setup();
     await user.type(
       screen.getByTitle<HTMLInputElement>('password'),
@@ -101,6 +115,7 @@ describe('Password validation', () => {
   });
 
   test('Password must contain digit', async () => {
+    render(<RegistrationForm logIn={registrationTest} />);
     const user = userEvent.setup();
     await user.type(
       screen.getByTitle<HTMLInputElement>('password'),
@@ -114,6 +129,7 @@ describe('Password validation', () => {
   });
 
   test('Password must contain special character', async () => {
+    render(<RegistrationForm logIn={registrationTest} />);
     const user = userEvent.setup();
     await user.type(
       screen.getByTitle<HTMLInputElement>('password'),
@@ -128,6 +144,7 @@ describe('Password validation', () => {
 
 describe('First name validation', () => {
   test('First name is required', async () => {
+    render(<RegistrationForm logIn={registrationTest} />);
     const user = userEvent.setup();
     await user.click(screen.getByTitle<HTMLInputElement>('firstName'));
     await user.click(screen.getByTitle<HTMLInputElement>('lastName'));
@@ -138,6 +155,7 @@ describe('First name validation', () => {
   });
 
   test('First name must not contain special character', async () => {
+    render(<RegistrationForm logIn={registrationTest} />);
     const user = userEvent.setup();
     await user.type(screen.getByTitle<HTMLInputElement>('firstName'), 'name$');
     await user.click(screen.getByTitle<HTMLInputElement>('email'));
@@ -147,6 +165,7 @@ describe('First name validation', () => {
   });
 
   test('First name must not contain numbers', async () => {
+    render(<RegistrationForm logIn={registrationTest} />);
     const user = userEvent.setup();
     await user.type(
       screen.getByTitle<HTMLInputElement>('firstName'),
@@ -161,6 +180,7 @@ describe('First name validation', () => {
 
 describe('Last name validation', () => {
   test('Last name is required', async () => {
+    render(<RegistrationForm logIn={registrationTest} />);
     const user = userEvent.setup();
     await user.click(screen.getByTitle<HTMLInputElement>('lastName'));
     await user.click(screen.getByTitle<HTMLInputElement>('firstName'));
@@ -171,6 +191,7 @@ describe('Last name validation', () => {
   });
 
   test('Last name must not contain special character', async () => {
+    render(<RegistrationForm logIn={registrationTest} />);
     const user = userEvent.setup();
     await user.type(screen.getByTitle<HTMLInputElement>('lastName'), 'name$');
     await user.click(screen.getByTitle<HTMLInputElement>('email'));
@@ -180,6 +201,7 @@ describe('Last name validation', () => {
   });
 
   test('Last name must not contain numbers', async () => {
+    render(<RegistrationForm logIn={registrationTest} />);
     const user = userEvent.setup();
     await user.type(screen.getByTitle<HTMLInputElement>('lastName'), 'name777');
     await user.click(screen.getByTitle<HTMLInputElement>('email'));
@@ -191,6 +213,7 @@ describe('Last name validation', () => {
 
 describe('Date of birth validation', () => {
   test('Date of birth is required', async () => {
+    render(<RegistrationForm logIn={registrationTest} />);
     const user = userEvent.setup();
     await user.click(screen.getByTitle<HTMLInputElement>('dateOfBirth'));
     await user.click(screen.getByTitle<HTMLInputElement>('firstName'));
@@ -201,6 +224,7 @@ describe('Date of birth validation', () => {
   });
 
   test('Date of birth must be 13 years of age or older', async () => {
+    render(<RegistrationForm logIn={registrationTest} />);
     const user = userEvent.setup();
     await user.type(
       screen.getByTitle<HTMLInputElement>('dateOfBirth'),
