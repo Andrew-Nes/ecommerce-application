@@ -7,7 +7,7 @@ import { validateFields } from './validateFields';
 import MyCountrySelect from './inputs/MyCountrySelect';
 import MyCheckBox from './inputs/myCheckBox/MyCheckBox';
 import MyPassInput from './inputs/MyPassInput';
-import { CreateClient, loginClient } from '../../../api/apiFunctions';
+import { CreateCustomer, loginClient } from '../../../api/apiFunctions';
 import convertDataForm from '../../../types/registrationFormTypes';
 import { ClientResponse, ErrorResponse } from '@commercetools/platform-sdk';
 import { serviceErrors } from '../../../types/formTypes';
@@ -30,7 +30,7 @@ export default function RegistrationForm() {
     setValue,
     trigger,
     setError,
-  } = useForm<RegistrationFormData>({ mode: 'onTouched' });
+  } = useForm<RegistrationFormData>({ mode: 'all' });
 
   const [isSetSameAddress, setSameAddress] = useState(false);
 
@@ -40,7 +40,7 @@ export default function RegistrationForm() {
     data: RegistrationFormData
   ) => {
     try {
-      await CreateClient(convertDataForm(data, isSetSameAddress));
+      await CreateCustomer(convertDataForm(data, isSetSameAddress));
       await loginClient(data.email, data.password);
       reset();
       redirect(routes.MAIN);
@@ -220,6 +220,7 @@ export default function RegistrationForm() {
             name="streetBilling"
             title="Street"
             validate={validateFields.STREET_VALIDATE}
+            stateSameAddress={isSetSameAddress}
           />
           <MyInput
             register={register}
@@ -227,6 +228,7 @@ export default function RegistrationForm() {
             name="cityBilling"
             title="City"
             validate={validateFields.CITY_VALIDATE}
+            stateSameAddress={isSetSameAddress}
           />
           <MyInput
             register={register}
@@ -234,6 +236,7 @@ export default function RegistrationForm() {
             name="postalCodeBilling"
             title="Postal code"
             validate={validateFields.POSTAL_CODE_VALIDATE}
+            stateSameAddress={isSetSameAddress}
           />
           <MyCountrySelect
             register={register}
