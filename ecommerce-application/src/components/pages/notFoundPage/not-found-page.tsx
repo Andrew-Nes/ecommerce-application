@@ -1,5 +1,5 @@
 import './not-found-page.scss';
-import { routes } from '../../../types/routes';
+import { routes } from '../../../types/routingTypes';
 import notFountImage from '../../../../assets/img/404-page-image1.png';
 import {
   anchorsText,

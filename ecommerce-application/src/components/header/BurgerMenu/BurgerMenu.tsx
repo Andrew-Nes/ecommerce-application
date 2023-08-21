@@ -2,7 +2,7 @@ import './burgerMenu.scss';
 import { useState } from 'react';
 import BurgerButton from './BurgerButton';
 import { Link } from 'react-router-dom';
-import { routes } from '../../../types/routes';
+import { routes } from '../../../types/routingTypes';
 
 export default function BurgerMenu() {
   const [open, setOpen] = useState<boolean>(false);

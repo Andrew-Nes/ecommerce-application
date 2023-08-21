@@ -2,7 +2,7 @@ import './registration-page.scss';
 import { Link } from 'react-router-dom';
 import { anchorsText, paragraphText } from '../../../types/elementsText';
 import RegistrationForm from '../../forms/RegistrationForm/RegistrationForm';
-import { routes } from '../../../types/routes';
+import { routes } from '../../../types/routingTypes';
 
 function RegistrationPage() {
   return (

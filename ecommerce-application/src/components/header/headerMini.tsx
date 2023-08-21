@@ -1,6 +1,6 @@
 import './header.scss';
 import { Link } from 'react-router-dom';
-import { routes } from '../../types/routes';
+import { routes } from '../../types/routingTypes';
 import Logo from '../../../assets/img/shopLogo.png';
 import { logoText } from '../../types/elementsText';
 
