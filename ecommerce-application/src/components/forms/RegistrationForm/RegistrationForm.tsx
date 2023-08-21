@@ -17,7 +17,6 @@ import { errorsMessage } from '../../../types/formTypes';
 import { useNavigate } from 'react-router-dom';
 import { routes } from '../../../types/routingTypes';
 import { buttonsText, headingText } from '../../../types/elementsText';
-import React from 'react';
 
 const COUNTRIES: string[] = ['US'];
 const defaultCountryIndex: number = 0;
