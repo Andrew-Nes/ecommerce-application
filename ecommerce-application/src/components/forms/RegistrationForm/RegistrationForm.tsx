@@ -256,14 +256,6 @@ export default function RegistrationForm({ logIn }: { logIn(): void }) {
         </fieldset>
 
         <div className="registration__button-wrapper">
-          <span
-            className={`error__message ${
-              errors.root?.serverError ? 'error__message_visible' : ''
-            }`}
-            data-testid="server-error"
-          >
-            {errors.root?.serverError.message}
-          </span>
           <button
             className="button registration__button"
             disabled={!isValid}
