@@ -11,7 +11,7 @@ function RegistrationPage({ loginStateChange }: loginStateChangeProp) {
   return (
     <main className="main registration-page">
       <div className="wrapper login-page__wrapper">
-        <RegistrationForm logIn={logIn}/>
+        <RegistrationForm logIn={logIn} />
         <p className="text registration__text">
           {paragraphText.REGISTRATION_PAGE_PARAGRAPH}
           <span>

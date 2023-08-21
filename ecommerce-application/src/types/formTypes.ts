@@ -41,7 +41,7 @@ enum serviceErrors {
   DUPLICATE_FIELD = 'There is already an existing customer with the provided email.',
   SERVICE_UNAVAILABLE = 503,
   BAD_GATEWAY = 502,
-  INTERNAL_SERVER_ERROR = 500
+  INTERNAL_SERVER_ERROR = 500,
 }
 
 type PasswordType = 'password' | 'text';
