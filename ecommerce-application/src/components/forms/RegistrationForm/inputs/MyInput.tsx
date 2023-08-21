@@ -20,6 +20,7 @@ export default function MyInput(props: MyInputProps) {
           validate: props.validate,
         })}
         title={props.name}
+        disabled={props.stateSameAddress}
       />
       <span className="error__message" title={`${props.name}Error`}>
         {props.errors[props.name]?.message}

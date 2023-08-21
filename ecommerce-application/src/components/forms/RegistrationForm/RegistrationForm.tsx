@@ -252,6 +252,7 @@ export default function RegistrationForm({ logIn }: { logIn(): void }) {
             name="countryBilling"
             title="Country"
             countries={COUNTRIES}
+            stateSameAddress={isSetSameAddress}
           />
         </fieldset>
 

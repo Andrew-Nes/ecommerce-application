@@ -6,6 +6,7 @@ export default function MyCountrySelect(props: MyInputProps) {
     <div className="input-wrapper">
       <label className="label">{props.title}:</label>
       <select
+      disabled={props.stateSameAddress}
         className="input select"
         {...props.register(props.name)}
         title={props.name}
@@ -13,6 +14,7 @@ export default function MyCountrySelect(props: MyInputProps) {
         {props.countries?.map((country) => {
           return <option key={country}>{country}</option>;
         })}
+        
       </select>
     </div>
   );
