@@ -13,6 +13,5 @@ export default class TokenStorage implements TokenCache {
 
   public set(cache: TokenStore): void {
     this.tokenStore = cache;
-    window.localStorage.setItem('clientToken', cache.token);
   }
 }
