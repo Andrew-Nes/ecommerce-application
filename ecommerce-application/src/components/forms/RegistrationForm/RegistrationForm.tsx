@@ -31,7 +31,7 @@ export default function RegistrationForm({ logIn }: { logIn(): void }) {
     setValue,
     trigger,
     setError,
-  } = useForm<RegistrationFormData>({ mode: 'onTouched' });
+  } = useForm<RegistrationFormData>({ mode: 'all' });
 
   const [isSetSameAddress, setSameAddress] = useState(false);
 

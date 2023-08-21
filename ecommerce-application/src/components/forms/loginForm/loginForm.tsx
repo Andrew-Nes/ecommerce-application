@@ -40,7 +40,7 @@ export default function LoginForm({ logIn }: { logIn(): void }) {
     clearErrors,
     formState: { errors, isValid },
   } = useForm<LoginFormData>({
-    mode: 'onTouched',
+    mode: 'all',
   });
 
   const onSubmit: SubmitHandler<LoginFormData> = async (data) => {
@@ -102,7 +102,7 @@ export default function LoginForm({ logIn }: { logIn(): void }) {
           <input
             {...register('password', {
               required: errorsMessage.PASSWORD_REQUIRED,
-              validate: validateFields.PASSWORD_VALIDATE
+              validate: validateFields.PASSWORD_VALIDATE,
             })}
             className={`input login__input input_password ${
               errors.password || errors.root?.serverError ? 'input__error' : ''
