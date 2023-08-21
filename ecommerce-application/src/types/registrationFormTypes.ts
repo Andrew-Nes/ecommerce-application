@@ -1,5 +1,5 @@
 import type { FieldErrors, UseFormRegister, Validate } from 'react-hook-form';
-import type { BaseAddress, MyCustomerDraft, CustomerDraft } from '@commercetools/platform-sdk';
+import type { BaseAddress, CustomerDraft } from '@commercetools/platform-sdk';
 
 interface RegistrationFormData {
   email: string;
