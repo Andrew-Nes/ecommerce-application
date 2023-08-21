@@ -1,8 +1,8 @@
+import './RegistrationForm.scss';
 import { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import type { RegistrationFormData } from '../../../types/registrationFormTypes';
 import MyInput from './inputs/MyInput';
-import classes from './RegistrationForm.module.scss';
 import { validateFields } from './validateFields';
 import MyCountrySelect from './inputs/MyCountrySelect';
 import MyCheckBox from './inputs/myCheckBox/MyCheckBox';
@@ -16,6 +16,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { errorsMessage } from '../../../types/formTypes';
 import { useNavigate } from 'react-router-dom';
 import { routes } from '../../../types/routes';
+import { buttonsText, headingText } from '../../../types/elementsText';
+
 
 const COUNTRIES: string[] = ['US'];
 const defaultCountryIndex: number = 0;
@@ -30,7 +32,7 @@ export default function RegistrationForm() {
     setValue,
     trigger,
     setError,
-  } = useForm<RegistrationFormData>({ mode: 'all' });
+  } = useForm<RegistrationFormData>({ mode: 'onTouched' });
 
   const [isSetSameAddress, setSameAddress] = useState(false);
 
@@ -112,14 +114,15 @@ export default function RegistrationForm() {
   }
 
   return (
-    <div className={classes.registration}>
-      <h3>Registration form:</h3>
-      <form
-        className={classes.register__form}
-        onSubmit={handleSubmit(onSubmit)}
-      >
-        <fieldset>
-          <legend className={classes.legend_fieldset}>Customer</legend>
+    <div className="registration">
+      <h3 className="heading registration__heading">
+        {headingText.REGISTRATION_PAGE_HEADING}
+      </h3>
+      <form className="registration__form" onSubmit={handleSubmit(onSubmit)}>
+        <fieldset className="registration__form__fieldset fieldset">
+          <legend className="fieldset__heading">
+            {headingText.CUSTOMER_FORM}
+          </legend>
           <MyInput
             register={register}
             errors={errors}
@@ -159,8 +162,10 @@ export default function RegistrationForm() {
           />
         </fieldset>
 
-        <fieldset>
-          <legend className={classes.legend_fieldset}>Shipping address</legend>
+        <fieldset className="registration__form__fieldset fieldset">
+          <legend className="fieldset__heading">
+            {headingText.SHIPPING_ADDRESS_FORM}
+          </legend>
           <MyCheckBox
             register={register}
             errors={errors}
@@ -196,7 +201,7 @@ export default function RegistrationForm() {
             countries={COUNTRIES}
           />
 
-          <div className={classes.checkbox__container}>
+          <div className="checkbox__container">
             <label>Set the same address for billing:</label>
             <input
               type="checkbox"
@@ -206,8 +211,10 @@ export default function RegistrationForm() {
           </div>
         </fieldset>
 
-        <fieldset>
-          <legend className={classes.legend_fieldset}>Billing address</legend>
+        <fieldset className="registration__form__fieldset fieldset">
+          <legend className="fieldset__heading">
+            {headingText.BILLING_ADDRESS_FORM}
+          </legend>
           <MyCheckBox
             register={register}
             errors={errors}
@@ -247,13 +254,23 @@ export default function RegistrationForm() {
           />
         </fieldset>
 
-        <button
-          className={classes.submit_button}
-          disabled={!isValid}
-          type="submit"
-        >
-          register
-        </button>
+        <div className="registration__button-wrapper">
+          <span
+            className={`error__message ${
+              errors.root?.serverError ? 'error__message_visible' : ''
+            }`}
+            data-testid="server-error"
+          >
+            {errors.root?.serverError.message}
+          </span>
+          <button
+            className="button registration__button"
+            disabled={!isValid}
+            type="submit"
+          >
+            {buttonsText.REGISTER}
+          </button>
+        </div>
       </form>
     </div>
   );

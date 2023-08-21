@@ -1,38 +1,44 @@
+import './MyInput.scss';
 import { useState } from 'react';
-import classes from './MyInput.module.scss';
 import type { MyInputProps } from '../../../../types/registrationFormTypes';
-//import { errorsMessage } from '../../../../types/formTypes';
+import { PasswordType } from '../../../../types/formTypes';
+import closeEyeIcon from '../../../../../assets/img/close-eye.png';
+import openEyeIcon from '../../../../../assets/img/open-eye.png';
 
 export default function MyPassInput(props: MyInputProps) {
-  const [isShown, setIsSHown] = useState(false);
+  const [passwordType, setPasswordType] = useState<PasswordType>('password');
+  const [iconPath, setIconPath] = useState(closeEyeIcon);
 
   const togglePassword = () => {
-    setIsSHown((isShown) => !isShown);
+    if (passwordType === 'password') {
+      setPasswordType('text');
+      setIconPath(openEyeIcon);
+    } else {
+      setPasswordType('password');
+      setIconPath(closeEyeIcon);
+    }
   };
 
   return (
-    <div className={classes.myInput__container}>
-      <div className={classes.myPass_labelLine}>
-        <label className={classes.myInput_label}>{props.title}:</label>
-        <div className={classes.showPass__container}>
-          <label>Show password?</label>
-          <input type="checkbox" onChange={togglePassword} checked={isShown} />
-        </div>
+    <div className="input-wrapper">
+      <label className="label">{props.title}:</label>
+      <div className="password__wrapper">
+        <input
+          className={`input registration__input input_password ${
+            props.errors[props.name] ? 'input__error' : ''
+          }`}
+          type={passwordType}
+          {...props.register(props.name, {
+            required: `${props.title} is required`,
+            validate: props.validate,
+          })}
+          title={props.name}
+        />
+        <img src={iconPath} className="icon_eye" onClick={togglePassword}></img>
       </div>
-      <input
-        className={`${classes.myInput_input} ${
-          props.errors[props.name]?.message ? classes.input_error : ''
-        }`}
-        type={isShown ? 'text' : 'password'}
-        {...props.register(props.name, {
-          required: `${props.title} is required`,
-          validate: props.validate,
-        })}
-        title={props.name}
-      />
-      <p className={classes.myInput_errorText} title={`${props.name}Error`}>
+      <span className="error__message" title={`${props.name}Error`}>
         {props.errors[props.name]?.message}
-      </p>
+      </span>
     </div>
   );
 }
