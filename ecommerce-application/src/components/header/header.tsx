@@ -1,14 +1,21 @@
 import './header.scss';
 import { Link, useLocation } from 'react-router-dom';
-import { routes } from '../../types/routes';
+import { routes } from '../../types/routingTypes';
 import RedirectButton from '../redirect-button/redirect-button';
 import Logo from '../../../assets/img/shopLogo.png';
 import { buttonsText, anchorsText, logoText } from '../../types/elementsText';
 import BurgerMenu from './BurgerMenu/BurgerMenu';
 import HeaderMini from './headerMini';
-import { useEffect } from 'react';
+import { LogInContext } from '../app';
+import { useContext, useEffect } from 'react';
+import { loginStateChangeProp } from '../../types/routingTypes';
 
-function Header() {
+function Header({ loginStateChange }: loginStateChangeProp) {
+  const isLoggedIn = useContext(LogInContext);
+  const logout = () => {
+    loginStateChange(false);
+    window.localStorage.clear();
+  };
   const path = useLocation();
   const location = window.location.pathname;
   const existingPaths = Object.values(routes) as string[];
@@ -28,11 +35,20 @@ function Header() {
               </ul>
             </nav>
             <div className="header__buttons">
-              <RedirectButton
-                className="button header__button header__button_login"
-                text={buttonsText.LOGIN}
-                route={routes.LOGIN}
-              />
+              {!isLoggedIn ? (
+                <RedirectButton
+                  className="button header__button header__button_login"
+                  text={buttonsText.LOGIN}
+                  route={routes.LOGIN}
+                />
+              ) : (
+                <button
+                  className="button header__button header__button_login"
+                  onClick={logout}
+                >
+                  {buttonsText.LOGOUT}
+                </button>
+              )}
               <RedirectButton
                 className="button header__button header__button_signup"
                 text={buttonsText.SIGNUP}
@@ -41,7 +57,7 @@ function Header() {
             </div>
           </div>
           <div className="header__block header__block_logo">
-            <BurgerMenu />
+            <BurgerMenu loginStateChange={loginStateChange} />
             <div className="logo">
               <Link className="logo__link" to={routes.MAIN}>
                 <img src={Logo} alt="Logo" className="logo__image" />

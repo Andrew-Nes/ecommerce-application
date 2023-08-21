@@ -1,12 +1,18 @@
 import './burgerMenu.scss';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import BurgerButton from './BurgerButton';
 import { Link } from 'react-router-dom';
-import { routes } from '../../../types/routes';
+import { loginStateChangeProp, routes } from '../../../types/routingTypes';
+import { LogInContext } from '../../app';
 
-export default function BurgerMenu() {
+export default function BurgerMenu({ loginStateChange }: loginStateChangeProp) {
   const [open, setOpen] = useState<boolean>(false);
   const close = () => setOpen(false);
+  const isLoggedIn = useContext(LogInContext);
+  const logout = () => {
+    loginStateChange(false);
+    window.localStorage.clear();
+  };
 
   return (
     <div className="burger-menu">
@@ -14,13 +20,26 @@ export default function BurgerMenu() {
         <Link className="burger__link" to={routes.MAIN} onClick={() => close()}>
           Main
         </Link>
-        <Link
-          className="burger__link"
-          to={routes.LOGIN}
-          onClick={() => close()}
-        >
-          Login
-        </Link>
+        {!isLoggedIn ? (
+          <Link
+            className="burger__link"
+            to={routes.LOGIN}
+            onClick={() => close()}
+          >
+            Login
+          </Link>
+        ) : (
+          <Link
+            className="burger__link"
+            to={routes.MAIN}
+            onClick={() => {
+              logout();
+              close();
+            }}
+          >
+            Logout
+          </Link>
+        )}
         <Link
           className="burger__link"
           to={routes.REGISTER}

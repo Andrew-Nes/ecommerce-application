@@ -10,3 +10,7 @@ export interface buttonProps {
   route: string;
   className?: string;
 }
+
+export interface loginStateChangeProp {
+  loginStateChange: (newValue: boolean) => void;
+}

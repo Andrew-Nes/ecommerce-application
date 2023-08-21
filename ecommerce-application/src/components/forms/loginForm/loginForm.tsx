@@ -17,7 +17,7 @@ interface LoginFormData {
   password: string;
 }
 
-export default function LoginForm() {
+export default function LoginForm({ logIn }: { logIn(): void }) {
   const [passwordType, setPasswordType] = useState<PasswordType>('password');
   const [iconPath, setIconPath] = useState(closeEyeIcon);
 
@@ -47,6 +47,7 @@ export default function LoginForm() {
 
     try {
       await loginClient(data.email, data.password);
+      logIn();
       reset();
     } catch (error) {
       const errorResponse = JSON.parse(
