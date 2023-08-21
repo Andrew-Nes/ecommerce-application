@@ -25,6 +25,8 @@ function isAboveAgeLimit(date: string): boolean {
 
 export const validateFields = {
   EMAIL_VALIDATE: {
+    noSpace: (value: string) =>
+      !/\s/.test(value) || errorsMessage.EMAIL_WHITESPACE,
     domainExisting: (value: string) =>
       !value.endsWith('@') || errorsMessage.EMAIL_DOMAIN_EXIST,
     atSymbolExisting: (value: string) =>
@@ -36,6 +38,11 @@ export const validateFields = {
   },
 
   PASSWORD_VALIDATE: {
+    noSpace: (value: string) =>
+      !/\s/.test(value) || errorsMessage.PASSWORD_WHITESPACE,
+    length: (value: string) =>
+      value.length >= 8 || errorsMessage.PASSWORD_LENGTH,
+
     uppercaseLetter: (value: string) =>
       /[A-Z]/.test(value) || errorsMessage.PASSWORD_UPPERCASE_LETTER,
 
@@ -53,22 +60,33 @@ export const validateFields = {
       !/[!@#$%^&*]/.test(value) || errorsMessage.FIRST_NAME_SPECIAL_CHARACTER,
     digitExisting: (value: string) =>
       !/[0-9]/.test(value) || errorsMessage.FIRST_NAME_NUMBERS,
+    oneCharacter: (value: string) =>
+      /[^\s]/.test(value) || errorsMessage.FIRST_NAME_ONE_CHARACTER,
   },
   LAST_NAME_VALIDATE: {
     specialCharacter: (value: string) =>
       !/[!@#$%^&*]/.test(value) || errorsMessage.LAST_NAME_SPECIAL_CHARACTER,
     digitExisting: (value: string) =>
       !/[0-9]/.test(value) || errorsMessage.LAST_NAME_NUMBERS,
+    oneCharacter: (value: string) =>
+      /[^\s]/.test(value) || errorsMessage.LAST_NAME_ONE_CHARACTER,
   },
   DATE_OF_BIRTH_VALIDATE: {
     testYearsOld: (value: string) =>
       isAboveAgeLimit(value) || errorsMessage.DATE_OF_BIRTH_AGE,
   },
+  STREET_VALIDATE: {
+    oneCharacter: (value: string) =>
+      /[^\s]/.test(value) || errorsMessage.STREET_ONE_CHARACTER,
+  },
+
   CITY_VALIDATE: {
     specialCharacter: (value: string) =>
       !/[!@#$%^&*]/.test(value) || errorsMessage.CITY_SPECIAL_CHARACTER,
     digitExisting: (value: string) =>
       !/[0-9]/.test(value) || errorsMessage.CITY_NUMBERS,
+    oneCharacter: (value: string) =>
+      /[^\s]/.test(value) || errorsMessage.CITY_ONE_CHARACTER,
   },
   POSTAL_CODE_VALIDATE: {
     postalCOdeFormat: (value: string) =>

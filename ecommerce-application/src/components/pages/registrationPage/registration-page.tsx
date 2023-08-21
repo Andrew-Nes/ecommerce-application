@@ -2,13 +2,16 @@ import './registration-page.scss';
 import { Link } from 'react-router-dom';
 import { anchorsText, paragraphText } from '../../../types/elementsText';
 import RegistrationForm from '../../forms/RegistrationForm/RegistrationForm';
-import { routes } from '../../../types/routingTypes';
+import { routes, loginStateChangeProp } from '../../../types/routingTypes';
 
-function RegistrationPage() {
+function RegistrationPage({ loginStateChange }: loginStateChangeProp) {
+  function logIn() {
+    loginStateChange(true);
+  }
   return (
     <main className="main registration-page">
       <div className="wrapper login-page__wrapper">
-        <RegistrationForm />
+        <RegistrationForm logIn={logIn}/>
         <p className="text registration__text">
           {paragraphText.REGISTRATION_PAGE_PARAGRAPH}
           <span>

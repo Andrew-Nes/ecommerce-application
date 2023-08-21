@@ -7,12 +7,22 @@ import { validateFields } from './validateFields';
 import MyCountrySelect from './inputs/MyCountrySelect';
 import MyCheckBox from './inputs/myCheckBox/MyCheckBox';
 import MyPassInput from './inputs/MyPassInput';
+import { CreateCustomer, loginClient } from '../../../api/apiFunctions';
+import convertDataForm from '../../../types/registrationFormTypes';
+import { ClientResponse, ErrorResponse } from '@commercetools/platform-sdk';
+import { serviceErrors } from '../../../types/formTypes';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { errorsMessage } from '../../../types/formTypes';
+import { useNavigate } from 'react-router-dom';
+import { routes } from '../../../types/routingTypes';
 import { buttonsText, headingText } from '../../../types/elementsText';
+
 
 const COUNTRIES: string[] = ['US'];
 const defaultCountryIndex: number = 0;
 
-export default function RegistrationForm() {
+export default function RegistrationForm({ logIn }: { logIn(): void }) {
   const {
     register,
     handleSubmit,
@@ -21,19 +31,66 @@ export default function RegistrationForm() {
     getValues,
     setValue,
     trigger,
+    setError,
   } = useForm<RegistrationFormData>({ mode: 'onTouched' });
 
-  const [isChoose, setSameAddress] = useState(false);
+  const [isSetSameAddress, setSameAddress] = useState(false);
 
-  const onSubmit: SubmitHandler<RegistrationFormData> = () => {
-    reset();
+  const redirect = useNavigate();
+
+  const onSubmit: SubmitHandler<RegistrationFormData> = async (
+    data: RegistrationFormData
+  ) => {
+    try {
+      await CreateCustomer(convertDataForm(data, isSetSameAddress));
+      await loginClient(data.email, data.password);
+      reset();
+      logIn()
+      redirect(routes.MAIN);
+      toast.success('Registration completed successfully! You Log In.', {
+        position: 'bottom-center',
+      });
+    } catch (error) {
+      const errorResponse = JSON.parse(
+        JSON.stringify(error)
+      ) as ClientResponse<ErrorResponse>;
+
+      const errorCode = errorResponse.body.statusCode;
+      const errorMessage = errorResponse.body.message;
+
+      if (errorMessage === serviceErrors.DUPLICATE_FIELD) {
+        setError('email', {
+          type: 'existEmail',
+          message: errorsMessage.EXIST_EMAIL,
+        });
+        toast.error(errorsMessage.TOAST_EMAIL_EXIST, {
+          position: 'bottom-center',
+        });
+      } else if (
+        errorCode === serviceErrors.INVALID_CUSTOMER_CREDENTIALS &&
+        errorMessage !== serviceErrors.DUPLICATE_FIELD
+      ) {
+        toast.error(errorsMessage.TOAST_INVALID_INPUT, {
+          position: 'bottom-center',
+        });
+      }
+      if (
+        errorCode === serviceErrors.SERVICE_UNAVAILABLE ||
+        errorCode === serviceErrors.BAD_GATEWAY ||
+        errorCode === serviceErrors.INTERNAL_SERVER_ERROR
+      ) {
+        toast.info(errorsMessage.TOAST_SERVER_ERROR, {
+          position: 'bottom-center',
+        });
+      }
+    }
   };
 
   function setBillingAddress() {
-    if (!isChoose) {
-      setValue('cityBilling', getValues('cityShipping'));
-      setValue('streetBilling', getValues('streetShipping'));
-      setValue('postalCodeBilling', getValues('postalCodeShipping'));
+    if (!isSetSameAddress) {
+      setValue('cityBilling', 'city');
+      setValue('streetBilling', 'street');
+      setValue('postalCodeBilling', '12345');
       setValue('countryBilling', getValues('countryShipping'));
       trigger([
         'cityBilling',
@@ -121,6 +178,7 @@ export default function RegistrationForm() {
             errors={errors}
             name="streetShipping"
             title="Street"
+            validate={validateFields.STREET_VALIDATE}
           />
           <MyInput
             register={register}
@@ -169,6 +227,8 @@ export default function RegistrationForm() {
             errors={errors}
             name="streetBilling"
             title="Street"
+            validate={validateFields.STREET_VALIDATE}
+            stateSameAddress={isSetSameAddress}
           />
           <MyInput
             register={register}
@@ -176,6 +236,7 @@ export default function RegistrationForm() {
             name="cityBilling"
             title="City"
             validate={validateFields.CITY_VALIDATE}
+            stateSameAddress={isSetSameAddress}
           />
           <MyInput
             register={register}
@@ -183,6 +244,7 @@ export default function RegistrationForm() {
             name="postalCodeBilling"
             title="Postal code"
             validate={validateFields.POSTAL_CODE_VALIDATE}
+            stateSameAddress={isSetSameAddress}
           />
           <MyCountrySelect
             register={register}
@@ -190,6 +252,7 @@ export default function RegistrationForm() {
             name="countryBilling"
             title="Country"
             countries={COUNTRIES}
+            stateSameAddress={isSetSameAddress}
           />
         </fieldset>
 

@@ -1,7 +1,7 @@
 import './MyInput.scss';
 import { useState } from 'react';
 import type { MyInputProps } from '../../../../types/registrationFormTypes';
-import { PasswordType, errorsMessage } from '../../../../types/formTypes';
+import { PasswordType } from '../../../../types/formTypes';
 import closeEyeIcon from '../../../../../assets/img/close-eye.png';
 import openEyeIcon from '../../../../../assets/img/open-eye.png';
 
@@ -31,10 +31,6 @@ export default function MyPassInput(props: MyInputProps) {
           {...props.register(props.name, {
             required: `${props.title} is required`,
             validate: props.validate,
-            minLength: {
-              value: 8,
-              message: errorsMessage.PASSWORD_LENGTH,
-            },
           })}
           title={props.name}
         />

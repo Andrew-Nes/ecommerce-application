@@ -4,9 +4,11 @@ import LoginPage from './pages/loginPage/login-page';
 import RegistrationPage from './pages/registrationPage/registration-page';
 import NotFoundPage from './pages/notFoundPage/not-found-page';
 import Header from './header/header';
+import { ToastContainer } from 'react-toastify';
 import { createContext, useState } from 'react';
 
 export const LogInContext = createContext(false);
+
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(
@@ -20,13 +22,14 @@ function App() {
     <LogInContext.Provider value={isLoggedIn}>
       <BrowserRouter>
         <Header loginStateChange={logInStateChange} />
+         <ToastContainer/>
         <Routes>
           <Route path="/" element={<MainPage />} />
           <Route
             path="login"
             element={<LoginPage loginStateChange={logInStateChange} />}
           />
-          <Route path="register" element={<RegistrationPage />} />
+          <Route path="register" element={<RegistrationPage loginStateChange={logInStateChange}/>} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </BrowserRouter>
