@@ -6,9 +6,11 @@ import {
   Client,
   AnonymousAuthMiddlewareOptions,
 } from '@commercetools/sdk-client-v2';
+import TokenStorage from './tokenStorage';
 
 const scopes = import.meta.env.VITE_CTP_SCOPES.split(' ');
 const projectKey = import.meta.env.VITE_CTP_PROJECT_KEY;
+const tokenStorage = new TokenStorage();
 
 const authMiddlewareOptions: AuthMiddlewareOptions = {
   host: import.meta.env.VITE_CTP_AUTH_URL,
@@ -54,6 +56,7 @@ function getPasswordAuthMiddlewareOptions(
     },
     scopes,
     fetch,
+    tokenCache: tokenStorage,
   };
 }
 
