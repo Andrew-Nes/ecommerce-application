@@ -1,5 +1,5 @@
 import './burgerMenu.scss';
-import { MouseEventHandler, useContext, useState } from 'react';
+import { useContext, useState } from 'react';
 import BurgerButton from './BurgerButton';
 import { Link } from 'react-router-dom';
 import { loginStateChangeProp, routes } from '../../../types/routingTypes';
@@ -9,7 +9,7 @@ export default function BurgerMenu({ loginStateChange }: loginStateChangeProp) {
   const [open, setOpen] = useState<boolean>(false);
   const close = () => setOpen(false);
   const isLoggedIn = useContext(LogInContext);
-  const logout: MouseEventHandler = () => {
+  const logout = () => {
     loginStateChange(false);
     window.localStorage.clear();
   };
@@ -33,7 +33,7 @@ export default function BurgerMenu({ loginStateChange }: loginStateChangeProp) {
             className="burger__link"
             to={routes.MAIN}
             onClick={() => {
-              logout;
+              logout();
               close();
             }}
           >

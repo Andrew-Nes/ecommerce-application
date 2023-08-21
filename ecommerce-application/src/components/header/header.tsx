@@ -7,12 +7,12 @@ import { buttonsText, anchorsText, logoText } from '../../types/elementsText';
 import BurgerMenu from './BurgerMenu/BurgerMenu';
 import HeaderMini from './headerMini';
 import { LogInContext } from '../app';
-import { MouseEventHandler, useContext, useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import { loginStateChangeProp } from '../../types/routingTypes';
 
 function Header({ loginStateChange }: loginStateChangeProp) {
   const isLoggedIn = useContext(LogInContext);
-  const logout: MouseEventHandler = () => {
+  const logout = () => {
     loginStateChange(false);
     window.localStorage.clear();
   };
