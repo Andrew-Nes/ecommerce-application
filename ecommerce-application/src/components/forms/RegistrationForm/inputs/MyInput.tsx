@@ -13,7 +13,7 @@ export default function MyInput(props: MyInputProps) {
       <input
         className={`input registration__input ${
           props.errors[props.name] ? 'input__error' : ''
-        }`}
+        } ${props.stateSameAddress ? 'value-input' : ''}`}
         type={props.type}
         {...props.register(props.name, {
           required: requiredErrorText,

@@ -88,9 +88,9 @@ export default function RegistrationForm({ logIn }: { logIn(): void }) {
 
   function setBillingAddress() {
     if (!isSetSameAddress) {
-      setValue('cityBilling', getValues('cityShipping'));
-      setValue('streetBilling', getValues('streetShipping'));
-      setValue('postalCodeBilling', getValues('postalCodeShipping'));
+      setValue('cityBilling', 'city');
+      setValue('streetBilling', 'street');
+      setValue('postalCodeBilling', '12345');
       setValue('countryBilling', getValues('countryShipping'));
       trigger([
         'cityBilling',
