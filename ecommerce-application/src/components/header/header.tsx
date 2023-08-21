@@ -1,5 +1,5 @@
 import './header.scss';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { routes } from '../../types/routingTypes';
 import RedirectButton from '../redirect-button/redirect-button';
 import Logo from '../../../assets/img/shopLogo.png';
@@ -12,9 +12,11 @@ import { loginStateChangeProp } from '../../types/routingTypes';
 
 function Header({ loginStateChange }: loginStateChangeProp) {
   const isLoggedIn = useContext(LogInContext);
+  const redirect = useNavigate();
   const logout = () => {
     loginStateChange(false);
     window.localStorage.clear();
+    redirect(routes.MAIN);
   };
   const path = useLocation();
   const location = window.location.pathname;
