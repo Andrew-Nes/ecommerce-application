@@ -1,9 +1,14 @@
-import { Link, useLocation } from 'react-router-dom';
-import { loginStateChangeProp, routes } from '../../types/routingTypes';
 import './header.scss';
+import { Link, useLocation } from 'react-router-dom';
+import { routes } from '../../types/routingTypes';
 import RedirectButton from '../redirect-button/redirect-button';
+import Logo from '../../../assets/img/shopLogo.png';
+import { buttonsText, anchorsText, logoText } from '../../types/elementsText';
+import BurgerMenu from './BurgerMenu/BurgerMenu';
+import HeaderMini from './headerMini';
 import { LogInContext } from '../app';
 import { MouseEventHandler, useContext, useEffect } from 'react';
+import { loginStateChangeProp } from '../../types/routingTypes';
 
 function Header({ loginStateChange }: loginStateChangeProp) {
   const isLoggedIn = useContext(LogInContext);
@@ -13,36 +18,58 @@ function Header({ loginStateChange }: loginStateChangeProp) {
   };
   const path = useLocation();
   const location = window.location.pathname;
-  const existingPaths = Object.values(routes).join('-').split('-');
+  const existingPaths = Object.values(routes) as string[];
   useEffect(() => {}, [path]);
   if (existingPaths.includes(location)) {
     return (
       <header className="header">
-        <Link to={routes.MAIN}>
-          <div className="logo">
-            <img src="" alt="LOGO image here" className="logo__image" />
-            <p className="logo__text">LOGO text here</p>
+        <div className="wrapper header__wrapper">
+          <div className="header__block header__block_links">
+            <nav className="nav">
+              <ul className="nav__list list">
+                <li className="list__item" key="main">
+                  <Link className="list__link" to={routes.MAIN}>
+                    {anchorsText.MAIN}
+                  </Link>
+                </li>
+              </ul>
+            </nav>
+            <div className="header__buttons">
+              {!isLoggedIn ? (
+                <RedirectButton
+                  className="button header__button header__button_login"
+                  text={buttonsText.LOGIN}
+                  route={routes.LOGIN}
+                />
+              ) : (
+                <button
+                  className="button header__button header__button_login"
+                  onClick={logout}
+                >
+                  {buttonsText.LOGOUT}
+                </button>
+              )}
+              <RedirectButton
+                className="button header__button header__button_signup"
+                text={buttonsText.SIGNUP}
+                route={routes.REGISTER}
+              />
+            </div>
           </div>
-        </Link>
-        <nav className="navigation">
-          <ul className="navigation__list">
-            <li className="navigation__list-item" key="main">
-              <Link to={routes.MAIN}>Main</Link>
-            </li>
-          </ul>
-          <div className="navigation__buttons">
-            {!isLoggedIn ? (
-              <RedirectButton text="LogIn" route={routes.LOGIN} />
-            ) : (
-              <button onClick={logout}>LogOut</button>
-            )}
-            <RedirectButton text="Register" route={routes.REGISTER} />
+          <div className="header__block header__block_logo">
+            <BurgerMenu />
+            <div className="logo">
+              <Link className="logo__link" to={routes.MAIN}>
+                <img src={Logo} alt="Logo" className="logo__image" />
+                <p className="logo__text">{logoText.LOGO}</p>
+              </Link>
+            </div>
           </div>
-        </nav>
+        </div>
       </header>
     );
   } else {
-    return <h1>Alternative header</h1>;
+    return <HeaderMini />;
   }
 }
 
