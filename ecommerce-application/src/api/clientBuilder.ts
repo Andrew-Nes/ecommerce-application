@@ -8,17 +8,17 @@ import {
 } from '@commercetools/sdk-client-v2';
 import TokenStorage from './tokenStorage';
 
-const scopes = import.meta.env.VITE_CTP_SCOPES.split(' ');
-const projectKey = import.meta.env.VITE_CTP_PROJECT_KEY;
+const scopes: string[] = import.meta.env.VITE_CTP_SCOPES.split(' ') || [];
+const projectKey: string = import.meta.env.VITE_CTP_PROJECT_KEY || '';
 const commonTokenStorage = new TokenStorage();
 const clientTokenStorage = new TokenStorage();
 
 const authMiddlewareOptions: AuthMiddlewareOptions = {
-  host: import.meta.env.VITE_CTP_AUTH_URL,
+  host: import.meta.env.VITE_CTP_AUTH_URL || '',
   projectKey,
   credentials: {
-    clientId: import.meta.env.VITE_CTP_CLIENT_ID,
-    clientSecret: import.meta.env.VITE_CTP_CLIENT_SECRET,
+    clientId: import.meta.env.VITE_CTP_CLIENT_ID || '',
+    clientSecret: import.meta.env.VITE_CTP_CLIENT_SECRET || '',
   },
   scopes,
   fetch,
@@ -26,18 +26,18 @@ const authMiddlewareOptions: AuthMiddlewareOptions = {
 };
 
 const anonymousAuthMiddlewareOptions: AnonymousAuthMiddlewareOptions = {
-  host: import.meta.env.VITE_CTP_AUTH_URL,
+  host: import.meta.env.VITE_CTP_AUTH_URL || '',
   projectKey,
   credentials: {
-    clientId: import.meta.env.VITE_CTP_CLIENT_ID,
-    clientSecret: import.meta.env.VITE_CTP_CLIENT_SECRET,
+    clientId: import.meta.env.VITE_CTP_CLIENT_ID || '',
+    clientSecret: import.meta.env.VITE_CTP_CLIENT_SECRET || '',
   },
   scopes,
   fetch,
 };
 
 const httpMiddlewareOptions: HttpMiddlewareOptions = {
-  host: import.meta.env.VITE_CTP_API_URL,
+  host: import.meta.env.VITE_CTP_API_URL || '',
   fetch,
 };
 
@@ -46,11 +46,11 @@ function getPasswordAuthMiddlewareOptions(
   password: string
 ): PasswordAuthMiddlewareOptions {
   return {
-    host: import.meta.env.VITE_CTP_AUTH_URL,
+    host: import.meta.env.VITE_CTP_AUTH_URL || '',
     projectKey,
     credentials: {
-      clientId: import.meta.env.VITE_CTP_CLIENT_ID,
-      clientSecret: import.meta.env.VITE_CTP_CLIENT_SECRET,
+      clientId: import.meta.env.VITE_CTP_CLIENT_ID || '',
+      clientSecret: import.meta.env.VITE_CTP_CLIENT_SECRET || '',
       user: {
         username,
         password,

@@ -7,8 +7,12 @@ import {
   projectKey,
   getAuthClient,
 } from './clientBuilder';
+import { ByProjectKeyRequestBuilder } from '@commercetools/platform-sdk/dist/declarations/src/generated/client/by-project-key-request-builder';
 
-function createClientPasswordFlow(username: string, password: string) {
+function createClientPasswordFlow(
+  username: string,
+  password: string
+): ByProjectKeyRequestBuilder {
   const client = getPasswordAuthClient(username, password);
   const apiRoot = createApiBuilderFromCtpClient(client).withProjectKey({
     projectKey,
@@ -30,7 +34,7 @@ export const loginClient = async (username: string, password: string) => {
     .execute();
 };
 
-function createClientCredentialFlow() {
+function createClientCredentialFlow(): ByProjectKeyRequestBuilder {
   const client = getAuthClient();
   const apiRoot = createApiBuilderFromCtpClient(client).withProjectKey({
     projectKey,
