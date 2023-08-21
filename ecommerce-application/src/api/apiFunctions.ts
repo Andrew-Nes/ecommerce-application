@@ -1,4 +1,4 @@
-import { createApiBuilderFromCtpClient, MyCustomerDraft } from '@commercetools/platform-sdk';
+import { createApiBuilderFromCtpClient, CustomerDraft } from '@commercetools/platform-sdk';
 import { getPasswordAuthClient, projectKey, getAuthClient } from './clientBuilder';
 
 function createClientPasswordFlow(username: string, password: string) {
@@ -30,14 +30,14 @@ function createClientCredentialFlow() {
   return apiRoot;
 }
 
-
-export const CreateClient = async (data: MyCustomerDraft) => {
+export const CreateCustomer = async (data: CustomerDraft) => {
   const client = createClientCredentialFlow()
   await client
-    .me()
-    .signup()
+    .customers()
     .post({
       body: data
     })
     .execute()
 }
+
+
