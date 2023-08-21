@@ -27,10 +27,6 @@ export default function MyPassInput(props: MyInputProps) {
         {...props.register(props.name, {
           required: `${props.title} is required`,
           validate: props.validate,
-          /*minLength: {
-            value: 8,
-            message: errorsMessage.PASSWORD_LENGTH,
-          },*/
         })}
         title={props.name}
       />
