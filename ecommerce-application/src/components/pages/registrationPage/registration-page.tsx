@@ -1,12 +1,14 @@
 import './registration-page.scss';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { anchorsText, paragraphText } from '../../../types/elementsText';
 import RegistrationForm from '../../forms/RegistrationForm/RegistrationForm';
 import { routes, loginStateChangeProp } from '../../../types/routingTypes';
 
 function RegistrationPage({ loginStateChange }: loginStateChangeProp) {
+  const redirect = useNavigate();
   function logIn() {
     loginStateChange(true);
+    redirect(routes.MAIN);
   }
   return (
     <main className="main registration-page">

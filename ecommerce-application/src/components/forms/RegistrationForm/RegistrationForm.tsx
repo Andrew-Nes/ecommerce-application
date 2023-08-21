@@ -14,8 +14,6 @@ import { serviceErrors } from '../../../types/formTypes';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { errorsMessage } from '../../../types/formTypes';
-import { useNavigate } from 'react-router-dom';
-import { routes } from '../../../types/routingTypes';
 import { buttonsText, headingText } from '../../../types/elementsText';
 
 const COUNTRIES: string[] = ['US'];
@@ -35,8 +33,6 @@ export default function RegistrationForm({ logIn }: { logIn(): void }) {
 
   const [isSetSameAddress, setSameAddress] = useState(false);
 
-  const redirect = useNavigate();
-
   const onSubmit: SubmitHandler<RegistrationFormData> = async (
     data: RegistrationFormData
   ) => {
@@ -45,7 +41,6 @@ export default function RegistrationForm({ logIn }: { logIn(): void }) {
       await loginClient(data.email, data.password);
       reset();
       logIn();
-      redirect(routes.MAIN);
       toast.success('Registration completed successfully! You Log In.', {
         position: 'bottom-center',
       });
