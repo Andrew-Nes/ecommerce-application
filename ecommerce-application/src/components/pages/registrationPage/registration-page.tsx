@@ -18,7 +18,7 @@ function RegistrationPage({ loginStateChange }: loginStateChangeProp) {
           {paragraphText.REGISTRATION_PAGE_PARAGRAPH}
           <span>
             <Link to={routes.LOGIN} className="registration__anchor">
-              {anchorsText.LOGIN}
+              {anchorsText.LOGIN_CLICK}
             </Link>
           </span>
         </p>

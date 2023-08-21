@@ -10,7 +10,11 @@ import {
 } from '../../../types/formTypes';
 import { loginClient } from '../../../api/apiFunctions';
 import { ClientResponse, ErrorResponse } from '@commercetools/platform-sdk';
-import { buttonsText, headingText } from '../../../types/elementsText';
+import {
+  buttonsText,
+  headingText,
+  popupText,
+} from '../../../types/elementsText';
 import { validateFields } from '../RegistrationForm/validateFields';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -52,7 +56,7 @@ export default function LoginForm({ logIn }: { logIn(): void }) {
       await loginClient(data.email, data.password);
       logIn();
       reset();
-      toast.success('Registration completed successfully! You Log In.', {
+      toast.success(popupText.LOGIN_SUCCESS, {
         position: 'bottom-center',
       });
     } catch (error) {

@@ -14,7 +14,11 @@ import { serviceErrors } from '../../../types/formTypes';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { errorsMessage } from '../../../types/formTypes';
-import { buttonsText, headingText } from '../../../types/elementsText';
+import {
+  buttonsText,
+  headingText,
+  popupText,
+} from '../../../types/elementsText';
 
 const COUNTRIES: string[] = ['US'];
 const defaultCountryIndex: number = 0;
@@ -41,7 +45,7 @@ export default function RegistrationForm({ logIn }: { logIn(): void }) {
       await loginClient(data.email, data.password);
       reset();
       logIn();
-      toast.success('Registration completed successfully! You Log In.', {
+      toast.success(popupText.REGISTRATION_SUCCESS, {
         position: 'bottom-center',
       });
     } catch (error) {
@@ -64,7 +68,7 @@ export default function RegistrationForm({ logIn }: { logIn(): void }) {
         errorCode === serviceErrors.INVALID_CUSTOMER_CREDENTIALS &&
         errorMessage !== serviceErrors.DUPLICATE_FIELD
       ) {
-        toast.error(errorsMessage.TOAST_INVALID_INPUT, {
+        toast.error(popupText.REGISTRATION_FAIL, {
           position: 'bottom-center',
         });
       }

@@ -4,6 +4,7 @@ import BurgerButton from './BurgerButton';
 import { Link } from 'react-router-dom';
 import { loginStateChangeProp, routes } from '../../../types/routingTypes';
 import { LogInContext } from '../../app';
+import { anchorsText } from '../../../types/elementsText';
 
 export default function BurgerMenu({ loginStateChange }: loginStateChangeProp) {
   const [open, setOpen] = useState<boolean>(false);
@@ -18,7 +19,7 @@ export default function BurgerMenu({ loginStateChange }: loginStateChangeProp) {
     <div className="burger-menu">
       <nav className={`burger__nav ${open ? 'burger__nav_open' : ''}`}>
         <Link className="burger__link" to={routes.MAIN} onClick={() => close()}>
-          Main
+          {anchorsText.MAIN}
         </Link>
         {!isLoggedIn ? (
           <Link
@@ -26,7 +27,7 @@ export default function BurgerMenu({ loginStateChange }: loginStateChangeProp) {
             to={routes.LOGIN}
             onClick={() => close()}
           >
-            Login
+            {anchorsText.LOGIN}
           </Link>
         ) : (
           <Link
@@ -37,7 +38,7 @@ export default function BurgerMenu({ loginStateChange }: loginStateChangeProp) {
               close();
             }}
           >
-            Logout
+            {anchorsText.LOGOUT}
           </Link>
         )}
         <Link
@@ -45,7 +46,7 @@ export default function BurgerMenu({ loginStateChange }: loginStateChangeProp) {
           to={routes.REGISTER}
           onClick={() => close()}
         >
-          Sign up
+          {anchorsText.SIGNUP}
         </Link>
       </nav>
       <BurgerButton open={open} setOpen={setOpen} />
