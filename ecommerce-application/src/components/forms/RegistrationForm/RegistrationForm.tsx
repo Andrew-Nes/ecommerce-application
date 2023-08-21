@@ -22,7 +22,7 @@ import { buttonsText, headingText } from '../../../types/elementsText';
 const COUNTRIES: string[] = ['US'];
 const defaultCountryIndex: number = 0;
 
-export default function RegistrationForm() {
+export default function RegistrationForm({ logIn }: { logIn(): void }) {
   const {
     register,
     handleSubmit,
@@ -45,6 +45,7 @@ export default function RegistrationForm() {
       await CreateCustomer(convertDataForm(data, isSetSameAddress));
       await loginClient(data.email, data.password);
       reset();
+      logIn()
       redirect(routes.MAIN);
       toast.success('Registration completed successfully! You Log In.', {
         position: 'bottom-center',

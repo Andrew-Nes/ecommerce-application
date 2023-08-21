@@ -29,7 +29,7 @@ function App() {
             path="login"
             element={<LoginPage loginStateChange={logInStateChange} />}
           />
-          <Route path="register" element={<RegistrationPage />} />
+          <Route path="register" element={<RegistrationPage loginStateChange={logInStateChange}/>} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </BrowserRouter>
