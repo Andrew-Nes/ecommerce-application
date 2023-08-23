@@ -6,6 +6,7 @@ import NotFoundPage from './pages/notFoundPage/not-found-page';
 import Header from './header/header';
 import { ToastContainer } from 'react-toastify';
 import { createContext, useState } from 'react';
+import CatalogPage from './pages/catalogPage/catalog-page';
 
 export const LogInContext = createContext(false);
 
@@ -32,6 +33,7 @@ function App() {
             path="register"
             element={<RegistrationPage loginStateChange={logInStateChange} />}
           />
+          <Route path="catalog" element={<CatalogPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </BrowserRouter>
