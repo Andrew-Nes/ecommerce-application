@@ -53,11 +53,13 @@ export const validateFields = {
       /[0-9]/.test(value) || errorsMessage.PASSWORD_DIGIT,
 
     specialCharacter: (value: string) =>
-      /[!@#$%^&*]/.test(value) || errorsMessage.PASSWORD_SPECIAL_CHARACTER,
+      /[-=+!@"№;:?#$%_()><,.|{}'`~/\\^&\[*\]]/.test(value) ||
+      errorsMessage.PASSWORD_SPECIAL_CHARACTER,
   },
   FIRST_NAME_VALIDATE: {
     specialCharacter: (value: string) =>
-      !/[!@#$%^&*]/.test(value) || errorsMessage.FIRST_NAME_SPECIAL_CHARACTER,
+      !/[-=+!@"№;:?#$%_()><,.|{}'`~/\\^&\[*\]]/.test(value) ||
+      errorsMessage.FIRST_NAME_SPECIAL_CHARACTER,
     digitExisting: (value: string) =>
       !/[0-9]/.test(value) || errorsMessage.FIRST_NAME_NUMBERS,
     oneCharacter: (value: string) =>
@@ -65,7 +67,8 @@ export const validateFields = {
   },
   LAST_NAME_VALIDATE: {
     specialCharacter: (value: string) =>
-      !/[!@#$%^&*]/.test(value) || errorsMessage.LAST_NAME_SPECIAL_CHARACTER,
+      !/[-=+!@"№;:?#$%_()><,.|{}'`~/\\^&\[*\]]/.test(value) ||
+      errorsMessage.LAST_NAME_SPECIAL_CHARACTER,
     digitExisting: (value: string) =>
       !/[0-9]/.test(value) || errorsMessage.LAST_NAME_NUMBERS,
     oneCharacter: (value: string) =>
@@ -82,7 +85,8 @@ export const validateFields = {
 
   CITY_VALIDATE: {
     specialCharacter: (value: string) =>
-      !/[!@#$%^&*]/.test(value) || errorsMessage.CITY_SPECIAL_CHARACTER,
+      !/[-=+!@"№;:?#$%_()><,.|{}'`~/\\^&\[*\]]/.test(value) ||
+      errorsMessage.CITY_SPECIAL_CHARACTER,
     digitExisting: (value: string) =>
       !/[0-9]/.test(value) || errorsMessage.CITY_NUMBERS,
     oneCharacter: (value: string) =>
