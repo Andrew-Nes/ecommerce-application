@@ -30,6 +30,14 @@ export default function BurgerMenu({ loginStateChange }: loginStateChangeProp) {
             {anchorsText.LOGIN}
           </Link>
         ) : (
+          <div className='logged-in-links__container'>
+            <Link
+            className="burger__link"
+            to={routes.PROFILE}
+            onClick={() => close()}
+          >
+            {anchorsText.PROFILE}
+          </Link>
           <Link
             className="burger__link"
             to={routes.MAIN}
@@ -40,6 +48,8 @@ export default function BurgerMenu({ loginStateChange }: loginStateChangeProp) {
           >
             {anchorsText.LOGOUT}
           </Link>
+          </div>
+
         )}
         <Link
           className="burger__link"
