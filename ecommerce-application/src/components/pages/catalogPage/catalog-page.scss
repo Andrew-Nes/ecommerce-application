@@ -1,0 +1,25 @@
+.catalog-page__wrapper {
+  padding-top: 15px;
+}
+
+.breadcrumbs__item {
+  display: inline;
+}
+
+.breadcrumbs__item + .breadcrumbs__item:before {
+  content: '>';
+  padding: 10px;
+}
+
+.breadcrumbs__list {
+  font-size: 10px;
+  transition: 0.5s;
+}
+
+.breadcrumbs__list:hover {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.catalog__heading {
+  text-align: center;
+}
