@@ -6,6 +6,7 @@ import NotFoundPage from './pages/notFoundPage/not-found-page';
 import Header from './header/header';
 import { ToastContainer } from 'react-toastify';
 import { createContext, useState } from 'react';
+import ProfilePage from './pages/profilePage/profile-page';
 
 export const LogInContext = createContext(false);
 
@@ -31,6 +32,10 @@ function App() {
           <Route
             path="register"
             element={<RegistrationPage loginStateChange={logInStateChange} />}
+          />
+          <Route
+            path="profile"
+            element={<ProfilePage/>}
           />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
