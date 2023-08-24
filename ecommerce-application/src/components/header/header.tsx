@@ -3,12 +3,14 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { routes } from '../../types/routingTypes';
 import RedirectButton from '../redirect-button/redirect-button';
 import Logo from '../../../assets/img/shopLogo.png';
+import ProfileIcon from '../../../assets/img/user-profile.svg';
 import { buttonsText, anchorsText, logoText } from '../../types/elementsText';
 import BurgerMenu from './BurgerMenu/BurgerMenu';
 import HeaderMini from './headerMini';
 import { LogInContext } from '../app';
 import { useContext, useEffect } from 'react';
 import { loginStateChangeProp } from '../../types/routingTypes';
+import RedirectIcon from '../redirect-button/redirect-icon';
 
 function Header({ loginStateChange }: loginStateChangeProp) {
   const isLoggedIn = useContext(LogInContext);
@@ -37,19 +39,29 @@ function Header({ loginStateChange }: loginStateChangeProp) {
               </ul>
             </nav>
             <div className="header__buttons">
-              {!isLoggedIn ? (
+              {
+              !isLoggedIn ? (
                 <RedirectButton
                   className="button header__button header__button_login"
                   text={buttonsText.LOGIN}
                   route={routes.LOGIN}
                 />
               ) : (
+                <div className='logged-in-buttons__container'>
+                  <RedirectIcon
+                    className="profile_icon"
+                    alt={'Profile'}
+                    route={routes.PROFILE}
+                    src={ProfileIcon}
+                  />
                 <button
                   className="button header__button header__button_login"
                   onClick={logout}
                 >
                   {buttonsText.LOGOUT}
                 </button>
+                </div>
+
               )}
               <RedirectButton
                 className="button header__button header__button_signup"
