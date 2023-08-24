@@ -12,10 +12,10 @@ export interface buttonProps {
   className?: string;
 }
 export interface iconProps {
-  src: string,
-  route: string,
-  className?: string,
-  alt: string
+  src: string;
+  route: string;
+  className?: string;
+  alt: string;
 }
 export interface loginStateChangeProp {
   loginStateChange: (newValue: boolean) => void;

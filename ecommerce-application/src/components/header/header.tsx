@@ -39,29 +39,27 @@ function Header({ loginStateChange }: loginStateChangeProp) {
               </ul>
             </nav>
             <div className="header__buttons">
-              {
-              !isLoggedIn ? (
+              {!isLoggedIn ? (
                 <RedirectButton
                   className="button header__button header__button_login"
                   text={buttonsText.LOGIN}
                   route={routes.LOGIN}
                 />
               ) : (
-                <div className='logged-in-buttons__container'>
+                <div className="logged-in-buttons__container">
                   <RedirectIcon
                     className="profile_icon"
                     alt={'Profile'}
                     route={routes.PROFILE}
                     src={ProfileIcon}
                   />
-                <button
-                  className="button header__button header__button_login"
-                  onClick={logout}
-                >
-                  {buttonsText.LOGOUT}
-                </button>
+                  <button
+                    className="button header__button header__button_login"
+                    onClick={logout}
+                  >
+                    {buttonsText.LOGOUT}
+                  </button>
                 </div>
-
               )}
               <RedirectButton
                 className="button header__button header__button_signup"
