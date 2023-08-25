@@ -6,19 +6,15 @@ import { routes } from '../../../types/routingTypes';
 import { Tooltip } from 'react-tooltip';
 
 interface CatalogHeaderProp {
-  categories: Category[];
+  mainCategories: Category[];
+  subCategories: Category[];
 }
 
 export default function CatalogHeader(props: CatalogHeaderProp) {
-  const mainCategories = props.categories.filter(
-    (category) => !category.parent
-  );
-  const subCategories = props.categories.filter((category) => category.parent);
-
   return (
     <header className="catalog__header">
       <ul className="list catalog__header__list">
-        {mainCategories.map((category) => (
+        {props.mainCategories.map((category) => (
           <li className="list__item catalog__header__item" key={category.key}>
             <Link
               id={category.key}
@@ -34,10 +30,13 @@ export default function CatalogHeader(props: CatalogHeaderProp) {
               clickable
             >
               <ul className="list tooltip__list">
-                {subCategories
+                {props.subCategories
                   .filter((cat) => cat.parent?.id === category.id)
                   .map((cat) => (
-                    <li className="list__item tooltip__list__item">
+                    <li
+                      key={cat.key}
+                      className="list__item tooltip__list__item"
+                    >
                       <Link
                         className="list__link tooltip__list__link"
                         to={routes.CATALOG}
