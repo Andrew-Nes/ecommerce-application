@@ -1,12 +1,12 @@
-import './RegistrationForm.scss';
+import './registrationForm.scss';
 import { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import type { RegistrationFormData } from '../../../types/registrationFormTypes';
-import MyInput from './inputs/MyInput';
+import MyInput from './Inputs/MyInput';
 import { validateFields } from './validateFields';
-import MyCountrySelect from './inputs/MyCountrySelect';
-import MyCheckBox from './inputs/myCheckBox/MyCheckBox';
-import MyPassInput from './inputs/MyPassInput';
+import MyCountrySelect from './Inputs/MyCountrySelect';
+import MyCheckBox from './Inputs/MyCheckBox/MyCheckBox';
+import MyPassInput from './Inputs/MyPassInput';
 import { CreateCustomer, loginClient } from '../../../api/apiFunctions';
 import convertDataForm from '../../../types/registrationFormTypes';
 import { ClientResponse, ErrorResponse } from '@commercetools/platform-sdk';

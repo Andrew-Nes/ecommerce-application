@@ -1,9 +1,9 @@
 import { Route, BrowserRouter, Routes } from 'react-router-dom';
-import MainPage from './pages/mainPage/main-page';
-import LoginPage from './pages/loginPage/login-page';
-import RegistrationPage from './pages/registrationPage/registration-page';
-import NotFoundPage from './pages/notFoundPage/not-found-page';
-import Header from './header/header';
+import MainPage from './pages/MainPage/MainPage';
+import LoginPage from './pages/LoginPage/LoginPage';
+import RegistrationPage from './pages/RegistrationPage/RegistrationPage';
+import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
+import Header from './Header/Header';
 import { ToastContainer } from 'react-toastify';
 import { createContext, useState } from 'react';
 

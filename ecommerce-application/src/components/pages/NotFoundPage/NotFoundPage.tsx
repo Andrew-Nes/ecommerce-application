@@ -1,4 +1,4 @@
-import './not-found-page.scss';
+import './notFoundPage.scss';
 import { routes } from '../../../types/routingTypes';
 import notFountImage from '../../../../assets/img/404-page-image1.png';
 import {

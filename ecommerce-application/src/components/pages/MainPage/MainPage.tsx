@@ -1,5 +1,5 @@
-import './main-page.scss';
-import RedirectButton from '../../redirect-button/redirect-button';
+import './mainPage.scss';
+import RedirectButton from '../../RedirectButton/RedirectButton';
 import { routes } from '../../../types/routingTypes';
 import {
   buttonsText,

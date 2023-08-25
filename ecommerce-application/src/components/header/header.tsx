@@ -1,12 +1,12 @@
 import './header.scss';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { routes } from '../../types/routingTypes';
-import RedirectButton from '../redirect-button/redirect-button';
+import RedirectButton from '../RedirectButton/RedirectButton';
 import Logo from '../../../assets/img/shopLogo.png';
 import { buttonsText, anchorsText, logoText } from '../../types/elementsText';
 import BurgerMenu from './BurgerMenu/BurgerMenu';
-import HeaderMini from './headerMini';
-import { LogInContext } from '../app';
+import HeaderMini from './HeaderMini';
+import { LogInContext } from '../App';
 import { useContext, useEffect } from 'react';
 import { loginStateChangeProp } from '../../types/routingTypes';
 

@@ -1,6 +1,6 @@
 import { cleanup, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import LoginForm from '../src/components/forms/loginForm/loginForm';
+import LoginForm from '../src/components/forms/LoginForm/LoginForm';
 import { errorsMessage } from '../src/types/formTypes';
 import { loginClient } from '../src/api/apiFunctions';
 

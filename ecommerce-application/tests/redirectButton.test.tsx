@@ -1,5 +1,5 @@
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
-import App from '../src/components/app';
+import App from '../src/components/App';
 
 jest.mock('../src/api/apiFunctions', () => ({
   loginClient: jest.fn(),

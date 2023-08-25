@@ -3,7 +3,7 @@ import { useContext, useState } from 'react';
 import BurgerButton from './BurgerButton';
 import { Link } from 'react-router-dom';
 import { loginStateChangeProp, routes } from '../../../types/routingTypes';
-import { LogInContext } from '../../app';
+import { LogInContext } from '../../App';
 import { anchorsText } from '../../../types/elementsText';
 
 export default function BurgerMenu({ loginStateChange }: loginStateChangeProp) {

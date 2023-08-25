@@ -1,4 +1,4 @@
-import './MyInput.scss';
+import './myInput.scss';
 import type { MyInputProps } from '../../../../types/registrationFormTypes';
 import { errorsMessage } from '../../../../types/formTypes';
 

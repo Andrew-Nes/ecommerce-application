@@ -1,4 +1,4 @@
-import './registration-page.scss';
+import './registrationPage.scss';
 import { Link, useNavigate } from 'react-router-dom';
 import { anchorsText, paragraphText } from '../../../types/elementsText';
 import RegistrationForm from '../../forms/RegistrationForm/RegistrationForm';
