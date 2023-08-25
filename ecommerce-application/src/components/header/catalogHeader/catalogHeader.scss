@@ -23,3 +23,18 @@
   width: 100%;
   color: white;
 }
+
+.catalog__header__list .tooltip {
+  margin: 0;
+  width: 150px;
+  padding: 15px;
+}
+
+.tooltip__list__link {
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.tooltip__list__link:hover {
+  color: #cba662;
+}
