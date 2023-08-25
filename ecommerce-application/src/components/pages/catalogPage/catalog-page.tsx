@@ -2,10 +2,12 @@ import './catalog-page.scss';
 import { Link } from 'react-router-dom';
 import { routes } from '../../../types/routingTypes';
 import { anchorsText } from '../../../types/elementsText';
+import CatalogHeader from '../../header/catalogHeader/catalogHeader';
 
 export default function CatalogPage() {
   return (
     <main className="main catalog-page">
+      <CatalogHeader />
       <div className="wrapper catalog-page__wrapper">
         <ul className="breadcrumbs list">
           <li className="list__item breadcrumbs__item">

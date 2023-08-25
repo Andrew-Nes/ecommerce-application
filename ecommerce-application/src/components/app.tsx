@@ -5,8 +5,10 @@ import RegistrationPage from './pages/registrationPage/registration-page';
 import NotFoundPage from './pages/notFoundPage/not-found-page';
 import Header from './header/header';
 import { ToastContainer } from 'react-toastify';
-import { createContext, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 import CatalogPage from './pages/catalogPage/catalog-page';
+import { getCategories } from '../api/apiFunctions';
+import { categoriesObj } from '../utils/data/categories';
 
 export const LogInContext = createContext(false);
 
@@ -18,6 +20,14 @@ function App() {
     setIsLoggedIn(newValue);
     window.localStorage.setItem('isLoggedIn', newValue.toString());
   }
+  useEffect(() => {
+    getCategories().then(({ body }) => {
+      const results = body.results;
+      results.forEach((result) =>
+        categoriesObj.setCategory(result.key, result.name, result.id)
+      );
+    });
+  });
   return (
     <LogInContext.Provider value={isLoggedIn}>
       <BrowserRouter>
