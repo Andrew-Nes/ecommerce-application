@@ -1,9 +1,10 @@
 import './loginForm.scss';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { useState } from 'react';
+import { FC, useState } from 'react';
 import closeEyeIcon from '../../../../assets/img/close-eye.png';
 import openEyeIcon from '../../../../assets/img/open-eye.png';
 import {
+  LoginProps,
   PasswordType,
   errorsMessage,
   serviceErrors,
@@ -24,7 +25,7 @@ interface LoginFormData {
   password: string;
 }
 
-export default function LoginForm({ logIn }: { logIn(): void }) {
+const LoginForm: FC<LoginProps> = ({ logIn }) => {
   const [passwordType, setPasswordType] = useState<PasswordType>('password');
   const [iconPath, setIconPath] = useState(closeEyeIcon);
 
@@ -152,4 +153,6 @@ export default function LoginForm({ logIn }: { logIn(): void }) {
       </form>
     </div>
   );
-}
+};
+
+export default LoginForm;

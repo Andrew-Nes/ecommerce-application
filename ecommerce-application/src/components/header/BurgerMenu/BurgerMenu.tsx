@@ -1,12 +1,12 @@
 import './burgerMenu.scss';
-import { useContext, useState } from 'react';
+import { FC, useContext, useState } from 'react';
 import BurgerButton from './BurgerButton';
 import { Link } from 'react-router-dom';
 import { loginStateChangeProp, routes } from '../../../types/routingTypes';
 import { LogInContext } from '../../App';
 import { anchorsText } from '../../../types/elementsText';
 
-export default function BurgerMenu({ loginStateChange }: loginStateChangeProp) {
+const BurgerMenu: FC<loginStateChangeProp> = ({ loginStateChange }) => {
   const [open, setOpen] = useState<boolean>(false);
   const close = () => setOpen(false);
   const isLoggedIn = useContext(LogInContext);
@@ -52,4 +52,6 @@ export default function BurgerMenu({ loginStateChange }: loginStateChangeProp) {
       <BurgerButton open={open} setOpen={setOpen} />
     </div>
   );
-}
+};
+
+export default BurgerMenu;

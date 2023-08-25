@@ -1,5 +1,5 @@
 import './registrationForm.scss';
-import { useState } from 'react';
+import { FC, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import type { RegistrationFormData } from '../../../types/registrationFormTypes';
 import MyInput from './Inputs/MyInput';
@@ -10,7 +10,7 @@ import MyPassInput from './Inputs/MyPassInput';
 import { CreateCustomer, loginClient } from '../../../api/apiFunctions';
 import convertDataForm from '../../../types/registrationFormTypes';
 import { ClientResponse, ErrorResponse } from '@commercetools/platform-sdk';
-import { serviceErrors } from '../../../types/formTypes';
+import { LoginProps, serviceErrors } from '../../../types/formTypes';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { errorsMessage } from '../../../types/formTypes';
@@ -23,7 +23,7 @@ import {
 const COUNTRIES: string[] = ['US'];
 const defaultCountryIndex: number = 0;
 
-export default function RegistrationForm({ logIn }: { logIn(): void }) {
+const RegistrationForm: FC<LoginProps> = ({ logIn }) => {
   const {
     register,
     handleSubmit,
@@ -266,4 +266,6 @@ export default function RegistrationForm({ logIn }: { logIn(): void }) {
       </form>
     </div>
   );
-}
+};
+
+export default RegistrationForm;

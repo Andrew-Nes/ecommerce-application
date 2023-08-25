@@ -4,11 +4,11 @@ import LoginForm from '../../forms/LoginForm/LoginForm';
 import { routes } from '../../../types/routingTypes';
 import { anchorsText, paragraphText } from '../../../types/elementsText';
 import { loginStateChangeProp } from '../../../types/routingTypes';
-import { useContext, useEffect } from 'react';
+import { FC, useContext, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { LogInContext } from '../../App';
 
-function LoginPage({ loginStateChange }: loginStateChangeProp) {
+const LoginPage: FC<loginStateChangeProp> = ({ loginStateChange }) => {
   const isLoggedIn = useContext(LogInContext);
   const path = useLocation();
   const redirect = useNavigate();
@@ -35,6 +35,6 @@ function LoginPage({ loginStateChange }: loginStateChangeProp) {
       </div>
     </main>
   );
-}
+};
 
 export default LoginPage;

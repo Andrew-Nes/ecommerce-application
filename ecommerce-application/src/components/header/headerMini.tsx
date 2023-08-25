@@ -3,8 +3,9 @@ import { Link } from 'react-router-dom';
 import { routes } from '../../types/routingTypes';
 import Logo from '../../../assets/img/shopLogo.png';
 import { logoText } from '../../types/elementsText';
+import { FC } from 'react';
 
-function HeaderMini() {
+const HeaderMini: FC = () => {
   return (
     <header className="header-mini">
       <div className="wrapper header-mini__wrapper">
@@ -19,6 +20,6 @@ function HeaderMini() {
       </div>
     </header>
   );
-}
+};
 
 export default HeaderMini;

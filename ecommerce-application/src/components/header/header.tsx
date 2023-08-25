@@ -7,10 +7,10 @@ import { buttonsText, anchorsText, logoText } from '../../types/elementsText';
 import BurgerMenu from './BurgerMenu/BurgerMenu';
 import HeaderMini from './HeaderMini';
 import { LogInContext } from '../App';
-import { useContext, useEffect } from 'react';
+import { FC, useContext, useEffect } from 'react';
 import { loginStateChangeProp } from '../../types/routingTypes';
 
-function Header({ loginStateChange }: loginStateChangeProp) {
+const Header: FC<loginStateChangeProp> = ({ loginStateChange }) => {
   const isLoggedIn = useContext(LogInContext);
   const redirect = useNavigate();
   const logout = () => {
@@ -73,6 +73,6 @@ function Header({ loginStateChange }: loginStateChangeProp) {
   } else {
     return <HeaderMini />;
   }
-}
+};
 
 export default Header;

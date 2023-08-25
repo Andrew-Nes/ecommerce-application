@@ -6,8 +6,9 @@ import {
   headingText,
   paragraphText,
 } from '../../../types/elementsText';
+import { FC } from 'react';
 
-function MainPage() {
+const MainPage: FC = () => {
   return (
     <main className="main main-page">
       <div className="wrapper main-page__wrapper">
@@ -32,6 +33,6 @@ function MainPage() {
       </div>
     </main>
   );
-}
+};
 
 export default MainPage;

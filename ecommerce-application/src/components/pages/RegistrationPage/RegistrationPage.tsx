@@ -3,13 +3,15 @@ import { Link, useNavigate } from 'react-router-dom';
 import { anchorsText, paragraphText } from '../../../types/elementsText';
 import RegistrationForm from '../../forms/RegistrationForm/RegistrationForm';
 import { routes, loginStateChangeProp } from '../../../types/routingTypes';
+import { FC } from 'react';
 
-function RegistrationPage({ loginStateChange }: loginStateChangeProp) {
+const RegistrationPage: FC<loginStateChangeProp> = ({ loginStateChange }) => {
   const redirect = useNavigate();
-  function logIn() {
+  const logIn = () => {
     loginStateChange(true);
     redirect(routes.MAIN);
-  }
+  };
+
   return (
     <main className="main registration-page">
       <div className="wrapper login-page__wrapper">
@@ -25,6 +27,6 @@ function RegistrationPage({ loginStateChange }: loginStateChangeProp) {
       </div>
     </main>
   );
-}
+};
 
 export default RegistrationPage;

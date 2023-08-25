@@ -1,9 +1,11 @@
+import { FC } from 'react';
+
 type BurgerButtonProps = {
   open: boolean;
   setOpen: (v: boolean) => void;
 };
 
-export default function BurgerButton(props: BurgerButtonProps) {
+const BurgerButton: FC<BurgerButtonProps> = (props) => {
   return (
     <button
       className={`burger__button ${props.open ? 'burger__button_open' : ''}`}
@@ -14,4 +16,6 @@ export default function BurgerButton(props: BurgerButtonProps) {
       <div />
     </button>
   );
-}
+};
+
+export default BurgerButton;

@@ -1,11 +1,11 @@
 import './MyInput.scss';
-import { useState } from 'react';
+import { FC, useState } from 'react';
 import type { MyInputProps } from '../../../../types/registrationFormTypes';
 import { PasswordType } from '../../../../types/formTypes';
 import closeEyeIcon from '../../../../../assets/img/close-eye.png';
 import openEyeIcon from '../../../../../assets/img/open-eye.png';
 
-export default function MyPassInput(props: MyInputProps) {
+const MyPassInput: FC<MyInputProps> = (props) => {
   const [passwordType, setPasswordType] = useState<PasswordType>('password');
   const [iconPath, setIconPath] = useState(closeEyeIcon);
 
@@ -41,4 +41,6 @@ export default function MyPassInput(props: MyInputProps) {
       </span>
     </div>
   );
-}
+};
+
+export default MyPassInput;

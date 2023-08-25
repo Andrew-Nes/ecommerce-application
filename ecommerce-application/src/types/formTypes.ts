@@ -46,5 +46,9 @@ enum serviceErrors {
 
 type PasswordType = 'password' | 'text';
 
+export interface LoginProps {
+  logIn: () => void;
+}
+
 export { errorsMessage, serviceErrors };
 export type { PasswordType };

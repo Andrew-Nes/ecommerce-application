@@ -7,8 +7,9 @@ import {
   paragraphText,
 } from '../../../types/elementsText';
 import { Link } from 'react-router-dom';
+import { FC } from 'react';
 
-function NotFoundPage() {
+const NotFoundPage: FC = () => {
   return (
     <main className="main not-found-page">
       <div className="wrapper not-found-page__wrapper">
@@ -33,6 +34,6 @@ function NotFoundPage() {
       </div>
     </main>
   );
-}
+};
 
 export default NotFoundPage;

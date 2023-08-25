@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router-dom';
-import { MouseEventHandler } from 'react';
+import { FC, MouseEventHandler } from 'react';
 import { buttonProps } from '../../types/routingTypes';
 
-function RedirectButton({ text, route, className }: buttonProps) {
+const RedirectButton: FC<buttonProps> = ({ text, route, className }) => {
   const redirect = useNavigate();
   const redirection: MouseEventHandler = () => {
     redirect(route);
@@ -12,6 +12,6 @@ function RedirectButton({ text, route, className }: buttonProps) {
       {text}
     </button>
   );
-}
+};
 
 export default RedirectButton;

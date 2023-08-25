@@ -1,7 +1,8 @@
-import './MyInput.scss';
+import './myInput.scss';
 import type { MyInputProps } from '../../../../types/registrationFormTypes';
+import { FC } from 'react';
 
-export default function MyCountrySelect(props: MyInputProps) {
+const MyCountrySelect: FC<MyInputProps> = (props) => {
   return (
     <div className="input-wrapper">
       <label className="label">{props.title}:</label>
@@ -17,4 +18,6 @@ export default function MyCountrySelect(props: MyInputProps) {
       </select>
     </div>
   );
-}
+};
+
+export default MyCountrySelect;

@@ -1,7 +1,8 @@
+import { FC } from 'react';
 import { MyInputProps } from '../../../../../types/registrationFormTypes';
 import '../../RegistrationForm.scss';
 
-export default function MyCheckBox(props: MyInputProps) {
+const MyCheckBox: FC<MyInputProps> = (props) => {
   return (
     <div className="checkbox__container">
       <label>{props.title}</label>
@@ -13,4 +14,6 @@ export default function MyCheckBox(props: MyInputProps) {
       />
     </div>
   );
-}
+};
+
+export default MyCheckBox;

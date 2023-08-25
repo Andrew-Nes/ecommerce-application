@@ -1,8 +1,9 @@
 import './myInput.scss';
 import type { MyInputProps } from '../../../../types/registrationFormTypes';
 import { errorsMessage } from '../../../../types/formTypes';
+import { FC } from 'react';
 
-export default function MyInput(props: MyInputProps) {
+const MyInput: FC<MyInputProps> = (props) => {
   let requiredErrorText: string;
   props.type === 'date'
     ? (requiredErrorText = errorsMessage.DATE_OF_BIRTH_REQUIRED)
@@ -28,4 +29,6 @@ export default function MyInput(props: MyInputProps) {
       </span>
     </div>
   );
-}
+};
+
+export default MyInput;
