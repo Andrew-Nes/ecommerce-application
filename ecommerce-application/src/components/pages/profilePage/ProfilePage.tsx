@@ -3,8 +3,9 @@ import { routes } from '../../../types/routingTypes';
 import { useContext, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { LogInContext } from '../../app';
+import { FC } from 'react';
 
-const ProfilePage = () => {
+const ProfilePage: FC<void> = () => {
   const isLoggedIn = useContext(LogInContext);
   const path = useLocation();
   const redirect = useNavigate();
