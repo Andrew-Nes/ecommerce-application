@@ -1,7 +1,7 @@
 import './registrationPage.scss';
 import { Link, useNavigate } from 'react-router-dom';
 import { anchorsText, paragraphText } from '../../../types/elementsText';
-import RegistrationForm from '../../forms/RegistrationForm/RegistrationForm';
+import RegistrationForm from '../../Forms/RegistrationForm/RegistrationForm';
 import { routes, loginStateChangeProp } from '../../../types/routingTypes';
 import { FC } from 'react';
 

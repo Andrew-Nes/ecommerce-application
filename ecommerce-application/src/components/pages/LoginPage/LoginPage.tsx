@@ -1,6 +1,6 @@
 import './loginPage.scss';
 import { Link } from 'react-router-dom';
-import LoginForm from '../../forms/LoginForm/LoginForm';
+import LoginForm from '../../Forms/LoginForm/LoginForm';
 import { routes } from '../../../types/routingTypes';
 import { anchorsText, paragraphText } from '../../../types/elementsText';
 import { loginStateChangeProp } from '../../../types/routingTypes';
