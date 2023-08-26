@@ -5,7 +5,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { LogInContext } from '../../app';
 import { FC } from 'react';
 
-const ProfilePage: FC<void> = () => {
+const ProfilePage: FC = () => {
   const isLoggedIn = useContext(LogInContext);
   const path = useLocation();
   const redirect = useNavigate();
