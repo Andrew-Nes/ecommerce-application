@@ -10,7 +10,7 @@ import HeaderMini from './headerMini';
 import { LogInContext } from '../app';
 import { useContext, useEffect } from 'react';
 import { loginStateChangeProp } from '../../types/routingTypes';
-import RedirectIcon from '../redirect-button/redirect-icon';
+import RedirectIcon from '../redirect-button/RedirectIcon';
 
 function Header({ loginStateChange }: loginStateChangeProp) {
   const isLoggedIn = useContext(LogInContext);

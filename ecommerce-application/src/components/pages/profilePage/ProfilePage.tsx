@@ -4,7 +4,7 @@ import { useContext, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { LogInContext } from '../../app';
 
-export default function ProfilePage() {
+const ProfilePage = () => {
   const isLoggedIn = useContext(LogInContext);
   const path = useLocation();
   const redirect = useNavigate();
@@ -18,4 +18,6 @@ export default function ProfilePage() {
       <h1>Profile Page</h1>
     </div>
   );
-}
+};
+
+export default ProfilePage;

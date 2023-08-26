@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { MouseEventHandler } from 'react';
 import { iconProps } from '../../types/routingTypes';
 
-function RedirectIcon({ src, route, className, alt }: iconProps) {
+const RedirectIcon = ({ src, route, className, alt }: iconProps) => {
   const redirect = useNavigate();
   const redirection: MouseEventHandler = () => {
     redirect(route);
@@ -12,6 +12,6 @@ function RedirectIcon({ src, route, className, alt }: iconProps) {
       <img src={src} alt={alt} />
     </div>
   );
-}
+};
 
 export default RedirectIcon;

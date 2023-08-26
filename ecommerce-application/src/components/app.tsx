@@ -6,7 +6,7 @@ import NotFoundPage from './pages/notFoundPage/not-found-page';
 import Header from './header/header';
 import { ToastContainer } from 'react-toastify';
 import { createContext, useState } from 'react';
-import ProfilePage from './pages/profilePage/profile-page';
+import ProfilePage from './pages/profilePage/ProfilePage';
 
 export const LogInContext = createContext(false);
 
