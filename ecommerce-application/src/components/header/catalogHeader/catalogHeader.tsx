@@ -4,13 +4,14 @@ import { Languages } from '../../../types/commonDataTypes';
 import { Link } from 'react-router-dom';
 import { routes } from '../../../types/routingTypes';
 import { Tooltip } from 'react-tooltip';
+import { FC } from 'react';
 
 interface CatalogHeaderProp {
   mainCategories: Category[];
   subCategories: Category[];
 }
 
-export default function CatalogHeader(props: CatalogHeaderProp) {
+const CatalogHeader: FC<CatalogHeaderProp> = (props: CatalogHeaderProp) => {
   return (
     <header className="catalog__header">
       <ul className="list catalog__header__list">
@@ -52,4 +53,6 @@ export default function CatalogHeader(props: CatalogHeaderProp) {
       </ul>
     </header>
   );
-}
+};
+
+export default CatalogHeader;

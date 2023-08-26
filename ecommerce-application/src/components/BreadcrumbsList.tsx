@@ -1,11 +1,14 @@
 import { Link } from 'react-router-dom';
 import { BreadcrumbsItem } from '../types/breadcrumbsTypes';
+import { FC } from 'react';
 
 interface BreadcrumbsListProps {
   items: BreadcrumbsItem[];
 }
 
-export default function BreadcrumbsList(props: BreadcrumbsListProps) {
+const BreadcrumbsList: FC<BreadcrumbsListProps> = (
+  props: BreadcrumbsListProps
+) => {
   return (
     <ul className="breadcrumbs list">
       {props.items.map((item) => (
@@ -23,4 +26,6 @@ export default function BreadcrumbsList(props: BreadcrumbsListProps) {
       ))}
     </ul>
   );
-}
+};
+
+export default BreadcrumbsList;

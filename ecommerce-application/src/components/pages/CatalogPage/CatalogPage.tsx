@@ -7,6 +7,7 @@ import BreadcrumbsList from '../../BreadcrumbsList';
 import { BreadcrumbsItem } from '../../../types/breadcrumbsTypes';
 import { useNavigate } from 'react-router-dom';
 import { Languages } from '../../../types/commonDataTypes';
+import { FC } from 'react';
 
 interface CatalogPageProp {
   categories: Category[];
@@ -25,7 +26,7 @@ const lists: BreadcrumbsItem[] = [
   },
 ];
 
-export default function CatalogPage(props: CatalogPageProp) {
+const CatalogPage: FC<CatalogPageProp> = (props: CatalogPageProp) => {
   const redirect = useNavigate();
   const mainCategories = props.categories.filter(
     (category) => !category.parent
@@ -58,4 +59,6 @@ export default function CatalogPage(props: CatalogPageProp) {
       </div>
     </main>
   );
-}
+};
+
+export default CatalogPage;
