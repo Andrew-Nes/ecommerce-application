@@ -5,7 +5,7 @@ import RedirectButton from '../RedirectButton/RedirectButton';
 import Logo from '../../../assets/img/shopLogo.png';
 import { buttonsText, anchorsText, logoText } from '../../types/elementsText';
 import BurgerMenu from './BurgerMenu/BurgerMenu';
-import HeaderMini from './HeaderMini';
+import HeaderMini from '../../components/Header/HeaderMini';
 import { LogInContext } from '../App';
 import { FC, useContext, useEffect } from 'react';
 import { loginStateChangeProp } from '../../types/routingTypes';

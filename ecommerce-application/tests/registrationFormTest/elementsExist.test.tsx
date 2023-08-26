@@ -1,5 +1,5 @@
 import { cleanup, render, screen } from '@testing-library/react';
-import RegistrationForm from '../../src/components/forms/RegistrationForm/RegistrationForm';
+import RegistrationForm from '../../src/components/Forms/RegistrationForm/RegistrationForm';
 
 jest.mock('../../src/api/apiFunctions', () => ({
   loginClient: jest.fn(),

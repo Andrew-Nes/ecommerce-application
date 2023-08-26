@@ -1,6 +1,6 @@
 import { cleanup, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import RegistrationForm from '../../src/components/forms/RegistrationForm/RegistrationForm';
+import RegistrationForm from '../../src/components/Forms/RegistrationForm/RegistrationForm';
 import { errorsMessage } from '../../src/types/formTypes';
 
 jest.mock('../../src/api/apiFunctions', () => ({
