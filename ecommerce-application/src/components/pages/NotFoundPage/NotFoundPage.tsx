@@ -1,13 +1,13 @@
-import './notFoundPage.scss';
-import { routes } from '../../../types/routingTypes';
-import notFountImage from '../../../../assets/img/404-page-image1.png';
+import { FC } from 'react';
+import { Link } from 'react-router-dom';
 import {
-  anchorsText,
   headingText,
   paragraphText,
+  anchorsText,
 } from '../../../types/elementsText';
-import { Link } from 'react-router-dom';
-import { FC } from 'react';
+import { routes } from '../../../types/routingTypes';
+import './notFoundPage.scss';
+import notFountImage from '../../../../assets/img/404-page-image1.png';
 
 const NotFoundPage: FC = () => {
   return (

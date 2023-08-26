@@ -1,24 +1,27 @@
-import './registrationForm.scss';
+import { ClientResponse, ErrorResponse } from '@commercetools/platform-sdk';
 import { FC, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import type { RegistrationFormData } from '../../../types/registrationFormTypes';
-import MyInput from './Inputs/MyInput';
-import { validateFields } from './validateFields';
-import MyCountrySelect from './Inputs/MyCountrySelect';
-import MyCheckBox from './Inputs/MyCheckBox/MyCheckBox';
-import MyPassInput from './Inputs/MyPassInput';
-import { CreateCustomer, loginClient } from '../../../api/apiFunctions';
-import convertDataForm from '../../../types/registrationFormTypes';
-import { ClientResponse, ErrorResponse } from '@commercetools/platform-sdk';
-import { LoginProps, serviceErrors } from '../../../types/formTypes';
 import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { errorsMessage } from '../../../types/formTypes';
+import { CreateCustomer, loginClient } from '../../../api/apiFunctions';
 import {
-  buttonsText,
-  headingText,
   popupText,
+  headingText,
+  buttonsText,
 } from '../../../types/elementsText';
+import {
+  LoginProps,
+  serviceErrors,
+  errorsMessage,
+} from '../../../types/formTypes';
+import convertDataForm, {
+  RegistrationFormData,
+} from '../../../types/registrationFormTypes';
+import MyCheckBox from './Inputs/MyCheckBox/MyCheckBox';
+import MyCountrySelect from './Inputs/MyCountrySelect';
+import MyInput from './Inputs/MyInput';
+import MyPassInput from './Inputs/MyPassInput';
+import './registrationForm.scss';
+import { validateFields } from './validateFields';
 
 const COUNTRIES: string[] = ['US'];
 const defaultCountryIndex: number = 0;

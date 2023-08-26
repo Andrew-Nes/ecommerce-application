@@ -1,6 +1,6 @@
-import './myInput.scss';
-import type { MyInputProps } from '../../../../types/registrationFormTypes';
 import { FC } from 'react';
+import { MyInputProps } from '../../../../types/registrationFormTypes';
+import './myInput.scss';
 
 const MyCountrySelect: FC<MyInputProps> = (props) => {
   return (

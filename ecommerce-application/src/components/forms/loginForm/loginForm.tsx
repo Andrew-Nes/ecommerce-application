@@ -1,24 +1,23 @@
-import './loginForm.scss';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { ClientResponse, ErrorResponse } from '@commercetools/platform-sdk';
 import { FC, useState } from 'react';
-import closeEyeIcon from '../../../../assets/img/close-eye.png';
-import openEyeIcon from '../../../../assets/img/open-eye.png';
+import { useForm, SubmitHandler } from 'react-hook-form';
+import { toast } from 'react-toastify';
+import { loginClient } from '../../../api/apiFunctions';
+import {
+  popupText,
+  headingText,
+  buttonsText,
+} from '../../../types/elementsText';
 import {
   LoginProps,
   PasswordType,
-  errorsMessage,
   serviceErrors,
+  errorsMessage,
 } from '../../../types/formTypes';
-import { loginClient } from '../../../api/apiFunctions';
-import { ClientResponse, ErrorResponse } from '@commercetools/platform-sdk';
-import {
-  buttonsText,
-  headingText,
-  popupText,
-} from '../../../types/elementsText';
 import { validateFields } from '../RegistrationForm/validateFields';
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import './loginForm.scss';
+import closeEyeIcon from '../../../../assets/img/close-eye.png';
+import openEyeIcon from '../../../../assets/img/open-eye.png';
 
 interface LoginFormData {
   email: string;

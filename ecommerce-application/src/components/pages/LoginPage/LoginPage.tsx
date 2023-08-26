@@ -1,12 +1,10 @@
-import './loginPage.scss';
-import { Link } from 'react-router-dom';
-import { routes } from '../../../types/routingTypes';
-import { anchorsText, paragraphText } from '../../../types/elementsText';
-import { loginStateChangeProp } from '../../../types/routingTypes';
 import { FC, useContext, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useLocation, useNavigate, Link } from 'react-router-dom';
+import { paragraphText, anchorsText } from '../../../types/elementsText';
+import { loginStateChangeProp, routes } from '../../../types/routingTypes';
 import { LogInContext } from '../../App';
 import LoginForm from '../../Forms/LoginForm/LoginForm';
+import './loginPage.scss';
 
 const LoginPage: FC<loginStateChangeProp> = ({ loginStateChange }) => {
   const isLoggedIn = useContext(LogInContext);

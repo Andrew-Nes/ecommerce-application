@@ -1,10 +1,10 @@
-import './burgerMenu.scss';
-import { FC, useContext, useState } from 'react';
-import BurgerButton from './BurgerButton';
+import { FC, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { anchorsText } from '../../../types/elementsText';
 import { loginStateChangeProp, routes } from '../../../types/routingTypes';
 import { LogInContext } from '../../App';
-import { anchorsText } from '../../../types/elementsText';
+import BurgerButton from './BurgerButton';
+import './burgerMenu.scss';
 
 const BurgerMenu: FC<loginStateChangeProp> = ({ loginStateChange }) => {
   const [open, setOpen] = useState<boolean>(false);

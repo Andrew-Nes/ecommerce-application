@@ -1,7 +1,7 @@
-import './myInput.scss';
-import type { MyInputProps } from '../../../../types/registrationFormTypes';
-import { errorsMessage } from '../../../../types/formTypes';
 import { FC } from 'react';
+import { errorsMessage } from '../../../../types/formTypes';
+import { MyInputProps } from '../../../../types/registrationFormTypes';
+import './myInput.scss';
 
 const MyInput: FC<MyInputProps> = (props) => {
   let requiredErrorText: string;

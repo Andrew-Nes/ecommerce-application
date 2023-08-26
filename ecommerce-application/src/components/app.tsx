@@ -1,11 +1,11 @@
 import { Route, BrowserRouter, Routes } from 'react-router-dom';
-import MainPage from './Pages/MainPage/MainPage';
-import LoginPage from './Pages/LoginPage/LoginPage';
-import RegistrationPage from './Pages/RegistrationPage/RegistrationPage';
-import NotFoundPage from './Pages/NotFoundPage/NotFoundPage';
-import Header from '../components/Header/Header';
+import Header from './Header/Header';
 import { ToastContainer } from 'react-toastify';
 import { FC, createContext, useState } from 'react';
+import LoginPage from './Pages/LoginPage/LoginPage';
+import MainPage from './Pages/MainPage/MainPage';
+import NotFoundPage from './Pages/NotFoundPage/NotFoundPage';
+import RegistrationPage from './Pages/RegistrationPage/RegistrationPage';
 
 export const LogInContext = createContext(false);
 

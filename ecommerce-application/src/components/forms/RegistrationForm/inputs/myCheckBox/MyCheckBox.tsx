@@ -1,6 +1,6 @@
+import '../../RegistrationForm.scss';
 import { FC } from 'react';
 import { MyInputProps } from '../../../../../types/registrationFormTypes';
-import '../../RegistrationForm.scss';
 
 const MyCheckBox: FC<MyInputProps> = (props) => {
   return (

@@ -1,12 +1,12 @@
-import './mainPage.scss';
-import RedirectButton from '../../RedirectButton/RedirectButton';
-import { routes } from '../../../types/routingTypes';
+import { FC } from 'react';
 import {
-  buttonsText,
   headingText,
   paragraphText,
+  buttonsText,
 } from '../../../types/elementsText';
-import { FC } from 'react';
+import { routes } from '../../../types/routingTypes';
+import RedirectButton from '../../RedirectButton/RedirectButton';
+import './mainPage.scss';
 
 const MainPage: FC = () => {
   return (

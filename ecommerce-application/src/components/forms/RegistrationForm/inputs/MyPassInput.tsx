@@ -1,7 +1,7 @@
-import './MyInput.scss';
 import { FC, useState } from 'react';
-import type { MyInputProps } from '../../../../types/registrationFormTypes';
 import { PasswordType } from '../../../../types/formTypes';
+import { MyInputProps } from '../../../../types/registrationFormTypes';
+import './MyInput.scss';
 import closeEyeIcon from '../../../../../assets/img/close-eye.png';
 import openEyeIcon from '../../../../../assets/img/open-eye.png';
 

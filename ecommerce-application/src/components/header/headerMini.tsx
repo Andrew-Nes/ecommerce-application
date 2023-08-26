@@ -1,9 +1,8 @@
-import './header.scss';
+import { FC } from 'react';
 import { Link } from 'react-router-dom';
+import { logoText } from '../../types/elementsText';
 import { routes } from '../../types/routingTypes';
 import Logo from '../../../assets/img/shopLogo.png';
-import { logoText } from '../../types/elementsText';
-import { FC } from 'react';
 
 const HeaderMini: FC = () => {
   return (

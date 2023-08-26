@@ -1,14 +1,13 @@
-import './header.scss';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { routes } from '../../types/routingTypes';
-import RedirectButton from '../RedirectButton/RedirectButton';
-import Logo from '../../../assets/img/shopLogo.png';
-import { buttonsText, anchorsText, logoText } from '../../types/elementsText';
-import BurgerMenu from './BurgerMenu/BurgerMenu';
-import { LogInContext } from '../App';
 import { FC, useContext, useEffect } from 'react';
-import { loginStateChangeProp } from '../../types/routingTypes';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
+import { anchorsText, buttonsText, logoText } from '../../types/elementsText';
+import { loginStateChangeProp, routes } from '../../types/routingTypes';
+import { LogInContext } from '../App';
+import RedirectButton from '../RedirectButton/RedirectButton';
+import BurgerMenu from './BurgerMenu/BurgerMenu';
 import HeaderMini from './HeaderMini';
+import Logo from '../../../assets/img/shopLogo.png';
+import './header.scss';
 
 const Header: FC<loginStateChangeProp> = ({ loginStateChange }) => {
   const isLoggedIn = useContext(LogInContext);
