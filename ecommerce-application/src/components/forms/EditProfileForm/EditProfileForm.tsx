@@ -1,10 +1,6 @@
-import './EditProfileForm.scss'
+import './EditProfileForm.scss';
 const EditProfileForm = () => {
-    return (
-        <div>
+  return <div></div>;
+};
 
-        </div>
-    )
-}
-
-export default EditProfileForm
+export default EditProfileForm;

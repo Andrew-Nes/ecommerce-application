@@ -1,27 +1,27 @@
 .profile-page__wrapper {
-    padding: 15px 40px;
+  padding: 15px 40px;
 }
 
 .profile-page_title {
-    text-align: center;
+  text-align: center;
 }
 
 .customer-data__container {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    max-width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 300px;
 }
 
 .edit-profile_button {
-    width: 100px;
+  width: 100px;
 }
 
 .customer-data_item {
-    max-width: 400px;
-    display: flex;  
+  max-width: 400px;
+  display: flex;
 }
 
 .customer-data-item_label {
-    width: 40%;
+  width: 40%;
 }
