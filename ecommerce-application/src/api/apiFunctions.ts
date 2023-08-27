@@ -1,6 +1,7 @@
 import {
   createApiBuilderFromCtpClient,
   CustomerDraft,
+  MyCustomerUpdate,
 } from '@commercetools/platform-sdk';
 import {
   getPasswordAuthClient,
@@ -56,3 +57,30 @@ export const getCategories = async () => {
   const client = createClientCredentialFlow();
   return await client.categories().get().execute();
 };
+
+
+
+export const GetCustomer = async (token: string) => {
+  const client = createClientCredentialFlow();
+ return await client
+ .me()
+ .get({
+  headers: {
+    Authorization: `Bearer ${token}`
+  }
+ })
+ .execute()
+};
+
+export const UpdateCustomer = async (token: string, updateCustomer: MyCustomerUpdate) => {
+  const client = createClientCredentialFlow();
+ return await client
+ .me()
+  .post({
+    headers: {
+      Authorization: `Bearer ${token}`
+    },
+    body: updateCustomer
+  })
+  .execute()
+}
