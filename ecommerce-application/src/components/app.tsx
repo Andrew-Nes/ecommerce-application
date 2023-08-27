@@ -5,7 +5,6 @@ import RegistrationPage from './pages/registrationPage/registration-page';
 import NotFoundPage from './pages/notFoundPage/not-found-page';
 import Header from './header/header';
 import { ToastContainer } from 'react-toastify';
-import { createContext, useState } from 'react';
 import ProfilePage from './pages/ProfilePage/ProfilePage';
 import { createContext, useEffect, useState } from 'react';
 import CatalogPage from './pages/CatalogPage/CatalogPage';
