@@ -4,6 +4,7 @@ import { useContext, useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { LogInContext } from '../../app';
 import { FC } from 'react';
+import MyModal from '../../Modal/MyModal';
 
 const ProfilePage: FC = () => {
   const isLoggedIn = useContext(LogInContext);
@@ -41,6 +42,9 @@ const ProfilePage: FC = () => {
           <span>{dateOfBirth}</span>
         </div>
         <button onClick={() => setModalActive(true)}>Edit profile</button>
+        <MyModal
+          active={modalActive}
+          setActive={setModalActive}/>
       </fieldset>
     </div>
   );

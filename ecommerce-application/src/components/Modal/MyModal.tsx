@@ -1,4 +1,4 @@
-import './modal.scss'
+import './MyModal.scss'
 interface MyModalProps {
     active: boolean,
     setActive: React.Dispatch<React.SetStateAction<boolean>>,
