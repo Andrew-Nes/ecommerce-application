@@ -15,7 +15,7 @@ const ProfilePage: FC = () => {
   const accessToken = window.localStorage.getItem('token') || ''
 
   const [modalActive, setModalActive] = useState(false)
-  const [version, setVersion] = useState(0)
+  //const [version, setVersion] = useState(0)
 
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
@@ -24,7 +24,7 @@ const ProfilePage: FC = () => {
   async function setProfile () {
     try {      
       const response: ClientResponse<Customer> | undefined = await GetCustomer(accessToken)
-      setVersion(response.body.version)
+      //setVersion(response.body.version)
       setFirstName(response?.body.firstName || '')
       setLastName(response?.body.lastName || '')
       setDateOfBirth(response?.body.dateOfBirth || '')
