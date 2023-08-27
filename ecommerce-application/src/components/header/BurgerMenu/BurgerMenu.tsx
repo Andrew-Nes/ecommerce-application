@@ -21,6 +21,13 @@ export default function BurgerMenu({ loginStateChange }: loginStateChangeProp) {
         <Link className="burger__link" to={routes.MAIN} onClick={() => close()}>
           {anchorsText.MAIN}
         </Link>
+        <Link
+          className="burger__link"
+          to={routes.CATALOG}
+          onClick={() => close()}
+        >
+          {anchorsText.CATALOG}
+        </Link>
         {!isLoggedIn ? (
           <Link
             className="burger__link"

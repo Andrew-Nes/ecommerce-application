@@ -51,3 +51,8 @@ export const CreateCustomer = async (data: CustomerDraft) => {
     })
     .execute();
 };
+
+export const getCategories = async () => {
+  const client = createClientCredentialFlow();
+  return await client.categories().get().execute();
+};

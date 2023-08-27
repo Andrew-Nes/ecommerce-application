@@ -3,6 +3,7 @@ export enum routes {
   LOGIN = '/login',
   REGISTER = '/register',
   PROFILE = '/profile',
+  CATALOG = '/catalog',
   NOTFOUND = '*',
 }
 

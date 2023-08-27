@@ -36,6 +36,11 @@ function Header({ loginStateChange }: loginStateChangeProp) {
                     {anchorsText.MAIN}
                   </Link>
                 </li>
+                <li className="list__item" key="catalog">
+                  <Link className="list__link" to={routes.CATALOG}>
+                    {anchorsText.CATALOG}
+                  </Link>
+                </li>
               </ul>
             </nav>
             <div className="header__buttons">
