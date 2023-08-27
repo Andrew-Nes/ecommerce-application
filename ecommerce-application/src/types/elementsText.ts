@@ -14,6 +14,7 @@ enum anchorsText {
   CREATE_NEW_ACCOUNT = 'Create your account',
   LOGIN_CLICK = 'Click to login',
   NOT_FOUND_CLICK = 'Go back to main',
+  PROFILE = 'Profile',
 }
 
 enum logoText {

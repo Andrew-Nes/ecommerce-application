@@ -74,6 +74,24 @@
 .logo__text {
   margin: 0;
 }
+.logged-in-buttons__container {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+.profile_icon {
+  opacity: 0.5;
+  transition: all 0.5s ease;
+  &:hover {
+    transition: all 0.5s ease;
+    opacity: 1;
+    cursor: pointer;
+  }
+  & img {
+    width: 33px;
+    height: auto;
+  }
+}
 
 @media screen and (max-width: 550px) {
   .logo__image {

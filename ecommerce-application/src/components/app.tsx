@@ -5,11 +5,13 @@ import RegistrationPage from './pages/registrationPage/registration-page';
 import NotFoundPage from './pages/notFoundPage/not-found-page';
 import Header from './header/header';
 import { ToastContainer } from 'react-toastify';
+import ProfilePage from './pages/ProfilePage/ProfilePage';
 import { createContext, useEffect, useState } from 'react';
 import CatalogPage from './pages/CatalogPage/CatalogPage';
 import { getCategories } from '../api/apiFunctions';
 // import { categoriesObj } from '../utils/data/categories';
 import { Category } from '@commercetools/platform-sdk';
+
 
 export const LogInContext = createContext(false);
 
@@ -48,6 +50,7 @@ function App() {
             path="register"
             element={<RegistrationPage loginStateChange={logInStateChange} />}
           />
+          <Route path="profile" element={<ProfilePage />} />
           <Route
             path="catalog"
             element={<CatalogPage categories={categories} />}
