@@ -22,6 +22,7 @@ import MyInput from './Inputs/MyInput';
 import MyPassInput from './Inputs/MyPassInput';
 import './registrationForm.scss';
 import { validateFields } from './validateFields';
+import 'react-toastify/dist/ReactToastify.css';
 
 const COUNTRIES: string[] = ['US'];
 const defaultCountryIndex: number = 0;

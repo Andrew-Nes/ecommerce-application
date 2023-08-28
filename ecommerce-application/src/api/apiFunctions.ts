@@ -51,3 +51,13 @@ export const CreateCustomer = async (data: CustomerDraft) => {
     })
     .execute();
 };
+
+export const getProduct = async (ID: string) => {
+  const client = createClientCredentialFlow();
+  const product = await client
+    .productProjections()
+    .withId({ ID })
+    .get()
+    .execute();
+  return product;
+};

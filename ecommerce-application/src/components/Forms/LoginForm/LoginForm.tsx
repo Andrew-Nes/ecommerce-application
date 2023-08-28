@@ -18,6 +18,7 @@ import { validateFields } from '../RegistrationForm/validateFields';
 import './loginForm.scss';
 import closeEyeIcon from '../../../../assets/img/close-eye.png';
 import openEyeIcon from '../../../../assets/img/open-eye.png';
+import 'react-toastify/dist/ReactToastify.css';
 
 interface LoginFormData {
   email: string;

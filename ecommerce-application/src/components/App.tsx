@@ -6,6 +6,7 @@ import LoginPage from './Pages/LoginPage/LoginPage';
 import MainPage from './Pages/MainPage/MainPage';
 import NotFoundPage from './Pages/NotFoundPage/NotFoundPage';
 import RegistrationPage from './Pages/RegistrationPage/RegistrationPage';
+import ProductPage from './Pages/ProductPage/ProductPage';
 
 export const LogInContext = createContext(false);
 
@@ -34,6 +35,7 @@ const App: FC = () => {
             element={<RegistrationPage loginStateChange={logInStateChange} />}
           />
           <Route path="*" element={<NotFoundPage />} />
+          <Route path="product" element={<ProductPage />} />
         </Routes>
       </BrowserRouter>
     </LogInContext.Provider>

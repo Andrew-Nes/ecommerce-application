@@ -3,6 +3,7 @@ export enum routes {
   LOGIN = '/login',
   REGISTER = '/register',
   NOTFOUND = '*',
+  PRODUCT = '/product',
 }
 
 export interface buttonProps {
