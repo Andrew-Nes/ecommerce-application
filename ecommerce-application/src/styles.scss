@@ -21,6 +21,8 @@ body {
   padding: 0;
   width: calc(100vw - 17px);
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 li {
@@ -57,10 +59,9 @@ a {
   margin: 0;
 }
 
-// .main__wrapper {
-//   padding-top: 25px;
-//   padding-bottom: 15px;
-// }
+.main {
+  flex: 1;
+}
 
 .list {
   margin: 0;

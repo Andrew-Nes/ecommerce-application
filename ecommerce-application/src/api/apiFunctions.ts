@@ -56,3 +56,11 @@ export const getCategories = async () => {
   const client = createClientCredentialFlow();
   return await client.categories().get().execute();
 };
+
+export const getItems = async (id: string = '') => {
+  const client = createClientCredentialFlow();
+  return await client
+    .productProjections()
+    .get({ queryArgs: { where: `categories(id="${id}")` } })
+    .execute();
+};

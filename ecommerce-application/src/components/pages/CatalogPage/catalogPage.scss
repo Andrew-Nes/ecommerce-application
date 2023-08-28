@@ -1,3 +1,8 @@
+.catalog-page {
+  display: flex;
+  flex-direction: column;
+}
+
 .catalog-page__wrapper {
   padding-top: 15px;
 }
@@ -68,4 +73,28 @@
   background: 20% bottom / contain no-repeat
     url('../../../../assets/img/fishes_catalog_image.png')
     rgba(173, 216, 230, 0.7);
+}
+
+.loader-spinner {
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+}
+
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  row-gap: 5px;
+}
+
+.card {
+  width: 40%;
+  // height: 200px;
+  display: flex;
+  flex-direction: column;
+}
+
+.card__image {
+  width: 100%;
 }
