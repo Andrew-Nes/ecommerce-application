@@ -8,6 +8,8 @@ import BurgerMenu from './BurgerMenu/BurgerMenu';
 import HeaderMini from './HeaderMini';
 import Logo from '../../../assets/img/shopLogo.png';
 import './header.scss';
+import ProfileIcon from '../../../assets/img/user-profile.svg';
+import RedirectIcon from '../RedirectButton/RedirectIcon';
 
 const Header: FC<loginStateChangeProp> = ({ loginStateChange }) => {
   const isLoggedIn = useContext(LogInContext);
@@ -33,6 +35,11 @@ const Header: FC<loginStateChangeProp> = ({ loginStateChange }) => {
                     {anchorsText.MAIN}
                   </Link>
                 </li>
+                <li className="list__item" key="catalog">
+                  <Link className="list__link" to={routes.CATALOG}>
+                    {anchorsText.CATALOG}
+                  </Link>
+                </li>
               </ul>
             </nav>
             <div className="header__buttons">
@@ -43,12 +50,20 @@ const Header: FC<loginStateChangeProp> = ({ loginStateChange }) => {
                   route={routes.LOGIN}
                 />
               ) : (
-                <button
-                  className="button header__button header__button_login"
-                  onClick={logout}
-                >
-                  {buttonsText.LOGOUT}
-                </button>
+                <div className="logged-in-buttons__container">
+                  <RedirectIcon
+                    className="profile_icon"
+                    alt={'Profile'}
+                    route={routes.PROFILE}
+                    src={ProfileIcon}
+                  />
+                  <button
+                    className="button header__button header__button_login"
+                    onClick={logout}
+                  >
+                    {buttonsText.LOGOUT}
+                  </button>
+                </div>
               )}
               <RedirectButton
                 className="button header__button header__button_signup"
