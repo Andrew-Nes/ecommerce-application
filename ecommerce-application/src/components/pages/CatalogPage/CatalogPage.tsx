@@ -3,7 +3,7 @@ import { routes } from '../../../types/routingTypes';
 import { anchorsText } from '../../../types/elementsText';
 import { Category } from '@commercetools/platform-sdk';
 import BreadcrumbsList from '../../BreadcrumbsList';
-import CatalogHeader from '../../header/CatalogHeader/CatalogHeader';
+import CatalogHeader from '../../Header/CatalogHeader/CatalogHeader';
 import { BreadcrumbsItem } from '../../../types/breadcrumbsTypes';
 import { useNavigate } from 'react-router-dom';
 import { Languages } from '../../../types/commonDataTypes';
