@@ -1,0 +1,27 @@
+.slider{
+  display: flex;
+  width: 50%
+}
+
+.slider__arrow{
+  background: url(../../../assets/img/slider-arrow.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-color: transparent;
+  border: 1px solid black;
+  border-radius: 50%;
+  width: 30px;
+  height: 50px;
+}
+
+.slider__slide.active{
+  width: 90%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.product-image{
+  max-width: 50vw;
+  max-height: 65vh;
+}
