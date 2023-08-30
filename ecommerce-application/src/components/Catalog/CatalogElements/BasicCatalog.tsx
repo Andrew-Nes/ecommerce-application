@@ -1,10 +1,10 @@
-import BreadcrumbsList from '../BreadcrumbsList';
-import { routes } from '../../types/routingTypes';
-import { anchorsText } from '../../types/elementsText';
-import { BreadcrumbsItem } from '../../types/breadcrumbsTypes';
+import BreadcrumbsList from '../../BreadcrumbsList';
+import { routes } from '../../../types/routingTypes';
+import { anchorsText } from '../../../types/elementsText';
+import { BreadcrumbsItem } from '../../../types/breadcrumbsTypes';
 import { Category } from '@commercetools/platform-sdk';
 import { useNavigate } from 'react-router-dom';
-import { Languages } from '../../types/commonDataTypes';
+import { Languages } from '../../../types/commonDataTypes';
 import { FC } from 'react';
 
 const lists: BreadcrumbsItem[] = [
@@ -20,11 +20,11 @@ const lists: BreadcrumbsItem[] = [
   },
 ];
 
-interface MainCatalogProps {
+interface BasicCatalogProps {
   categories: Category[];
 }
 
-const MainCatalog: FC<MainCatalogProps> = (props: MainCatalogProps) => {
+const BasicCatalog: FC<BasicCatalogProps> = (props: BasicCatalogProps) => {
   const redirect = useNavigate();
   const mainCategories = props.categories.filter(
     (category) => !category.parent
@@ -40,7 +40,7 @@ const MainCatalog: FC<MainCatalogProps> = (props: MainCatalogProps) => {
             <div
               key={category.key}
               className={`category category_${category.key}`}
-              onClick={() => redirect(`${category.key}`, { replace: true })}
+              onClick={() => redirect(`${category.key}`)}
             >
               <h4 className="heading category__heading">
                 {category.name[Languages.ENGLISH]}
@@ -53,4 +53,4 @@ const MainCatalog: FC<MainCatalogProps> = (props: MainCatalogProps) => {
   );
 };
 
-export default MainCatalog;
+export default BasicCatalog;

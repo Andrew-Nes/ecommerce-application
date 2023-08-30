@@ -1,7 +1,6 @@
 import './catalogHeader.scss';
 import { Category } from '@commercetools/platform-sdk';
 import { Languages } from '../../../types/commonDataTypes';
-import { routes } from '../../../types/routingTypes';
 import { Link } from 'react-router-dom';
 import { Tooltip } from 'react-tooltip';
 import { FC } from 'react';
@@ -20,7 +19,7 @@ const CatalogHeader: FC<CatalogHeaderProp> = (props: CatalogHeaderProp) => {
             <Link
               id={category.key}
               className="list__link catalog__header__link"
-              to={routes.CATALOG}
+              to={`${category.key}`}
             >
               {category.name[Languages.ENGLISH]}
             </Link>
@@ -40,9 +39,9 @@ const CatalogHeader: FC<CatalogHeaderProp> = (props: CatalogHeaderProp) => {
                     >
                       <Link
                         className="list__link tooltip__list__link"
-                        to={routes.CATALOG}
+                        to={`${category.key}/${cat.key}`}
                       >
-                        {cat.key}
+                        {cat.name[Languages.ENGLISH]}
                       </Link>
                     </li>
                   ))}

@@ -10,8 +10,10 @@ import ProfilePage from './Pages/ProfilePage/ProfilePage';
 import CatalogPage from './Pages/CatalogPage/CatalogPage';
 import { getCategories } from '../api/apiFunctions';
 import { Category } from '@commercetools/platform-sdk';
-import MainCatalog from './Catalog/MainCatalog';
-import CategoryCatalog from './Catalog/CategoryCatalog';
+import BasicCatalog from './Catalog/CatalogElements/BasicCatalog';
+import CategoryComponent from './Catalog/CatalogElements/CategoryComponent';
+import BasicCategory from './Catalog/CategoryElements/BasicCategory';
+import Subcategory from './Catalog/CategoryElements/Subcategory';
 
 export const LogInContext = createContext(false);
 
@@ -55,11 +57,17 @@ const App: FC = () => {
             path="catalog"
             element={<CatalogPage categories={categories} />}
           >
-            <Route index element={<MainCatalog categories={categories} />} />
-            <Route
-              path=":categoryKey"
-              element={<CategoryCatalog categories={categories} />}
-            />
+            <Route index element={<BasicCatalog categories={categories} />} />
+            <Route path=":categoryKey" element={<CategoryComponent />}>
+              <Route
+                index
+                element={<BasicCategory categories={categories} />}
+              />
+              <Route
+                path=":subcategoryKey"
+                element={<Subcategory categories={categories} />}
+              />
+            </Route>
           </Route>
           <Route path="*" element={<NotFoundPage />} />
         </Routes>

@@ -69,7 +69,7 @@
     rgba(191, 210, 216, 0.7);
 }
 
-.category_fishes {
+.category_fish {
   background: 20% bottom / contain no-repeat
     url('../../../../assets/img/fishes_catalog_image.png')
     rgba(173, 216, 230, 0.7);
@@ -97,4 +97,18 @@
 
 .card__image {
   width: 100%;
+}
+
+.non-existent-image {
+  width: 100%;
+}
+
+.catalog_content {
+  padding-top: 20px;
+  display: flex;
+}
+
+.sidebar {
+  width: 30%;
+  min-width: 30%;
 }
