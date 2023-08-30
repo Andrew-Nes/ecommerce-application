@@ -49,6 +49,13 @@ type InputRegistration =
   | 'countryBilling'
   | 'defaultBillingAddress';
 
+  type InputEditForm =  'firstName'
+  | 'lastName'
+  | 'dateOfBirth'
+  | 'email'
+
+type InputEditAddressForm = 'streetName' | 'country' | 'state' | 'postalCode' | 'city'
+
 export default function convertDataForm(
   data: RegistrationFormData,
   setAddressState: boolean
@@ -87,4 +94,4 @@ export default function convertDataForm(
   return customer;
 }
 
-export type { RegistrationFormData, InputRegistration, MyInputProps };
+export type { RegistrationFormData, InputRegistration, MyInputProps, InputEditForm, InputEditAddressForm };
