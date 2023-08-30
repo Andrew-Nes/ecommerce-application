@@ -21,7 +21,7 @@ export default function createFilterObject(productsList: ProductProjection[]) {
     result.push({ name: key, values: Array.from(filters[key]) });
   }
 
-  console.log('RESULTS', result);
+  // console.log('RESULTS', result);
   return result;
 }
 

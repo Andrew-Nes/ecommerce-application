@@ -10,6 +10,7 @@ import { getItems } from '../../../api/apiFunctions';
 import { TailSpin } from 'react-loader-spinner';
 import Sidebar from '../../Sidebar/Sidebar';
 import createFilterObject from '../../../utils/filterCreation';
+import getMinMaxPrice from '../../../utils/minMaxPrice';
 
 interface BasicCategoryProps {
   categories: Category[];
@@ -19,6 +20,7 @@ const BasicCategory: FC<BasicCategoryProps> = (props: BasicCategoryProps) => {
   const { categoryKey } = useParams();
   const redirect = useNavigate();
   const [products, setProducts] = useState<ProductProjection[]>([]);
+  // const [prices, setPrices] = useState<[number, number]>([0,100]);
   const [isLoading, setState] = useState<boolean>(true);
 
   const category = props.categories.find(
@@ -31,7 +33,7 @@ const BasicCategory: FC<BasicCategoryProps> = (props: BasicCategoryProps) => {
   );
 
   const filters = createFilterObject(products);
-  const prices: [number, number] = [5, 500];
+  const prices = getMinMaxPrice(products);
 
   const lists: BreadcrumbsItem[] = [
     {
@@ -66,6 +68,7 @@ const BasicCategory: FC<BasicCategoryProps> = (props: BasicCategoryProps) => {
         const products = response.body.results;
         setProducts(products);
         setState(false);
+        // setPrices(getMinMaxPrice(products));
         console.log('PRODUCTS', products);
       } catch (error) {
         console.log(error);

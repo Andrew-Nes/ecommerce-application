@@ -1,6 +1,6 @@
 import './sidebar.scss';
 import { Category } from '@commercetools/platform-sdk';
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Languages } from '../../types/commonDataTypes';
 import Slider from 'react-slider';
@@ -18,6 +18,11 @@ interface SidebarProps {
 
 const Sidebar: FC<SidebarProps> = (props: SidebarProps) => {
   const [values, setValues] = useState(props.prices || [0, 10]);
+
+  useEffect(() => {
+    setValues(props.prices || [0, 10]);
+  }, [props]);
+
   return (
     <div className="sidebar">
       <div className="sidebar__content">
@@ -58,6 +63,7 @@ const Sidebar: FC<SidebarProps> = (props: SidebarProps) => {
               className="slider_price"
               onChange={setValues}
               value={values}
+              defaultValue={[props.prices[0], props.prices[1]]}
               min={props.prices[0]}
               max={props.prices[1]}
             />
