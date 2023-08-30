@@ -1,4 +1,4 @@
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { BreadcrumbsItem } from '../../../types/breadcrumbsTypes';
 import { routes } from '../../../types/routingTypes';
 import { anchorsText } from '../../../types/elementsText';
@@ -8,6 +8,7 @@ import { Languages } from '../../../types/commonDataTypes';
 import { FC, useEffect, useState } from 'react';
 import { getItems } from '../../../api/apiFunctions';
 import { TailSpin } from 'react-loader-spinner';
+import Sidebar from '../../Sidebar/Sidebar';
 // import NonExistentCategory from './NonExistentCategory';
 
 interface SubcategoryProps {
@@ -23,15 +24,15 @@ const Subcategory: FC<SubcategoryProps> = (props: SubcategoryProps) => {
   const category = props.categories.find(
     (category) => category.key === subcategoryKey
   );
+  const categoryId = category?.id;
+  const categoryName = category?.name[Languages.ENGLISH];
+
   const parentId = category?.parent?.id;
   const parentCategory = props.categories.find(
     (category) => category.id === parentId
   );
   const parentCategoryName = parentCategory?.name[Languages.ENGLISH];
   const parentCategoryKey = parentCategory?.key;
-  console.log(parentCategoryKey);
-  const categoryId = category?.id;
-  const categoryName = category?.name[Languages.ENGLISH];
 
   const lists: BreadcrumbsItem[] = [
     {
@@ -83,25 +84,7 @@ const Subcategory: FC<SubcategoryProps> = (props: SubcategoryProps) => {
           <p>Loading...</p>
         ) : (
           <div className="catalog_content">
-            <div className="sidebar">
-              {/* <div className='sidebar__title'></div> */}
-              <div className="sidebar__content">
-                <ul className="list">
-                  {props.categories
-                    .filter((cat) => cat.parent?.id === category?.id)
-                    .map((cat) => (
-                      <li key={cat.key} className="list__item">
-                        <Link
-                          className="list__link"
-                          to={`${cat.slug[Languages.ENGLISH]}`}
-                        >
-                          {cat.name[Languages.ENGLISH]}
-                        </Link>
-                      </li>
-                    ))}
-                </ul>
-              </div>
-            </div>
+            <Sidebar />
             <div className="cards">
               {products.map((product) => {
                 const image: string =

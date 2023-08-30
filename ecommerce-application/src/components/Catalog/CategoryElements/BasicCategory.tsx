@@ -1,4 +1,4 @@
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { BreadcrumbsItem } from '../../../types/breadcrumbsTypes';
 import { routes } from '../../../types/routingTypes';
 import { anchorsText } from '../../../types/elementsText';
@@ -8,6 +8,8 @@ import { Languages } from '../../../types/commonDataTypes';
 import { FC, useEffect, useState } from 'react';
 import { getItems } from '../../../api/apiFunctions';
 import { TailSpin } from 'react-loader-spinner';
+import Sidebar from '../../Sidebar/Sidebar';
+import createFilterObject from '../../../utils/filterCreation';
 
 interface BasicCategoryProps {
   categories: Category[];
@@ -24,6 +26,11 @@ const BasicCategory: FC<BasicCategoryProps> = (props: BasicCategoryProps) => {
   );
   const categoryId = category?.id;
   const categoryName = category?.name[Languages.ENGLISH];
+  const childCategories = props.categories.filter(
+    (cat) => cat.parent?.id === category?.id
+  );
+
+  const filters = createFilterObject(products);
 
   const lists: BreadcrumbsItem[] = [
     {
@@ -58,6 +65,7 @@ const BasicCategory: FC<BasicCategoryProps> = (props: BasicCategoryProps) => {
         const products = response.body.results;
         setProducts(products);
         setState(false);
+        console.log('PRODUCTS', products);
       } catch (error) {
         console.log(error);
       }
@@ -74,22 +82,7 @@ const BasicCategory: FC<BasicCategoryProps> = (props: BasicCategoryProps) => {
           <TailSpin wrapperClass="loader-spinner" />
         ) : (
           <div className="catalog_content">
-            <div className="sidebar">
-              {/* <div className='sidebar__title'></div> */}
-              <div className="sidebar__content">
-                <ul className="list">
-                  {props.categories
-                    .filter((cat) => cat.parent?.id === category?.id)
-                    .map((cat) => (
-                      <li key={cat.key} className="list__item">
-                        <Link className="list__link" to={`${cat.key}`}>
-                          {cat.name[Languages.ENGLISH]}
-                        </Link>
-                      </li>
-                    ))}
-                </ul>
-              </div>
-            </div>
+            <Sidebar childCategories={childCategories} filters={filters} />
             <div className="cards">
               {products.map((product) => {
                 const image: string =
