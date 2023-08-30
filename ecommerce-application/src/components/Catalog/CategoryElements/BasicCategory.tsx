@@ -31,6 +31,7 @@ const BasicCategory: FC<BasicCategoryProps> = (props: BasicCategoryProps) => {
   );
 
   const filters = createFilterObject(products);
+  const prices: [number, number] = [5, 500];
 
   const lists: BreadcrumbsItem[] = [
     {
@@ -82,7 +83,11 @@ const BasicCategory: FC<BasicCategoryProps> = (props: BasicCategoryProps) => {
           <TailSpin wrapperClass="loader-spinner" />
         ) : (
           <div className="catalog_content">
-            <Sidebar childCategories={childCategories} filters={filters} />
+            <Sidebar
+              childCategories={childCategories}
+              filters={filters}
+              prices={prices}
+            />
             <div className="cards">
               {products.map((product) => {
                 const image: string =
