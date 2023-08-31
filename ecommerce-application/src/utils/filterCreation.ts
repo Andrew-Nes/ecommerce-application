@@ -9,19 +9,24 @@ export default function createFilterObject(productsList: ProductProjection[]) {
       if (!(attr.name in filters)) {
         filters[attr.name] = new Set();
       }
-      filters[attr.name].add(attr.value);
+      filters[attr.name].add(attr.value.toString());
     });
   });
-
-  // console.log('FILTERS', typeof Array.from(filters.weight)[0]);
 
   const result: Filters[] = [];
 
   for (const key in filters) {
-    result.push({ name: key, values: Array.from(filters[key]).sort() });
+    let values: string[] | number[] = Array.from(filters[key]);
+    if (key === 'weight') {
+      values = values
+        .sort((a, b) => Number(a) - Number(b))
+        .map((value) => String(value));
+    } else {
+      values.sort();
+    }
+    result.push({ name: key, values: values });
   }
 
-  // console.log('RESULTS', result);
   return result;
 }
 
