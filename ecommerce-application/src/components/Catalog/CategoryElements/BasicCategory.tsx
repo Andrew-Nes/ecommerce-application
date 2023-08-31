@@ -96,12 +96,12 @@ const BasicCategory: FC<BasicCategoryProps> = (props: BasicCategoryProps) => {
                 const image: string =
                   product.masterVariant.images?.[0]?.url || '';
                 return (
-                  <div className="card">
+                  <div className="card" key={product.id} id={product.id}>
                     <img className="card__image" src={image} />
                     <h3 className="card__heading">
                       {product.name[Languages.ENGLISH]}
                     </h3>
-                    <p className="card__descroption">
+                    <p className="card__description">
                       {product.description?.[Languages.ENGLISH]}
                     </p>
                     <p className="card__price">

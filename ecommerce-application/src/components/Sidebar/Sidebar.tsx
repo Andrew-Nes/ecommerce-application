@@ -30,10 +30,10 @@ const Sidebar: FC<SidebarProps> = (props: SidebarProps) => {
           <div>
             <p>Categories</p>
             <ul className="list">
-              {props.childCategories.map((cat) => (
-                <li key={cat.key} className="list__item">
-                  <Link className="list__link" to={`${cat.key}`}>
-                    {cat.name[Languages.ENGLISH]}
+              {props.childCategories.map((category) => (
+                <li key={category.key} className="list__item">
+                  <Link className="list__link" to={`${category.key}`}>
+                    {category.name[Languages.ENGLISH]}
                   </Link>
                 </li>
               ))}
@@ -41,7 +41,7 @@ const Sidebar: FC<SidebarProps> = (props: SidebarProps) => {
           </div>
         )}
         {props.filters?.map((filter) => (
-          <div>
+          <div key={filter.name}>
             <p>{filter.name}</p>
             <ul className="list">
               {filter.values.map((value) => (

@@ -96,7 +96,7 @@ const Subcategory: FC<SubcategoryProps> = (props: SubcategoryProps) => {
                 const image: string =
                   product.masterVariant.images?.[0]?.url || '';
                 return (
-                  <div className="card">
+                  <div className="card" key={product.id} id={product.id}>
                     <img className="card__image" src={image} />
                     <h3 className="card__heading">
                       {product.name[Languages.ENGLISH]}
