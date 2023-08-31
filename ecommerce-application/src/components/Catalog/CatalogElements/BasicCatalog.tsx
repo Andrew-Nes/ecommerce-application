@@ -7,28 +7,25 @@ import { useNavigate } from 'react-router-dom';
 import { Languages } from '../../../types/commonDataTypes';
 import { FC } from 'react';
 
-const lists: BreadcrumbsItem[] = [
-  {
-    key: 'main',
-    route: routes.MAIN,
-    name: anchorsText.MAIN,
-  },
-  {
-    key: 'catalog',
-    route: routes.CATALOG,
-    name: anchorsText.CATALOG,
-  },
-];
-
 interface BasicCatalogProps {
-  categories: Category[];
+  basicCategories: Category[];
 }
 
 const BasicCatalog: FC<BasicCatalogProps> = (props: BasicCatalogProps) => {
   const redirect = useNavigate();
-  const mainCategories = props.categories.filter(
-    (category) => !category.parent
-  );
+
+  const lists: BreadcrumbsItem[] = [
+    {
+      key: 'main',
+      route: routes.MAIN,
+      name: anchorsText.MAIN,
+    },
+    {
+      key: 'catalog',
+      route: routes.CATALOG,
+      name: anchorsText.CATALOG,
+    },
+  ];
 
   return (
     <div className="wrapper catalog-page__wrapper">
@@ -36,7 +33,7 @@ const BasicCatalog: FC<BasicCatalogProps> = (props: BasicCatalogProps) => {
       <div>
         <h3 className="heading catalog__heading">Catalog</h3>
         <div className="categories">
-          {mainCategories.map((category) => (
+          {props.basicCategories.map((category) => (
             <div
               key={category.key}
               className={`category category_${category.key}`}

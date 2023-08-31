@@ -12,24 +12,25 @@ import Sidebar from '../../Sidebar/Sidebar';
 // import NonExistentCategory from './NonExistentCategory';
 
 interface SubcategoryProps {
-  categories: Category[];
+  mainCategories: Category[];
+  subCategories: Category[];
 }
 
 const Subcategory: FC<SubcategoryProps> = (props: SubcategoryProps) => {
-  const { subcategoryKey } = useParams();
+  const { currentSubCategoryKey } = useParams();
   const redirect = useNavigate();
   const [products, setProducts] = useState<ProductProjection[]>([]);
   const [isLoading, setState] = useState<boolean>(true);
 
-  const category = props.categories.find(
-    (category) => category.key === subcategoryKey
+  const currentCategory = props.subCategories.find(
+    (category) => category.key === currentSubCategoryKey
   );
-  const categoryId = category?.id;
-  const categoryName = category?.name[Languages.ENGLISH];
+  const currentCategoryId = currentCategory?.id;
+  const currentCategoryName = currentCategory?.name[Languages.ENGLISH];
 
-  const parentId = category?.parent?.id;
-  const parentCategory = props.categories.find(
-    (category) => category.id === parentId
+  const parentCategoryId = currentCategory?.parent?.id;
+  const parentCategory = props.mainCategories.find(
+    (category) => category.id === parentCategoryId
   );
   const parentCategoryName = parentCategory?.name[Languages.ENGLISH];
   const parentCategoryKey = parentCategory?.key;
@@ -51,31 +52,36 @@ const Subcategory: FC<SubcategoryProps> = (props: SubcategoryProps) => {
       name: `${parentCategoryName}`,
     },
     {
-      key: `${subcategoryKey}`,
+      key: `${currentSubCategoryKey}`,
       route: ``,
-      name: `${categoryName}`,
+      name: `${currentCategoryName}`,
     },
   ];
 
   /* eslint-disable react-hooks/exhaustive-deps*/
   useEffect(() => {
-    if (props.categories.length === 0) {
+    if (props.subCategories.length === 0) {
       return;
     }
-    if (!category) {
+    if (!currentCategory) {
       redirect(routes.CATALOG);
       return;
     }
     const fetchData = async () => {
-      const response = await getItems(categoryId);
-      const products = response.body.results;
-      setProducts(products);
-      setState(false);
+      try {
+        const response = await getItems(currentCategoryId);
+        const products = response.body.results;
+        setProducts(products);
+        setState(false);
+      } catch (error) {
+        // TODO
+        // handle error
+      }
     };
     fetchData();
-  }, [getItems, props, category]);
+  }, [getItems, props, currentCategory]);
 
-  if (props.categories.length > 0) {
+  if (props.subCategories.length > 0) {
     // if (category) {
     return (
       <div className="wrapper catalog-page__wrapper">
@@ -95,7 +101,7 @@ const Subcategory: FC<SubcategoryProps> = (props: SubcategoryProps) => {
                     <h3 className="card__heading">
                       {product.name[Languages.ENGLISH]}
                     </h3>
-                    <p className="card__descroption">
+                    <p className="card__description">
                       {product.description?.[Languages.ENGLISH]}
                     </p>
                     <p className="card__price">

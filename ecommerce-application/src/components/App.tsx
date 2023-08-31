@@ -22,21 +22,31 @@ const App: FC = () => {
     window.localStorage.getItem('isLoggedIn') === 'true' || false
   );
 
-  const [categories, setCategories] = useState<Category[]>([]);
+  const [basicCategories, setBasicCategories] = useState<Category[]>([]);
+  const [subCategories, setSubCategories] = useState<Category[]>([]);
 
   function logInStateChange(newValue: boolean): void {
     setIsLoggedIn(newValue);
     window.localStorage.setItem('isLoggedIn', newValue.toString());
   }
+
   /* eslint-disable react-hooks/exhaustive-deps*/
   useEffect(() => {
     const fetchData = async () => {
-      const categories = await getCategories();
-      const results = categories.body.results;
-      setCategories(results);
+      const response = await getCategories();
+      const allCategories = response.body.results;
+      const mainCategories = allCategories.filter(
+        (category) => !category.parent
+      );
+      const childCategories = allCategories.filter(
+        (category) => category.parent
+      );
+      setBasicCategories(mainCategories);
+      setSubCategories(childCategories);
     };
     fetchData();
   }, [getCategories]);
+
   return (
     <LogInContext.Provider value={isLoggedIn}>
       <BrowserRouter>
@@ -55,17 +65,35 @@ const App: FC = () => {
           <Route path="profile" element={<ProfilePage />} />
           <Route
             path="catalog"
-            element={<CatalogPage categories={categories} />}
+            element={
+              <CatalogPage
+                basicCategories={basicCategories}
+                subCategories={subCategories}
+              />
+            }
           >
-            <Route index element={<BasicCatalog categories={categories} />} />
-            <Route path=":categoryKey" element={<CategoryComponent />}>
+            <Route
+              index
+              element={<BasicCatalog basicCategories={basicCategories} />}
+            />
+            <Route path=":currentCategoryKey" element={<CategoryComponent />}>
               <Route
                 index
-                element={<BasicCategory categories={categories} />}
+                element={
+                  <BasicCategory
+                    basicCategories={basicCategories}
+                    subCategories={subCategories}
+                  />
+                }
               />
               <Route
-                path=":subcategoryKey"
-                element={<Subcategory categories={categories} />}
+                path=":currentSubCategoryKey"
+                element={
+                  <Subcategory
+                    mainCategories={basicCategories}
+                    subCategories={subCategories}
+                  />
+                }
               />
             </Route>
           </Route>

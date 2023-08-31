@@ -13,23 +13,24 @@ import createFilterObject from '../../../utils/filterCreation';
 import getMinMaxPrice from '../../../utils/minMaxPrice';
 
 interface BasicCategoryProps {
-  categories: Category[];
+  basicCategories: Category[];
+  subCategories: Category[];
 }
 
 const BasicCategory: FC<BasicCategoryProps> = (props: BasicCategoryProps) => {
-  const { categoryKey } = useParams();
+  const { currentCategoryKey } = useParams();
   const redirect = useNavigate();
   const [products, setProducts] = useState<ProductProjection[]>([]);
-  // const [prices, setPrices] = useState<[number, number]>([0,100]);
   const [isLoading, setState] = useState<boolean>(true);
 
-  const category = props.categories.find(
-    (category) => category.key === categoryKey
+  const currentCategory = props.basicCategories.find(
+    (category) => category.key === currentCategoryKey
   );
-  const categoryId = category?.id;
-  const categoryName = category?.name[Languages.ENGLISH];
-  const childCategories = props.categories.filter(
-    (cat) => cat.parent?.id === category?.id
+  const currentCategoryId = currentCategory?.id;
+  const currentCategoryName = currentCategory?.name[Languages.ENGLISH];
+
+  const childCategories = props.subCategories.filter(
+    (subCategory) => subCategory.parent?.id === currentCategory?.id
   );
 
   const filters = createFilterObject(products);
@@ -47,37 +48,36 @@ const BasicCategory: FC<BasicCategoryProps> = (props: BasicCategoryProps) => {
       name: anchorsText.CATALOG,
     },
     {
-      key: `${categoryKey}`,
+      key: `${currentCategoryKey}`,
       route: ``,
-      name: `${categoryName}`,
+      name: `${currentCategoryName}`,
     },
   ];
 
   /* eslint-disable react-hooks/exhaustive-deps*/
   useEffect(() => {
-    if (props.categories.length === 0) {
+    if (props.basicCategories.length === 0) {
       return;
     }
-    if (!category) {
+    if (!currentCategory) {
       redirect(routes.CATALOG);
       return;
     }
     const fetchData = async () => {
       try {
-        const response = await getItems(categoryId);
+        const response = await getItems(currentCategoryId);
         const products = response.body.results;
         setProducts(products);
         setState(false);
-        // setPrices(getMinMaxPrice(products));
-        console.log('PRODUCTS', products);
       } catch (error) {
-        console.log(error);
+        // TODO
+        // handle error
       }
     };
     fetchData();
-  }, [getItems, props, category]);
+  }, [getItems, props, currentCategory]);
 
-  if (props.categories.length > 0) {
+  if (props.basicCategories.length > 0) {
     // if (category) {
     return (
       <div className="wrapper catalog-page__wrapper">
