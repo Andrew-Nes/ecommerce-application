@@ -18,7 +18,7 @@ export default function createFilterObject(productsList: ProductProjection[]) {
   const result: Filters[] = [];
 
   for (const key in filters) {
-    result.push({ name: key, values: Array.from(filters[key]) });
+    result.push({ name: key, values: Array.from(filters[key]).sort() });
   }
 
   // console.log('RESULTS', result);

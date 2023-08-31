@@ -89,7 +89,7 @@ const Subcategory: FC<SubcategoryProps> = (props: SubcategoryProps) => {
         {isLoading ? (
           <p>Loading...</p>
         ) : (
-          <div className="catalog_content">
+          <div className="catalog__content">
             <Sidebar />
             <div className="cards">
               {products.map((product) => {

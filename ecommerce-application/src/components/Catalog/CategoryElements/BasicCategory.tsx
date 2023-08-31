@@ -85,7 +85,7 @@ const BasicCategory: FC<BasicCategoryProps> = (props: BasicCategoryProps) => {
         {isLoading ? (
           <TailSpin wrapperClass="loader-spinner" />
         ) : (
-          <div className="catalog_content">
+          <div className="catalog__content">
             <Sidebar
               childCategories={childCategories}
               filters={filters}

@@ -103,12 +103,8 @@
   width: 100%;
 }
 
-.catalog_content {
+.catalog__content {
   padding-top: 20px;
   display: flex;
-}
-
-.sidebar {
-  width: 30%;
-  min-width: 30%;
+  column-gap: 20px;
 }
