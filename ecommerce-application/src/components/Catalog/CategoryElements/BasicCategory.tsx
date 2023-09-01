@@ -142,19 +142,34 @@ const BasicCategory: FC<BasicCategoryProps> = (props: BasicCategoryProps) => {
                         <h3 className="card__heading">
                           {product.name[Languages.ENGLISH]}
                         </h3>
+                        <p className="card__description text">
+                          {product.description
+                            ? `${product.description[Languages.ENGLISH].slice(
+                                0,
+                                60
+                              )}...`
+                            : ''}
+                        </p>
                         <div className="prices__wrapper">
                           <p className="card__price card__price_current text">
-                            {product.masterVariant.price
+                            {product.masterVariant.price?.discounted
                               ? `$${
-                                  product.masterVariant.price.value.centAmount /
-                                  100
+                                  product.masterVariant.price.discounted.value
+                                    .centAmount / 100
                                 }`
-                              : ''}
+                              : `$${
+                                  product.masterVariant.price
+                                    ? product.masterVariant.price.value
+                                        .centAmount / 100
+                                    : ''
+                                }`}
                           </p>
                           {product.masterVariant.price?.discounted && (
                             <p className="card__price text">
-                              {product.masterVariant.price.discounted.value
-                                .centAmount / 100}
+                              {`$${
+                                product.masterVariant.price.value.centAmount /
+                                100
+                              }`}
                             </p>
                           )}
                         </div>
