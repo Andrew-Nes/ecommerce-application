@@ -31,12 +31,17 @@
 }
 
 .categories {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-items: legacy;
+  // grid-template-rows: 2fr;
+  // flex-wrap: wrap;
+  // justify-content: center;
 }
 
 .category {
-  width: 50%;
+  width: 100%;
+  max-width: 480px;
   height: 200px;
   cursor: pointer;
   transition: 0.5s;
@@ -55,6 +60,7 @@
   background: 75% / contain no-repeat
     url('../../../../assets/img/cats_category_image.png')
     hsla(129, 32%, 71%, 0.5);
+    justify-self: right;
 }
 
 .category_birds {
@@ -73,6 +79,7 @@
   background: 20% bottom / contain no-repeat
     url('../../../../assets/img/fishes_catalog_image.png')
     rgba(173, 216, 230, 0.7);
+    justify-self: right;
 }
 
 .loader-spinner {
