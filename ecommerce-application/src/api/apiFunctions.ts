@@ -101,6 +101,49 @@ export const getItems = async (id: string = '') => {
   const client = getCurrentClient();
   return await client
     .productProjections()
-    .get({ queryArgs: { where: `categories(id="${id}")` } })
+    .get({
+      queryArgs: {
+        where: `categories(id="${id}")`,
+        limit: 100,
+      },
+    })
     .execute();
 };
+
+export const getFilteredItems = async (
+  id: string = '',
+  filters?: filtersCheckboxes,
+  priceRange?: [number, number]
+) => {
+  const filtersString: string[] = [];
+  if (filters) {
+    for (const key of Object.keys(filters)) {
+      if (filters[key] && filters[key].length > 0) {
+        const value = filters[key].map((value) => `"${value}"`).join(',');
+        const string = `variants.attributes.${key}:${value}`;
+        filtersString.push(string);
+      }
+    }
+  }
+  const priceString = priceRange
+    ? `variants.price.centAmount:range (${priceRange[0] * 100} to ${
+        priceRange[1] * 100
+      })`
+    : 'variants.prices:exists';
+
+  const client = getCurrentClient();
+  return await client
+    .productProjections()
+    .search()
+    .get({
+      queryArgs: {
+        filter: [`categories.id:"${id}"`, ...filtersString, priceString],
+        limit: 100,
+      },
+    })
+    .execute();
+};
+
+interface filtersCheckboxes {
+  [key: string]: string[];
+}

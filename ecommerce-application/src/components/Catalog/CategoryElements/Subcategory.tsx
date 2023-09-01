@@ -6,10 +6,13 @@ import BreadcrumbsList from '../../BreadcrumbsList';
 import { Category, ProductProjection } from '@commercetools/platform-sdk';
 import { Languages } from '../../../types/commonDataTypes';
 import { FC, useEffect, useState } from 'react';
-import { getItems } from '../../../api/apiFunctions';
+import { getFilteredItems, getItems } from '../../../api/apiFunctions';
 import { TailSpin } from 'react-loader-spinner';
 import Sidebar from '../../Sidebar/Sidebar';
-// import NonExistentCategory from './NonExistentCategory';
+import { filtersCheckboxes } from '../../../types/categoryTypes';
+import getMinMaxPrice from '../../../utils/minMaxPrice';
+import NonExistentProducts from '../NonExistingProducts.tsx/NonExistentProducts';
+import createFilterObject from '../../../utils/filterCreation';
 
 interface SubcategoryProps {
   mainCategories: Category[];
@@ -18,9 +21,13 @@ interface SubcategoryProps {
 
 const Subcategory: FC<SubcategoryProps> = (props: SubcategoryProps) => {
   const { currentSubCategoryKey } = useParams();
+  const [allProducts, setAllProducts] = useState<ProductProjection[]>([]);
+  const [filteredProducts, setFilteredProducts] = useState<ProductProjection[]>(
+    []
+  );
+  const [isProductLoading, setProductLoading] = useState<boolean>(true);
+  const [chosenFilter, setChosenFilter] = useState<filtersCheckboxes>({});
   const redirect = useNavigate();
-  const [products, setProducts] = useState<ProductProjection[]>([]);
-  const [isLoading, setState] = useState<boolean>(true);
 
   const currentCategory = props.subCategories.find(
     (category) => category.key === currentSubCategoryKey
@@ -34,6 +41,9 @@ const Subcategory: FC<SubcategoryProps> = (props: SubcategoryProps) => {
   );
   const parentCategoryName = parentCategory?.name[Languages.ENGLISH];
   const parentCategoryKey = parentCategory?.key;
+
+  const filters = createFilterObject(allProducts);
+  const prices = getMinMaxPrice(allProducts);
 
   const lists: BreadcrumbsItem[] = [
     {
@@ -71,8 +81,9 @@ const Subcategory: FC<SubcategoryProps> = (props: SubcategoryProps) => {
       try {
         const response = await getItems(currentCategoryId);
         const products = response.body.results;
-        setProducts(products);
-        setState(false);
+        setAllProducts(products);
+        setFilteredProducts(products);
+        setProductLoading(false);
       } catch (error) {
         // TODO
         // handle error
@@ -81,45 +92,70 @@ const Subcategory: FC<SubcategoryProps> = (props: SubcategoryProps) => {
     fetchData();
   }, [getItems, props, currentCategory]);
 
+  useEffect(() => {
+    if (props.subCategories.length === 0) {
+      return;
+    }
+    setProductLoading(true);
+    const fetchData = async () => {
+      try {
+        const response = await getFilteredItems(
+          currentCategoryId,
+          chosenFilter
+        );
+        const filteredProducts = response.body.results;
+        setFilteredProducts(filteredProducts);
+        setProductLoading(false);
+      } catch (error) {
+        // TODO
+        // handle error
+        console.log('ERROR', error);
+      }
+    };
+    fetchData();
+  }, [getFilteredItems, chosenFilter]);
+
   if (props.subCategories.length > 0) {
-    // if (category) {
     return (
       <div className="wrapper catalog-page__wrapper">
         <BreadcrumbsList items={lists} />
-        {isLoading ? (
-          <p>Loading...</p>
-        ) : (
-          <div className="catalog__content">
-            <Sidebar />
+        <div className="catalog__content">
+          <Sidebar
+            filters={filters}
+            prices={prices}
+            setFilters={setChosenFilter}
+          />
+          {isProductLoading ? (
+            <TailSpin wrapperClass="loader-spinner" />
+          ) : (
             <div className="cards">
-              {products.map((product) => {
-                const image: string =
-                  product.masterVariant.images?.[0]?.url || '';
-                return (
-                  <div className="card" key={product.id} id={product.id}>
-                    <img className="card__image" src={image} />
-                    <h3 className="card__heading">
-                      {product.name[Languages.ENGLISH]}
-                    </h3>
-                    <p className="card__description">
-                      {product.description?.[Languages.ENGLISH]}
-                    </p>
-                    <p className="card__price">
-                      {product.masterVariant.price?.value.centAmount}
-                    </p>
-                  </div>
-                );
-              })}
+              {filteredProducts.length > 0 ? (
+                filteredProducts.map((product) => {
+                  const image: string =
+                    product.masterVariant.images?.[0]?.url || '';
+                  return (
+                    <div className="card" key={product.id} id={product.id}>
+                      <img className="card__image" src={image} />
+                      <h3 className="card__heading">
+                        {product.name[Languages.ENGLISH]}
+                      </h3>
+                      <p className="card__description">
+                        {product.description?.[Languages.ENGLISH]}
+                      </p>
+                      <p className="card__price">
+                        {product.masterVariant.price?.value.centAmount}
+                      </p>
+                    </div>
+                  );
+                })
+              ) : (
+                <NonExistentProducts />
+              )}
             </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     );
-    // } else {
-    //   return (
-    //     <NonExistentCategory />
-    //   )
-    // }
   } else {
     return <TailSpin wrapperClass="loader-spinner" />;
   }

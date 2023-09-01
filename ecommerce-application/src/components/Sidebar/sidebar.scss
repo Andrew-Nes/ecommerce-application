@@ -64,3 +64,35 @@
   font-variant: small-caps;
   font-size: 20px;
 }
+
+.sidebar__variants {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 5px;
+}
+
+.sidebar__item {
+  padding: 5px;
+}
+
+.sidebar__link {
+  display: inline-block;
+  padding: 5px;
+  width: 100%;
+}
+
+.sidebar__link:hover {
+  color: #cba662;
+}
+
+.sidebar__label {
+  padding: 5px;
+  cursor: pointer;
+  font-size: 18px;
+  transition: 0.3s;
+}
+
+.sidebar__label:hover {
+  color: #cba662;
+}

@@ -1,6 +1,6 @@
 import './sidebar.scss';
 import { Category } from '@commercetools/platform-sdk';
-import { FC, useEffect, useState } from 'react';
+import { Dispatch, FC, SetStateAction, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Languages } from '../../types/commonDataTypes';
 import Slider from 'react-slider';
@@ -11,14 +11,23 @@ interface Filters {
   values: string[];
 }
 
+interface filtersCheckboxes {
+  [key: string]: string[];
+}
+
 interface SidebarProps {
   childCategories?: Category[];
   filters?: Filters[];
   prices?: [number, number];
+  setFilters: Dispatch<SetStateAction<filtersCheckboxes>>;
+  setPrice: Dispatch<SetStateAction<[number, number] | undefined>>;
+  priceRange: [number, number] | undefined;
 }
 
 const Sidebar: FC<SidebarProps> = (props: SidebarProps) => {
-  const [values, setValues] = useState(props.prices || [0, 10]);
+  const [values, setValues] = useState<[number, number]>(
+    props.prices || [0, 10]
+  );
 
   useEffect(() => {
     setValues(props.prices || [0, 10]);
@@ -35,11 +44,14 @@ const Sidebar: FC<SidebarProps> = (props: SidebarProps) => {
             }
           >
             <div className="sidebar__block__mark"></div>
-            <h4 className="sidebar__heading heading">Categories</h4>
+            <h4 className="sidebar__heading heading">categories</h4>
             <ul className="list sidebar__variants">
               {props.childCategories.map((category) => (
-                <li key={category.key} className="list__item">
-                  <Link className="list__link" to={`${category.key}`}>
+                <li key={category.key} className="list__item sidebar__item">
+                  <Link
+                    className="list__link sidebar__link"
+                    to={`${category.key}`}
+                  >
                     {category.name[Languages.ENGLISH]}
                   </Link>
                 </li>
@@ -47,31 +59,25 @@ const Sidebar: FC<SidebarProps> = (props: SidebarProps) => {
             </ul>
           </div>
         )}
-        {props.filters && <SidebarForm filters={props.filters} />}
-        {/* {props.filters?.map((filter) => (
-          <div key={filter.name}>
-            <p>{filter.name}</p>
-            <ul className="list">
-              {filter.values.map((value) => (
-                <li key={value} className="list__item">
-                  <label>
-                    <input type="checkbox"></input>
-                    {value}
-                  </label>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))} */}
+        {props.filters && (
+          <SidebarForm
+            filters={props.filters}
+            setFilters={props.setFilters}
+            prices={props.prices}
+          />
+        )}
         {props.prices && (
           <div>
             <p>Price</p>
             <p>{`$${values[0]} - $${values[1]}`}</p>
             <Slider
               className="slider_price"
-              onChange={setValues}
+              onChange={(newValues) => {
+                setValues(newValues);
+                props.setPrice(newValues);
+              }}
               value={values}
-              defaultValue={[props.prices[0], props.prices[1]]}
+              defaultValue={props.priceRange}
               min={props.prices[0]}
               max={props.prices[1]}
             />
