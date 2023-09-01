@@ -1,8 +1,8 @@
-import './profile-page.scss';
+import './ProfilePage.scss';
 import { routes } from '../../../types/routingTypes';
 import { useContext, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { LogInContext } from '../../app';
+import { LogInContext } from '../../App';
 import { FC } from 'react';
 
 const ProfilePage: FC = () => {
