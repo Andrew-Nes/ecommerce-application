@@ -97,6 +97,12 @@
   justify-content: space-between;
   padding: 5px 10px;
   border: 1px solid rgba(144, 144, 150, 0.5);
+  transition: 0.5s;
+}
+
+.card:hover {
+  background-color: rgba(203, 166, 98, 0.5);
+  transform: scale(102%);
 }
 
 .card__image {
