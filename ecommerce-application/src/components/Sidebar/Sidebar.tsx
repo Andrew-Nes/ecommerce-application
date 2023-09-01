@@ -1,9 +1,8 @@
 import './sidebar.scss';
 import { Category } from '@commercetools/platform-sdk';
-import { Dispatch, FC, SetStateAction, useEffect, useState } from 'react';
+import { Dispatch, FC, SetStateAction } from 'react';
 import { Link } from 'react-router-dom';
 import { Languages } from '../../types/commonDataTypes';
-import Slider from 'react-slider';
 import SidebarForm from '../Forms/SidebarForm/SidebarForm';
 
 interface Filters {
@@ -18,21 +17,10 @@ interface filtersCheckboxes {
 interface SidebarProps {
   childCategories?: Category[];
   filters?: Filters[];
-  prices?: [number, number];
   setFilters: Dispatch<SetStateAction<filtersCheckboxes>>;
-  setPrice: Dispatch<SetStateAction<[number, number] | undefined>>;
-  priceRange: [number, number] | undefined;
 }
 
 const Sidebar: FC<SidebarProps> = (props: SidebarProps) => {
-  const [values, setValues] = useState<[number, number]>(
-    props.prices || [0, 10]
-  );
-
-  useEffect(() => {
-    setValues(props.prices || [0, 10]);
-  }, [props]);
-
   return (
     <div className="sidebar">
       <div className="sidebar__content">
@@ -60,28 +48,7 @@ const Sidebar: FC<SidebarProps> = (props: SidebarProps) => {
           </div>
         )}
         {props.filters && (
-          <SidebarForm
-            filters={props.filters}
-            setFilters={props.setFilters}
-            prices={props.prices}
-          />
-        )}
-        {props.prices && (
-          <div>
-            <p>Price</p>
-            <p>{`$${values[0]} - $${values[1]}`}</p>
-            <Slider
-              className="slider_price"
-              onChange={(newValues) => {
-                setValues(newValues);
-                props.setPrice(newValues);
-              }}
-              value={values}
-              defaultValue={props.priceRange}
-              min={props.prices[0]}
-              max={props.prices[1]}
-            />
-          </div>
+          <SidebarForm filters={props.filters} setFilters={props.setFilters} />
         )}
       </div>
     </div>

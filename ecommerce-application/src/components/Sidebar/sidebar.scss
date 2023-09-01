@@ -45,7 +45,7 @@
   height: 10px;
   border-bottom: 1px solid black;
   border-left: 1px solid black;
-  transform: rotate(-45deg);
+  transform: rotate(135deg);
   transition: 0.5s;
   position: absolute;
   left: calc(100% - 30px);
@@ -53,7 +53,7 @@
 }
 
 .sidebar__block_close > .sidebar__block__mark {
-  transform: rotate(135deg);
+  transform: rotate(-45deg);
 }
 
 .sidebar__block_close > .sidebar__variants {

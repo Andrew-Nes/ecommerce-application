@@ -84,15 +84,19 @@
 .cards {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-evenly;
+  // justify-content: center;
   row-gap: 5px;
+  column-gap: 5px;
+  padding: 15px 10px 10px;
 }
 
 .card {
-  width: 40%;
-  // height: 200px;
+  width: calc(33.3% - 5px);
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+  padding: 5px 10px;
+  border: 1px solid rgba(144, 144, 150, 0.5);
 }
 
 .card__image {
@@ -107,4 +111,47 @@
   padding-top: 20px;
   display: flex;
   column-gap: 20px;
+}
+
+.cards__wrapper {
+  padding: 10px;
+  border: 1px solid #909096;
+}
+
+.cards__header {
+  padding: 15px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #909096;
+}
+
+.cards__form {
+  display: flex;
+  column-gap: 5px;
+}
+
+.cards__form__select {
+  border: none;
+  font-size: 16px;
+  font-family: 'Roboto', sans-serif;
+}
+
+.prices__wrapper {
+  display: flex;
+  column-gap: 15px;
+  align-items: center;
+  text-align: center;
+}
+
+.card__price {
+  text-decoration: line-through;
+  color: rgba(0, 0, 0, 0.5);
+  font-size: 18px;
+}
+
+.card__price_current {
+  text-decoration: none;
+  color: black;
+  font-size: 20px;
 }

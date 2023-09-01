@@ -10,9 +10,9 @@ import { getFilteredItems, getItems } from '../../../api/apiFunctions';
 import { TailSpin } from 'react-loader-spinner';
 import Sidebar from '../../Sidebar/Sidebar';
 import { filtersCheckboxes } from '../../../types/categoryTypes';
-import getMinMaxPrice from '../../../utils/minMaxPrice';
 import NonExistentProducts from '../NonExistingProducts.tsx/NonExistentProducts';
 import createFilterObject from '../../../utils/filterCreation';
+import SortForm from '../../Forms/SortForm/SortForm';
 
 interface SubcategoryProps {
   mainCategories: Category[];
@@ -27,6 +27,8 @@ const Subcategory: FC<SubcategoryProps> = (props: SubcategoryProps) => {
   );
   const [isProductLoading, setProductLoading] = useState<boolean>(true);
   const [chosenFilter, setChosenFilter] = useState<filtersCheckboxes>({});
+  const [sortingVariant, setSortingVariant] =
+    useState<string>('name.en-US asc');
   const redirect = useNavigate();
 
   const currentCategory = props.subCategories.find(
@@ -43,7 +45,6 @@ const Subcategory: FC<SubcategoryProps> = (props: SubcategoryProps) => {
   const parentCategoryKey = parentCategory?.key;
 
   const filters = createFilterObject(allProducts);
-  const prices = getMinMaxPrice(allProducts);
 
   const lists: BreadcrumbsItem[] = [
     {
@@ -79,7 +80,7 @@ const Subcategory: FC<SubcategoryProps> = (props: SubcategoryProps) => {
     }
     const fetchData = async () => {
       try {
-        const response = await getItems(currentCategoryId);
+        const response = await getItems(currentCategoryId, sortingVariant);
         const products = response.body.results;
         setAllProducts(products);
         setFilteredProducts(products);
@@ -101,6 +102,7 @@ const Subcategory: FC<SubcategoryProps> = (props: SubcategoryProps) => {
       try {
         const response = await getFilteredItems(
           currentCategoryId,
+          sortingVariant,
           chosenFilter
         );
         const filteredProducts = response.body.results;
@@ -113,44 +115,59 @@ const Subcategory: FC<SubcategoryProps> = (props: SubcategoryProps) => {
       }
     };
     fetchData();
-  }, [getFilteredItems, chosenFilter]);
+  }, [getFilteredItems, chosenFilter, sortingVariant]);
 
   if (props.subCategories.length > 0) {
     return (
       <div className="wrapper catalog-page__wrapper">
         <BreadcrumbsList items={lists} />
         <div className="catalog__content">
-          <Sidebar
-            filters={filters}
-            prices={prices}
-            setFilters={setChosenFilter}
-          />
+          <Sidebar filters={filters} setFilters={setChosenFilter} />
           {isProductLoading ? (
             <TailSpin wrapperClass="loader-spinner" />
           ) : (
-            <div className="cards">
-              {filteredProducts.length > 0 ? (
-                filteredProducts.map((product) => {
-                  const image: string =
-                    product.masterVariant.images?.[0]?.url || '';
-                  return (
-                    <div className="card" key={product.id} id={product.id}>
-                      <img className="card__image" src={image} />
-                      <h3 className="card__heading">
-                        {product.name[Languages.ENGLISH]}
-                      </h3>
-                      <p className="card__description">
-                        {product.description?.[Languages.ENGLISH]}
-                      </p>
-                      <p className="card__price">
-                        {product.masterVariant.price?.value.centAmount}
-                      </p>
-                    </div>
-                  );
-                })
-              ) : (
-                <NonExistentProducts />
-              )}
+            <div className="cards__wrapper">
+              <div className="cards__header">
+                <p className="text">{`${filteredProducts.length} Results`}</p>
+                <SortForm
+                  setSorting={setSortingVariant}
+                  sortString={sortingVariant}
+                />
+              </div>
+              <div className="cards">
+                {filteredProducts.length > 0 ? (
+                  filteredProducts.map((product) => {
+                    const image: string =
+                      product.masterVariant.images?.[0]?.url || '';
+                    return (
+                      <div className="card" key={product.id} id={product.id}>
+                        <img className="card__image" src={image} />
+                        <h3 className="card__heading">
+                          {product.name[Languages.ENGLISH]}
+                        </h3>
+                        <div className="prices__wrapper">
+                          <p className="card__price card__price_current text">
+                            {product.masterVariant.price
+                              ? `$${
+                                  product.masterVariant.price.value.centAmount /
+                                  100
+                                }`
+                              : ''}
+                          </p>
+                          {product.masterVariant.price?.discounted && (
+                            <p className="card__price text">
+                              {product.masterVariant.price.discounted.value
+                                .centAmount / 100}
+                            </p>
+                          )}
+                        </div>
+                      </div>
+                    );
+                  })
+                ) : (
+                  <NonExistentProducts />
+                )}
+              </div>
             </div>
           )}
         </div>
