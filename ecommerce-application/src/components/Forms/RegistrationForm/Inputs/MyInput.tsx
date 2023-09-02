@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { errorsMessage } from '../../../../types/formTypes';
 import { MyInputProps } from '../../../../types/registrationFormTypes';
-import './myInput.scss';
+import './MyInput.scss';
 
 const MyInput: FC<MyInputProps> = (props) => {
   let requiredErrorText: string;
