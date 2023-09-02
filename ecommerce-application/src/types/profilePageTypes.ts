@@ -7,7 +7,6 @@ import {
   UseFormClearErrors,
 } from 'react-hook-form';
 
-
 interface ProfilePageProp {
   loginStateChange: (newValue: boolean) => void;
 }
@@ -98,5 +97,5 @@ export type {
   EditPassFormData,
   EditPassFormProps,
   EditPassInputProps,
-  ProfilePageProp
+  ProfilePageProp,
 };

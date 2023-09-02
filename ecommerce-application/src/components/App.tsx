@@ -48,7 +48,10 @@ const App: FC = () => {
             path="register"
             element={<RegistrationPage loginStateChange={logInStateChange} />}
           />
-          <Route path="profile" element={<ProfilePage loginStateChange={logInStateChange} />} />
+          <Route
+            path="profile"
+            element={<ProfilePage loginStateChange={logInStateChange} />}
+          />
           <Route
             path="catalog"
             element={<CatalogPage categories={categories} />}

@@ -63,7 +63,7 @@ const EditPassForm = (props: EditPassFormProps) => {
       redirect(routes.PROFILE);
       reset();
       props.setModalActive(false);
-        props.isUpdateData(true)
+      props.isUpdateData(true);
       toast.success(popupText.CHANGE_PASSWORD_SUCCESS, {
         position: 'bottom-center',
       });

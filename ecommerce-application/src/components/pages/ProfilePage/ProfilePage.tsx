@@ -10,8 +10,6 @@ import { GetCustomer } from '../../../api/apiFunctions';
 import AddressLists from './AddressList/AddressList';
 import { ProfilePageProp } from '../../../types/profilePageTypes';
 
-
-
 const ProfilePage: FC<ProfilePageProp> = (props: ProfilePageProp) => {
   const isLoggedIn = useContext(LogInContext);
   const path = useLocation();
