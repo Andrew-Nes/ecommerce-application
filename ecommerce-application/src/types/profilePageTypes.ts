@@ -23,29 +23,35 @@ interface AddressItemProps {
 
 interface EditProfileFormProps {
   currentCustomer: Customer | undefined;
-  isActive: boolean,
-  isUpdateData: Dispatch<SetStateAction<boolean>>
-  setModalActive: Dispatch<SetStateAction<boolean>>
+  isActive: boolean;
+  isUpdateData: Dispatch<SetStateAction<boolean>>;
+  setModalActive: Dispatch<SetStateAction<boolean>>;
 }
 
 interface EditProfileFormData {
-  firstName: string,
-  lastName:string,
-  dateOfBirth: string
-  email: string
+  firstName: string;
+  lastName: string;
+  dateOfBirth: string;
+  email: string;
 }
-type InputEditForm = 'firstName' | 'lastName' | 'email' | 'dateOfBirth'
+type InputEditForm = 'firstName' | 'lastName' | 'email' | 'dateOfBirth';
 interface MyProfileInputProps {
-  register: UseFormRegister<EditProfileFormData>,
+  register: UseFormRegister<EditProfileFormData>;
   errors: FieldErrors<EditProfileFormData>;
   name: InputEditForm;
   title: string;
   validate?:
-  | Validate<string, EditProfileFormData>
-  | Record<string, Validate<string, EditProfileFormData>>
-  | undefined;
+    | Validate<string, EditProfileFormData>
+    | Record<string, Validate<string, EditProfileFormData>>
+    | undefined;
   type?: string;
-  value?: string
+  value?: string;
 }
 
-export type { ProfileCardAddressProps, AddressItemProps, EditProfileFormProps, EditProfileFormData, MyProfileInputProps };
+export type {
+  ProfileCardAddressProps,
+  AddressItemProps,
+  EditProfileFormProps,
+  EditProfileFormData,
+  MyProfileInputProps,
+};
