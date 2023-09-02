@@ -18,6 +18,8 @@ const AddressLists: FC<ProfileCardAddressProps> = (
         <AddAddressForm
           isModalActive={isActiveModal}
           setModalActive={setActiveModal}
+          version={props.currentCustomer?.version}
+          isUpdateData={props.isUpdateData}
         />
       </MyModal>
       <ul className="address-list__container">

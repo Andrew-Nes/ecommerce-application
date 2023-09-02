@@ -7,6 +7,8 @@ import {
   AddAddressFormData,
 } from '../../../types/profilePageTypes';
 import MyAddressSelectInput from './AddAddressInput/AddAddressSelect';
+import { MyCustomerUpdate, MyCustomerUpdateAction } from '@commercetools/platform-sdk';
+import { UpdateCustomer } from '../../../api/apiFunctions';
 
 export const AddAddressForm: FC<AddAddressFormProps> = (
   props: AddAddressFormProps
@@ -20,8 +22,33 @@ export const AddAddressForm: FC<AddAddressFormProps> = (
   const onSubmit: SubmitHandler<AddAddressFormData> = (
     data: AddAddressFormData
   ) => {
-    console.log(data);
-    console.log(props);
+
+    const changeAddressAction: MyCustomerUpdateAction = {
+        action: 'addAddress',
+        address: {
+            country: data.country,
+            city: data.city,
+            streetName: data.streetName,
+            postalCode: data.postalCode,
+            state: data.state
+        }
+    }   
+
+    const UpdateCustomerData: MyCustomerUpdate = {
+        actions: [changeAddressAction],
+        version: Number(props.version)
+      }
+      try{
+           UpdateCustomer(UpdateCustomerData).then(() => {
+             props.isUpdateData(true)
+             props.setModalActive(false)
+           })
+
+       }
+       catch(error) {
+         console.log(error)
+       }
+
   };
 
   return (
