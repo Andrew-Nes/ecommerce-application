@@ -16,9 +16,8 @@ import { UpdateCustomer } from '../../../api/apiFunctions';
 export const AddAddressForm: FC<AddAddressFormProps> = (
   props: AddAddressFormProps
 ) => {
-
-    const [isShipping, setShipping] = useState(false)
-    const [isBilling, setBilling] = useState(false)
+  const [isShipping, setShipping] = useState(false);
+  const [isBilling, setBilling] = useState(false);
   const {
     register,
     handleSubmit,
@@ -26,10 +25,10 @@ export const AddAddressForm: FC<AddAddressFormProps> = (
     formState: { errors, isValid },
   } = useForm<AddAddressFormData>({ mode: 'all' });
 
-  const onSubmit: SubmitHandler<AddAddressFormData> =  async (
+  const onSubmit: SubmitHandler<AddAddressFormData> = async (
     data: AddAddressFormData
   ) => {
-    const addressKey = new Date()
+    const addressKey = new Date();
     const addAddressAction: MyCustomerUpdateAction = {
       action: 'addAddress',
       address: {
@@ -38,7 +37,7 @@ export const AddAddressForm: FC<AddAddressFormProps> = (
         streetName: data.streetName,
         postalCode: data.postalCode,
         state: data.state,
-        key: addressKey.toString()
+        key: addressKey.toString(),
       },
     };
 
@@ -47,34 +46,33 @@ export const AddAddressForm: FC<AddAddressFormProps> = (
       version: Number(props.version),
     };
     try {
-      await UpdateCustomer(UpdateCustomerData)
+      await UpdateCustomer(UpdateCustomerData);
       if (isShipping) {
         const addShippingAddressAction: MyCustomerUpdateAction = {
-            action: 'addShippingAddressId',
-            addressKey: addressKey.toString()
-          }
-          const UpdateCustomerData: MyCustomerUpdate = {
-            actions: [addShippingAddressAction],
-            version: Number(props.version) + 1,
-          };
-          await UpdateCustomer(UpdateCustomerData)
+          action: 'addShippingAddressId',
+          addressKey: addressKey.toString(),
+        };
+        const UpdateCustomerData: MyCustomerUpdate = {
+          actions: [addShippingAddressAction],
+          version: Number(props.version) + 1,
+        };
+        await UpdateCustomer(UpdateCustomerData);
       }
       if (isBilling) {
         const addBillingAddressAction: MyCustomerUpdateAction = {
-            action: 'addBillingAddressId',
-            addressKey: addressKey.toString()
-          }
-          const UpdateCustomerData: MyCustomerUpdate = {
-            actions: [addBillingAddressAction],
-            version: Number(props.version) + (isShipping ? 2 : 1),
-          };
-          await UpdateCustomer(UpdateCustomerData)
+          action: 'addBillingAddressId',
+          addressKey: addressKey.toString(),
+        };
+        const UpdateCustomerData: MyCustomerUpdate = {
+          actions: [addBillingAddressAction],
+          version: Number(props.version) + (isShipping ? 2 : 1),
+        };
+        await UpdateCustomer(UpdateCustomerData);
       }
-        reset()
-        props.isUpdateData(true);
-        props.setModalActive(false);
-
-      } catch (error) {
+      reset();
+      props.isUpdateData(true);
+      props.setModalActive(false);
+    } catch (error) {
       console.log(error);
     }
   };
@@ -122,29 +120,33 @@ export const AddAddressForm: FC<AddAddressFormProps> = (
           countries={['US']}
         />
 
-            <div>
-                <label>Set as shipping</label>
-                <input type="checkbox" onChange={() => {
-                   if (isShipping) {
-                    setShipping(false)
-                   } else {
-                    setShipping(true)
-                   }
-                }
-                }/>
-            </div>
+        <div>
+          <label>Set as shipping</label>
+          <input
+            type="checkbox"
+            onChange={() => {
+              if (isShipping) {
+                setShipping(false);
+              } else {
+                setShipping(true);
+              }
+            }}
+          />
+        </div>
 
-            <div>
-                <label>Set as billing</label>
-                <input type="checkbox" onChange={() => {
-                   if (isBilling) {
-                    setBilling(false)
-                   } else {
-                    setBilling(true)
-                   }
-                }
-                }/>
-            </div>
+        <div>
+          <label>Set as billing</label>
+          <input
+            type="checkbox"
+            onChange={() => {
+              if (isBilling) {
+                setBilling(false);
+              } else {
+                setBilling(true);
+              }
+            }}
+          />
+        </div>
         <button type="submit" disabled={!isValid}>
           Add
         </button>
