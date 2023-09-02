@@ -88,6 +88,32 @@ interface EditPassInputProps {
   value?: string;
 }
 
+interface MyAddressInputProps {
+  register: UseFormRegister<AddAddressFormData>;
+  errors: FieldErrors<AddAddressFormData>;
+  name: 'country' | 'streetName' | 'postalCode' | 'city' | 'state';
+  title: string;
+  validate?:
+    | Validate<string, AddAddressFormData>
+    | Record<string, Validate<string, AddAddressFormData>>
+    | undefined;
+  type?: string;
+  value?: string;
+  countries?: string[];
+}
+
+interface AddAddressFormData {
+  country: string;
+  city: string;
+  streetName: string;
+  postalCode: string;
+  state: string;
+}
+
+interface AddAddressFormProps {
+  isModalActive: boolean;
+  setModalActive: Dispatch<SetStateAction<boolean>>;
+}
 export type {
   ProfileCardAddressProps,
   AddressItemProps,
@@ -98,4 +124,7 @@ export type {
   EditPassFormProps,
   EditPassInputProps,
   ProfilePageProp,
+  MyAddressInputProps,
+  AddAddressFormData,
+  AddAddressFormProps,
 };
