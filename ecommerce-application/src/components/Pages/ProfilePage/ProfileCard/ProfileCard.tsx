@@ -2,11 +2,12 @@ import { FC, useState } from 'react';
 import './ProfileCard.scss';
 import MyModal from '../../../../components/Modal/MyModal';
 import { ProfileCardAddressProps } from '../../../../types/profilePageTypes';
+import EditProfileForm from '../../../Forms/EditProfileForm/EditProfileForm';
 
 const ProfileCard: FC<ProfileCardAddressProps> = (
   props: ProfileCardAddressProps
 ) => {
-  const [modalActive, setModalActive] = useState(false);
+  const [modalEditActive, setModalEditActive] = useState(false);
   const [modalPassActive, setPassModalActive] = useState(false);
 
   return (
@@ -40,9 +41,9 @@ const ProfileCard: FC<ProfileCardAddressProps> = (
       <div className="profile-card__buttons-container">
         <button
           className="edit-profile_button"
-          onClick={() => setModalActive(true)}
+          onClick={() => setModalEditActive(true)}
         >
-          Edit profile
+          Edit Profile
         </button>
         <button
           className="edit-profile_button"
@@ -52,7 +53,14 @@ const ProfileCard: FC<ProfileCardAddressProps> = (
         </button>
       </div>
 
-      <MyModal active={modalActive} setActive={setModalActive}></MyModal>
+      <MyModal active={modalEditActive} setActive={setModalEditActive}>
+        <EditProfileForm
+          isActive={modalEditActive}
+          isUpdateData={props.isUpdateData}
+          setModalActive={setModalEditActive}
+          currentCustomer={props.currentCustomer}
+        />
+      </MyModal>
 
       <MyModal
         active={modalPassActive}
