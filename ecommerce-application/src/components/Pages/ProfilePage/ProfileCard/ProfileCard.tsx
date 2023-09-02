@@ -72,6 +72,7 @@ const ProfileCard: FC<ProfileCardAddressProps> = (
           customerID={props.currentCustomer?.id}
           customerPassword={props.currentCustomer?.password}
           email={props.currentCustomer?.email || ''}
+          loginStateChange={props.loginStateChange}
         />
       </MyModal>
     </fieldset>

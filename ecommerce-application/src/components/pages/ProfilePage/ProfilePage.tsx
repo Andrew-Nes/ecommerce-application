@@ -8,8 +8,11 @@ import ProfileCard from './ProfileCard/ProfileCard';
 import { ClientResponse, Customer } from '@commercetools/platform-sdk';
 import { GetCustomer } from '../../../api/apiFunctions';
 import AddressLists from './AddressList/AddressList';
+import { ProfilePageProp } from '../../../types/profilePageTypes';
 
-const ProfilePage: FC = () => {
+
+
+const ProfilePage: FC<ProfilePageProp> = (props: ProfilePageProp) => {
   const isLoggedIn = useContext(LogInContext);
   const path = useLocation();
   const redirect = useNavigate();
@@ -43,12 +46,14 @@ const ProfilePage: FC = () => {
     <div className="profile-page__wrapper">
       <h1>Profile Page</h1>
       <ProfileCard
+        loginStateChange={props.loginStateChange}
         isUpdateData={setIsUpdateData}
         currentCustomer={currentCustomer}
       />
       <AddressLists
         currentCustomer={currentCustomer}
         isUpdateData={setIsUpdateData}
+        loginStateChange={props.loginStateChange}
       />
     </div>
   );

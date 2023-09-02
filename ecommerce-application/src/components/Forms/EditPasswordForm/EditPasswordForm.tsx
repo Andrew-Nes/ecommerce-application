@@ -10,6 +10,8 @@ import {
 import { useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { popupText } from '../../../types/elementsText';
+import { routes } from '../../../types/routingTypes';
+import { redirect } from 'react-router-dom';
 
 const EditPassForm = (props: EditPassFormProps) => {
   const {
@@ -53,17 +55,18 @@ const EditPassForm = (props: EditPassFormProps) => {
     };
     try {
       await UpdateCustomerPassword(UpdateCustomerPassData);
+      props.loginStateChange(false);
+      window.localStorage.clear();
 
       await loginClient(props.email, data.newPass);
+      props.loginStateChange(true);
+      redirect(routes.PROFILE);
       reset();
       props.setModalActive(false);
-
+        props.isUpdateData(true)
       toast.success(popupText.CHANGE_PASSWORD_SUCCESS, {
         position: 'bottom-center',
       });
-      setTimeout(() => {
-        location.reload();
-      }, 3000);
     } catch (error) {
       toast.error(popupText.CHANGE_PASSWORD_FAILED, {
         position: 'bottom-center',

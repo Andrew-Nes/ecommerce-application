@@ -7,9 +7,14 @@ import {
   UseFormClearErrors,
 } from 'react-hook-form';
 
+
+interface ProfilePageProp {
+  loginStateChange: (newValue: boolean) => void;
+}
 interface ProfileCardAddressProps {
   currentCustomer: Customer | undefined;
   isUpdateData: Dispatch<SetStateAction<boolean>>;
+  loginStateChange: (newValue: boolean) => void;
 }
 
 interface AddressItemProps {
@@ -67,6 +72,7 @@ interface EditPassFormProps {
   customerID: string | undefined;
   customerPassword: string | undefined;
   email: string;
+  loginStateChange: (newValue: boolean) => void;
 }
 
 interface EditPassInputProps {
@@ -92,4 +98,5 @@ export type {
   EditPassFormData,
   EditPassFormProps,
   EditPassInputProps,
+  ProfilePageProp
 };
