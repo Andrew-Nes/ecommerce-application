@@ -113,9 +113,8 @@ interface AddAddressFormData {
 interface AddAddressFormProps {
   isModalActive: boolean;
   setModalActive: Dispatch<SetStateAction<boolean>>;
-  version: number | undefined
+  version: number | undefined;
   isUpdateData: Dispatch<SetStateAction<boolean>>;
-
 }
 export type {
   ProfileCardAddressProps,
