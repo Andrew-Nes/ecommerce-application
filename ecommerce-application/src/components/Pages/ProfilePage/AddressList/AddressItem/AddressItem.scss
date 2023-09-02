@@ -20,6 +20,7 @@
 
 .address-data-item_label {
   width: 40%;
+  font-weight: 600;
 }
 
 .address-type__container {
@@ -36,8 +37,18 @@
 
 .billing {
   border: 1px solid green;
+  color: green;
 }
 
 .shipping {
   border: 1px solid blue;
+  color: blue;
+}
+
+.address-edit_button {
+  padding: 5px 8px;
+  background-color: #cba662;
+  cursor: pointer;
+  width: 100%;
+  font-weight: 500;
 }

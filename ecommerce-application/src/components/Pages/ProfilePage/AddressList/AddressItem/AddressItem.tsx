@@ -63,7 +63,12 @@ const AddressItem: FC<AddressItemProps> = (props: AddressItemProps) => {
           {props.address.postalCode}
         </span>
       </div>
-      <button className='address-edit_button' onClick={() => setModalActive(true)}>Edit</button>
+      <button
+        className="address-edit_button"
+        onClick={() => setModalActive(true)}
+      >
+        Edit
+      </button>
 
       <MyModal active={isModalActive} setActive={setModalActive}></MyModal>
     </li>
