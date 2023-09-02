@@ -43,7 +43,7 @@ enum popupText {
   REGISTRATION_FAIL = 'This email address already exists in the system. Log in or use another email address.',
   LOGIN_SUCCESS = 'Login completed successfully!',
   CHANGE_PASSWORD_SUCCESS = 'Your password has been changed!',
-  CHANGE_PASSWORD_FAILED = 'Failed to change password! Something happened!'
+  CHANGE_PASSWORD_FAILED = 'Failed to change password! Something happened!',
 }
 
 export {

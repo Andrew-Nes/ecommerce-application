@@ -113,7 +113,7 @@ export const UpdateCustomerPassword = async (
     .me()
     .password()
     .post({
-      body: updateCustomer
+      body: updateCustomer,
     })
-    .execute()
+    .execute();
 };
