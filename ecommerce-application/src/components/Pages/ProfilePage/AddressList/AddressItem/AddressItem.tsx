@@ -21,16 +21,17 @@ const AddressItem: FC<AddressItemProps> = (props: AddressItemProps) => {
         ) : (
           ''
         )}
-        {props.isBilling ? (
-          <span className="address-type billing">Billing</span>
-        ) : (
-          ''
-        )}
         {props.isDefaultShipping ? (
           <span className="address-type shipping">DefaultShipping</span>
         ) : (
           ''
         )}
+        {props.isBilling ? (
+          <span className="address-type billing">Billing</span>
+        ) : (
+          ''
+        )}
+
         {props.isDefaultBilling ? (
           <span className="address-type billing">DefaultBilling</span>
         ) : (
