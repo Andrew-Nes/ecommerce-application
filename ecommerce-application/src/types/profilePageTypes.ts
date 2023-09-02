@@ -1,6 +1,11 @@
 import { Address, Customer } from '@commercetools/platform-sdk';
 import { Dispatch, SetStateAction } from 'react';
-import { UseFormRegister, FieldErrors, Validate } from 'react-hook-form';
+import {
+  UseFormRegister,
+  FieldErrors,
+  Validate,
+  UseFormClearErrors,
+} from 'react-hook-form';
 
 interface ProfileCardAddressProps {
   currentCustomer: Customer | undefined;
@@ -48,10 +53,43 @@ interface MyProfileInputProps {
   value?: string;
 }
 
+interface EditPassFormData {
+  currentPass: string;
+  newPass: string;
+  confirmNewPass: string;
+}
+
+interface EditPassFormProps {
+  isActive: boolean;
+  isUpdateData: Dispatch<SetStateAction<boolean>>;
+  setModalActive: Dispatch<SetStateAction<boolean>>;
+  version: number | undefined;
+  customerID: string | undefined;
+  customerPassword: string | undefined;
+  email: string;
+}
+
+interface EditPassInputProps {
+  register: UseFormRegister<EditPassFormData>;
+  errors: FieldErrors<EditPassFormData>;
+  name: 'currentPass' | 'newPass' | 'confirmNewPass';
+  title: string;
+  validate?:
+    | Validate<string, EditPassFormData>
+    | Record<string, Validate<string, EditPassFormData>>
+    | undefined;
+  clearErrors: UseFormClearErrors<EditPassFormData>;
+  type?: string;
+  value?: string;
+}
+
 export type {
   ProfileCardAddressProps,
   AddressItemProps,
   EditProfileFormProps,
   EditProfileFormData,
   MyProfileInputProps,
+  EditPassFormData,
+  EditPassFormProps,
+  EditPassInputProps,
 };
