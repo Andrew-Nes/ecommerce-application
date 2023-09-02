@@ -1,0 +1,48 @@
+
+.address__container {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 350px;
+    padding: 5px 10px;
+    border: 1px solid black;
+  }
+
+  .default-shipping {
+    order: 0;
+    
+  }
+
+  .default-billing {
+    order: 1;
+    
+
+  }
+  .address-data_item {
+    display: flex;
+  }
+  
+  .address-data-item_label {
+    width: 40%;
+  }
+  
+
+  .address-type__container {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+}
+
+.address-type {
+    padding: 5px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.billing {
+  border: 1px solid green;
+}
+
+.shipping {
+  border: 1px solid blue;
+}
