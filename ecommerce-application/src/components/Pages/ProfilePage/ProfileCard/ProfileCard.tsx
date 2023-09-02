@@ -3,6 +3,7 @@ import './ProfileCard.scss';
 import MyModal from '../../../../components/Modal/MyModal';
 import { ProfileCardAddressProps } from '../../../../types/profilePageTypes';
 import EditProfileForm from '../../../Forms/EditProfileForm/EditProfileForm';
+import EditPassForm from '../../../Forms/EditPasswordForm/EditPasswordForm';
 
 const ProfileCard: FC<ProfileCardAddressProps> = (
   props: ProfileCardAddressProps
@@ -62,10 +63,17 @@ const ProfileCard: FC<ProfileCardAddressProps> = (
         />
       </MyModal>
 
-      <MyModal
-        active={modalPassActive}
-        setActive={setPassModalActive}
-      ></MyModal>
+      <MyModal active={modalPassActive} setActive={setPassModalActive}>
+        <EditPassForm
+          isActive={modalPassActive}
+          isUpdateData={props.isUpdateData}
+          setModalActive={setPassModalActive}
+          version={props.currentCustomer?.version}
+          customerID={props.currentCustomer?.id}
+          customerPassword={props.currentCustomer?.password}
+          email={props.currentCustomer?.email || ''}
+        />
+      </MyModal>
     </fieldset>
   );
 };
