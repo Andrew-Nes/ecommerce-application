@@ -13,25 +13,25 @@ const ProfileCard: FC<ProfileCardProps> = (props: ProfileCardProps) => {
       <div className="customer-data_item">
         <label className="customer-data-item_label">First Name:</label>
         <span className="customer-data-item_content">
-          {props.currentCustomer.firstName}
+          {props.currentCustomer?.firstName}
         </span>
       </div>
       <div className="customer-data_item">
         <label className="customer-data-item_label">Email:</label>
         <span className="customer-data-item_content">
-          {props.currentCustomer.email}
+          {props.currentCustomer?.email}
         </span>
       </div>
       <div className="customer-data_item">
         <label className="customer-data-item_label">Last Name:</label>
         <span className="customer-data-item_content">
-          {props.currentCustomer.lastName}
+          {props.currentCustomer?.lastName}
         </span>
       </div>
       <div className="customer-data_item">
         <label className="customer-data-item_label">Date Of Birth:</label>
         <span className="customer-data-item_content">
-          {props.currentCustomer.dateOfBirth}
+          {props.currentCustomer?.dateOfBirth}
         </span>
       </div>
       <button
