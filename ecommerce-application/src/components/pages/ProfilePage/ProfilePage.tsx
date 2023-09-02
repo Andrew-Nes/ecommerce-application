@@ -39,7 +39,7 @@ const ProfilePage: FC<ProfilePageProp> = (props: ProfilePageProp) => {
   useEffect(() => {
     setProfile();
     if (isUpdateData) {
-      setIsUpdateData(false)
+      setIsUpdateData(false);
     }
   }, [isUpdateData]);
 

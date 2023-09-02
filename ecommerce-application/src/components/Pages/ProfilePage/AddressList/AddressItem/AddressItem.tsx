@@ -2,7 +2,10 @@ import { FC, useState } from 'react';
 import './AddressItem.scss';
 import MyModal from '../../../../Modal/MyModal';
 import { AddressItemProps } from '../../../../../types/profilePageTypes';
-import { MyCustomerUpdate, MyCustomerUpdateAction } from '@commercetools/platform-sdk';
+import {
+  MyCustomerUpdate,
+  MyCustomerUpdateAction,
+} from '@commercetools/platform-sdk';
 import { UpdateCustomer } from '../../../../../api/apiFunctions';
 
 const AddressItem: FC<AddressItemProps> = (props: AddressItemProps) => {
@@ -11,17 +14,16 @@ const AddressItem: FC<AddressItemProps> = (props: AddressItemProps) => {
   const deleteAddress = async () => {
     const removeAddressAction: MyCustomerUpdateAction = {
       action: 'removeAddress',
-      addressId: props.addressID
-    }
+      addressId: props.addressID,
+    };
 
     const UpdateCustomerData: MyCustomerUpdate = {
       actions: [removeAddressAction],
-      version: Number(props.version)
-    }
-    await UpdateCustomer(UpdateCustomerData)
-    props.isUpdateData(true)
-
-  }
+      version: Number(props.version),
+    };
+    await UpdateCustomer(UpdateCustomerData);
+    props.isUpdateData(true);
+  };
 
   return (
     <li
@@ -82,20 +84,21 @@ const AddressItem: FC<AddressItemProps> = (props: AddressItemProps) => {
           {props.address.postalCode}
         </span>
       </div>
-      <div className='address-item__buttons-container'>
-      <button
-        className="address-edit_button"
-        onClick={() => setModalActive(true)}
-      >
-        Edit
-      </button>
-      <button
-      onClick={() => {
-        deleteAddress()
-      }}
-      >Delete</button>
+      <div className="address-item__buttons-container">
+        <button
+          className="address-edit_button"
+          onClick={() => setModalActive(true)}
+        >
+          Edit
+        </button>
+        <button
+          onClick={() => {
+            deleteAddress();
+          }}
+        >
+          Delete
+        </button>
       </div>
-
 
       <MyModal active={isModalActive} setActive={setModalActive}></MyModal>
     </li>
