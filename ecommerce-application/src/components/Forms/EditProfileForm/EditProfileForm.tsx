@@ -78,7 +78,7 @@ const EditProfileForm: FC<EditProfileFormProps> = (
   };
   return (
     <div>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form className="edit-profile__form" onSubmit={handleSubmit(onSubmit)}>
         <MyProfileInput
           register={register}
           name="firstName"
@@ -108,10 +108,21 @@ const EditProfileForm: FC<EditProfileFormProps> = (
           errors={errors}
           type="date"
         />
-        <button type="submit" disabled={!isValid}>
-          Save
-        </button>
-        <button onClick={() => props.setModalActive(false)}>Back</button>
+        <div className="profile-edit-form__btn-container">
+          <button
+            className="profile-edit-form_button"
+            type="submit"
+            disabled={!isValid}
+          >
+            Save
+          </button>
+          <button
+            className="profile-edit-form_button"
+            onClick={() => props.setModalActive(false)}
+          >
+            Back
+          </button>
+        </div>
       </form>
     </div>
   );
