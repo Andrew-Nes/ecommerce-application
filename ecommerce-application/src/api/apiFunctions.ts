@@ -1,5 +1,6 @@
 import {
   createApiBuilderFromCtpClient,
+  CustomerChangePassword,
   CustomerDraft,
   MyCustomerUpdate,
 } from '@commercetools/platform-sdk';
@@ -102,4 +103,17 @@ export const UpdateCustomer = async (updateCustomer: MyCustomerUpdate) => {
       body: updateCustomer,
     })
     .execute();
+};
+
+export const UpdateCustomerPassword = async (
+  updateCustomer: CustomerChangePassword
+) => {
+  const client = getCurrentClient();
+  return await client
+    .me()
+    .password()
+    .post({
+      body: updateCustomer
+    })
+    .execute()
 };
