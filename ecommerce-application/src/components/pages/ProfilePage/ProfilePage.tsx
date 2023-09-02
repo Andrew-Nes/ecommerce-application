@@ -5,9 +5,17 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { LogInContext } from '../../App';
 import { FC } from 'react';
 import ProfileCard from './ProfileCard/ProfileCard';
-import { ClientResponse, Customer } from '@commercetools/platform-sdk';
+import {
+  ClientResponse,
+  Customer,
+  ErrorResponse,
+} from '@commercetools/platform-sdk';
 import { GetCustomer } from '../../../api/apiFunctions';
 import AddressLists from './AddressList/AddressList';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { popupText } from '../../../types/elementsText';
+import { serviceErrors, errorsMessage } from '../../../types/formTypes';
 
 const ProfilePage: FC = () => {
   const isLoggedIn = useContext(LogInContext);
@@ -25,7 +33,34 @@ const ProfilePage: FC = () => {
         await GetCustomer();
       setCurrentCustomer(response.body);
     } catch (error) {
-      console.log(error);
+      const errorResponse = JSON.parse(
+        JSON.stringify(error)
+      ) as ClientResponse<ErrorResponse>;
+
+      const errorCode = errorResponse.body.statusCode;
+      const errorMessage = errorResponse.body.message;
+
+      if (errorMessage === serviceErrors.DUPLICATE_FIELD) {
+        toast.error(errorsMessage.TOAST_EMAIL_EXIST, {
+          position: 'bottom-center',
+        });
+      } else if (
+        errorCode === serviceErrors.INVALID_CUSTOMER_CREDENTIALS &&
+        errorMessage !== serviceErrors.DUPLICATE_FIELD
+      ) {
+        toast.error(popupText.REGISTRATION_FAIL, {
+          position: 'bottom-center',
+        });
+      }
+      if (
+        errorCode === serviceErrors.SERVICE_UNAVAILABLE ||
+        errorCode === serviceErrors.BAD_GATEWAY ||
+        errorCode === serviceErrors.INTERNAL_SERVER_ERROR
+      ) {
+        toast.info(errorsMessage.TOAST_SERVER_ERROR, {
+          position: 'bottom-center',
+        });
+      }
     }
   }
 
