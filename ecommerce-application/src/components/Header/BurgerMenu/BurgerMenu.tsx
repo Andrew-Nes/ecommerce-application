@@ -21,6 +21,13 @@ const BurgerMenu: FC<loginStateChangeProp> = ({ loginStateChange }) => {
         <Link className="burger__link" to={routes.MAIN} onClick={() => close()}>
           {anchorsText.MAIN}
         </Link>
+        <Link
+          className="burger__link"
+          to={routes.CATALOG}
+          onClick={() => close()}
+        >
+          {anchorsText.CATALOG}
+        </Link>
         {!isLoggedIn ? (
           <Link
             className="burger__link"
@@ -30,16 +37,25 @@ const BurgerMenu: FC<loginStateChangeProp> = ({ loginStateChange }) => {
             {anchorsText.LOGIN}
           </Link>
         ) : (
-          <Link
-            className="burger__link"
-            to={routes.MAIN}
-            onClick={() => {
-              logout();
-              close();
-            }}
-          >
-            {anchorsText.LOGOUT}
-          </Link>
+          <div className="logged-in-links__container">
+            <Link
+              className="burger__link"
+              to={routes.PROFILE}
+              onClick={() => close()}
+            >
+              {anchorsText.PROFILE}
+            </Link>
+            <Link
+              className="burger__link"
+              to={routes.MAIN}
+              onClick={() => {
+                logout();
+                close();
+              }}
+            >
+              {anchorsText.LOGOUT}
+            </Link>
+          </div>
         )}
         <Link
           className="burger__link"

@@ -60,4 +60,9 @@ export const getProduct = async (ID: string) => {
     .get()
     .execute();
   return product;
+}
+
+export const getCategories = async () => {
+  const client = createClientCredentialFlow();
+  return await client.categories().get().execute();
 };
