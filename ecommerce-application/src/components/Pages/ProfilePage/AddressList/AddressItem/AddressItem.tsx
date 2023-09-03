@@ -8,6 +8,7 @@ import {
 } from '@commercetools/platform-sdk';
 import { UpdateCustomer } from '../../../../../api/apiFunctions';
 import EditAddressForm from '../../../../Forms/EditAddressForm/EditAddressForm';
+import SetDefaultButton from './SetDefaultButton/SetDefaultButton';
 
 const AddressItem: FC<AddressItemProps> = (props: AddressItemProps) => {
   const [isModalActive, setModalActive] = useState(false);
@@ -84,6 +85,64 @@ const AddressItem: FC<AddressItemProps> = (props: AddressItemProps) => {
         <span className="address-data-item_content">
           {props.address.postalCode}
         </span>
+      </div>
+      <div className="address-item__buttons-container address-detail">
+        {props.isShipping && !props.isDefaultShipping ? (
+          <SetDefaultButton
+            text="Set as default shipping"
+            isUpdateData={props.isUpdateData}
+            addressID={props.addressID}
+            version={props.version?.toString() || ''}
+            action="setDefaultShippingAddress"
+          />
+        ) : (
+          ''
+        )}
+        {props.isBilling && !props.isDefaultBilling ? (
+          <SetDefaultButton
+            text="Set as default billing"
+            isUpdateData={props.isUpdateData}
+            addressID={props.addressID}
+            version={props.version?.toString() || ''}
+            action="setDefaultBillingAddress"
+          />
+        ) : (
+          ''
+        )}
+        {!props.isShipping ? (
+          <SetDefaultButton
+            text="Set as shipping"
+            isUpdateData={props.isUpdateData}
+            addressID={props.addressID}
+            version={props.version?.toString() || ''}
+            action="addShippingAddressId"
+          />
+        ) : (
+          <SetDefaultButton
+            text="Remove shipping"
+            isUpdateData={props.isUpdateData}
+            addressID={props.addressID}
+            version={props.version?.toString() || ''}
+            action="removeShippingAddressId"
+          />
+        )}
+        {!props.isBilling ? (
+          <SetDefaultButton
+            text="Set as billing"
+            isUpdateData={props.isUpdateData}
+            addressID={props.addressID}
+            version={props.version?.toString() || ''}
+            action="addBillingAddressId"
+          />
+        ) : (
+          <SetDefaultButton
+            text="Remove billing"
+            isUpdateData={props.isUpdateData}
+            addressID={props.addressID}
+            version={props.version?.toString() || ''}
+            action="removeBillingAddressId"
+          />
+        )}
       </div>
       <div className="address-item__buttons-container">
         <button
