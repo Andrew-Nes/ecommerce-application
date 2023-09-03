@@ -8,7 +8,7 @@ import {
   EditAddressFormData,
   EditAddressFormProps,
 } from '../../../types/profilePageTypes';
-import { FC, useEffect /*, useState */ } from 'react';
+import { FC, useEffect } from 'react';
 import MyAddressInput from '../AddAddressForm/AddAddressInput/AddAddressInput';
 import { validateFields } from '../RegistrationForm/validateFields';
 import MyAddressSelectInput from '../AddAddressForm/AddAddressInput/AddAddressSelect';
@@ -23,13 +23,6 @@ const EditAddressForm: FC<EditAddressFormProps> = (
     formState: { errors, isValid },
   } = useForm<EditAddressFormData>({ mode: 'all' });
 
-  /* const [isDefaultShipping, setDefaultShipping] = useState(
-    props.isDefaultShipping
-  );
-  const [isDefaultBilling, setDefaultBilling] = useState(
-    props.isDefaultBilling
-  );
-*/
   useEffect(() => {
     setValue('city', props.address.city || '');
     setValue('streetName', props.address.streetName || '');
@@ -43,26 +36,6 @@ const EditAddressForm: FC<EditAddressFormProps> = (
     props.address.postalCode,
     setValue,
   ]);
-
-  /*const actionsArray: MyCustomerUpdateAction[] = [];
-  /const [array, setActionArray] = useState(actionsArray);
-
-  const removeShippingAddressAction: MyCustomerUpdateAction = {
-    action: 'removeShippingAddressId',
-    addressId: props.addressID,
-  };
-  const removeBillingAddressAction: MyCustomerUpdateAction = {
-    action: 'removeBillingAddressId',
-    addressId: props.addressID,
-  };
-  const setDefaultShippingAction: MyCustomerUpdateAction = {
-    action: 'setDefaultShippingAddress',
-    addressId: props.addressID,
-  };
-  const setDefaultBillingAction: MyCustomerUpdateAction = {
-    action: 'setDefaultBillingAddress',
-    addressId: props.addressID,
-  };*/
 
   const onSubmit: SubmitHandler<EditAddressFormData> = (
     data: EditAddressFormData

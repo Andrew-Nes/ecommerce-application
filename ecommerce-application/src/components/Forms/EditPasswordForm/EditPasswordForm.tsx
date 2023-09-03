@@ -7,13 +7,13 @@ import {
   EditPassFormProps,
   EditPassFormData,
 } from '../../../types/profilePageTypes';
-import { useEffect } from 'react';
+import { FC, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { popupText } from '../../../types/elementsText';
 import { routes } from '../../../types/routingTypes';
 import { redirect } from 'react-router-dom';
 
-const EditPassForm = (props: EditPassFormProps) => {
+const EditPassForm: FC<EditPassFormProps> = (props: EditPassFormProps) => {
   const {
     register,
     handleSubmit,
@@ -76,7 +76,7 @@ const EditPassForm = (props: EditPassFormProps) => {
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <span>{errors.root?.passErrors.message}</span>
+        <span className='error__message'>{errors.root?.passErrors.message}</span>
         <EditPassInput
           register={register}
           name="currentPass"

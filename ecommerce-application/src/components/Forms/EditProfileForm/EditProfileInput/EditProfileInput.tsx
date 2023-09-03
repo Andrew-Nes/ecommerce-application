@@ -12,7 +12,7 @@ const MyProfileInput: FC<MyProfileInputProps> = (
     : (requiredErrorText = `${props.title} is required`);
   return (
     <div className="edit-profile-input-wrapper">
-      <label className="edit-profile-label">{props.title}:</label>
+      <label className="edit-profile-label">{props.title}</label>
       <input
         className={`input edit-profile__input ${
           props.errors[props.name] ? 'input__error' : ''
