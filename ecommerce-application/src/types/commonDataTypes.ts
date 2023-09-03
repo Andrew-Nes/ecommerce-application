@@ -2,4 +2,11 @@ enum Languages {
   ENGLISH = 'en-US',
 }
 
-export default Languages;
+enum Categories {
+  CATS = 'cats',
+  DOGS = 'dogs',
+  BIRDS = 'birds',
+  FISHES = 'fishes',
+}
+
+export { Languages, Categories };

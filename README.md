@@ -23,7 +23,8 @@ Provide customers with a convenient and personalized way to purchase a product.
 3. Run terminal;
 4. Go to project folder (run "cd ecommerce-application/" in terminal);
 5. Install dependencies (run "npm install" in terminal);
-6. Use one of the scripts below depending on your purpose.
+6. Find file 'env.example' and rename it to '.env'; 
+7. Use one of the scripts below depending on your purpose.
 
 # Available Scripts
  * npm run start:dev - Run dev server
