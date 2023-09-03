@@ -1,6 +1,6 @@
 import { TokenCache, TokenStore } from '@commercetools/sdk-client-v2';
 
-export default class TokenStorage implements TokenCache {
+class TokenStorage implements TokenCache {
   private tokenStore: TokenStore = {
     token: '',
     expirationTime: 0,
@@ -13,5 +13,18 @@ export default class TokenStorage implements TokenCache {
 
   public set(cache: TokenStore): void {
     this.tokenStore = cache;
+    window.localStorage.setItem('token', cache.token);
+  }
+
+  public clear(): void {
+    this.tokenStore = {
+      token: '',
+      expirationTime: 0,
+      refreshToken: '',
+    };
   }
 }
+
+const tokenStorage = new TokenStorage();
+
+export default tokenStorage;
