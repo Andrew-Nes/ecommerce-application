@@ -116,6 +116,27 @@ interface AddAddressFormProps {
   version: number | undefined;
   isUpdateData: Dispatch<SetStateAction<boolean>>;
 }
+interface EditAddressFormData {
+  city: string;
+  country: string;
+  state: string;
+  streetName: string;
+  postalCode: string;
+}
+
+interface EditAddressFormProps {
+  address: Address;
+  setModalActive: Dispatch<SetStateAction<boolean>>;
+  isUpdateData: Dispatch<SetStateAction<boolean>>;
+  activeModal: boolean;
+  version: string;
+  isShipping: boolean;
+  isBilling: boolean;
+  isDefaultShipping: boolean;
+  isDefaultBilling: boolean;
+  addressID: string;
+}
+
 export type {
   ProfileCardAddressProps,
   AddressItemProps,
@@ -129,4 +150,6 @@ export type {
   MyAddressInputProps,
   AddAddressFormData,
   AddAddressFormProps,
+  EditAddressFormData,
+  EditAddressFormProps,
 };
