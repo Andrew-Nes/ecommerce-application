@@ -166,5 +166,5 @@ export type {
   AddAddressFormProps,
   EditAddressFormData,
   EditAddressFormProps,
-  SetDefaultShippingButtonProps
+  SetDefaultShippingButtonProps,
 };

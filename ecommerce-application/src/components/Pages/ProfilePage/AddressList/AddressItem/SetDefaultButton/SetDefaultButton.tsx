@@ -6,9 +6,9 @@ import { UpdateCustomer } from '../../../../../../api/apiFunctions';
 import { FC } from 'react';
 import { SetDefaultShippingButtonProps } from '../../../../../../types/profilePageTypes';
 
-
-
-const SetDefaultButton :FC<SetDefaultShippingButtonProps> = (props: SetDefaultShippingButtonProps) => {
+const SetDefaultButton: FC<SetDefaultShippingButtonProps> = (
+  props: SetDefaultShippingButtonProps
+) => {
   const setDefaultAddress = async () => {
     try {
       const setDefaultAddressAction: MyCustomerUpdateAction = {
