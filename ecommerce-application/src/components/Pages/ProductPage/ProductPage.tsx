@@ -3,7 +3,7 @@ import { getProduct } from '../../../api/apiFunctions';
 import Slider from '../../Slider/Slider';
 import './productPage.scss';
 import { ProductProjection } from '@commercetools/platform-sdk';
-import Languages from '../../../types/commonDataTypes';
+import { Languages } from '../../../types/commonDataTypes';
 const noImagePic = '../../../../assets/img/slider-no-image.jpg';
 
 const ProductPage: FC<{ id: string }> = (props) => {

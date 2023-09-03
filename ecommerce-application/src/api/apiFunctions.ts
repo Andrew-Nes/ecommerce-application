@@ -122,8 +122,3 @@ export const getProduct = async (ID: string) => {
     .execute();
   return product;
 }
-
-export const getCategories = async () => {
-  const client = createClientCredentialFlow();
-  return await client.categories().get().execute();
-};
