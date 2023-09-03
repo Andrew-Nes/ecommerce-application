@@ -4,19 +4,11 @@ import { Dispatch, FC, SetStateAction } from 'react';
 import { Link } from 'react-router-dom';
 import { Languages } from '../../types/commonDataTypes';
 import SidebarForm from '../Forms/SidebarForm/SidebarForm';
-
-interface Filters {
-  name: string;
-  values: string[];
-}
-
-interface filtersCheckboxes {
-  [key: string]: string[];
-}
+import { Filters, filtersCheckboxes } from '../../types/categoryTypes';
 
 interface SidebarProps {
   childCategories?: Category[];
-  filters?: Filters[];
+  filters: Filters[];
   setFilters: Dispatch<SetStateAction<filtersCheckboxes>>;
 }
 
@@ -47,9 +39,7 @@ const Sidebar: FC<SidebarProps> = (props: SidebarProps) => {
             </ul>
           </div>
         )}
-        {props.filters && (
-          <SidebarForm filters={props.filters} setFilters={props.setFilters} />
-        )}
+        <SidebarForm filters={props.filters} setFilters={props.setFilters} />
       </div>
     </div>
   );

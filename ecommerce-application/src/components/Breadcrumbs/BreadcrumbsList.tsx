@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { BreadcrumbsItem } from '../types/breadcrumbsTypes';
+import { BreadcrumbsItem } from '../../types/breadcrumbsTypes';
 import { FC } from 'react';
 
 interface BreadcrumbsListProps {

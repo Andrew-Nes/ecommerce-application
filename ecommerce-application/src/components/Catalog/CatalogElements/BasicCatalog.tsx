@@ -1,4 +1,4 @@
-import BreadcrumbsList from '../../BreadcrumbsList';
+import BreadcrumbsList from '../../Breadcrumbs/BreadcrumbsList';
 import { routes } from '../../../types/routingTypes';
 import { anchorsText } from '../../../types/elementsText';
 import { BreadcrumbsItem } from '../../../types/breadcrumbsTypes';

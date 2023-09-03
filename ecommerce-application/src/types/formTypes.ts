@@ -46,9 +46,21 @@ enum serviceErrors {
 
 type PasswordType = 'password' | 'text';
 
-export interface LoginProps {
+interface LoginProps {
   logIn: () => void;
 }
 
-export { errorsMessage, serviceErrors };
-export type { PasswordType };
+interface Filters {
+  name: string;
+  values: string[];
+}
+
+enum SortingVariants {
+  NAME_ASC = 'name.en-US asc',
+  NAME_DESC = 'name.en-US desc',
+  PRICE_ASC = 'price asc',
+  PRICE_DESC = 'price desc',
+}
+
+export { errorsMessage, serviceErrors, SortingVariants };
+export type { PasswordType, LoginProps, Filters };
