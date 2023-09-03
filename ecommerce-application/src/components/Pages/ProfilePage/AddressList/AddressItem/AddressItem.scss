@@ -9,11 +9,11 @@
 }
 
 .default-shipping {
-  order: 0;
+  order: -1;
 }
 
 .default-billing {
-  order: 1;
+  order: -1;
 }
 .address-data_item {
   display: flex;
@@ -58,4 +58,11 @@
   display: flex;
   align-items: center;
   justify-content: space-around;
+}
+
+.address-detail {
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 5px;
 }
