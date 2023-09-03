@@ -25,6 +25,14 @@ function createClientPasswordFlow(
   return apiRoot;
 }
 
+// function createClientCredentialFlow(): ByProjectKeyRequestBuilder {
+//   const client = getAuthClient();
+//   const apiRoot = createApiBuilderFromCtpClient(client).withProjectKey({
+//     projectKey,
+//   });
+//   return apiRoot;
+// }
+
 function createAnonymousFlow() {
   const client = getAnonymousAuthClient();
   const apiRoot = createApiBuilderFromCtpClient(client).withProjectKey({
@@ -103,3 +111,14 @@ export const UpdateCustomer = async (updateCustomer: MyCustomerUpdate) => {
     })
     .execute();
 };
+
+export const getProduct = async (ID: string) => {
+  const client = getCurrentClient();
+  const product = await client
+    .productProjections()
+    .withId({ ID })
+    .get()
+    .execute();
+  return product;
+};
+
