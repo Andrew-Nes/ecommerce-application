@@ -6,12 +6,10 @@ import {
   Client,
   AnonymousAuthMiddlewareOptions,
 } from '@commercetools/sdk-client-v2';
-import TokenStorage from './tokenStorage';
+import tokenStorage from './tokenStorage';
 
-const scopes: string[] = import.meta.env.VITE_CTP_SCOPES.split(' ') || [];
+const scopes: string[] = import.meta.env.VITE_CTP_SCOPES?.split(' ') || [];
 const projectKey: string = import.meta.env.VITE_CTP_PROJECT_KEY || '';
-const commonTokenStorage = new TokenStorage();
-const clientTokenStorage = new TokenStorage();
 
 const authMiddlewareOptions: AuthMiddlewareOptions = {
   host: import.meta.env.VITE_CTP_AUTH_URL || '',
@@ -22,7 +20,7 @@ const authMiddlewareOptions: AuthMiddlewareOptions = {
   },
   scopes,
   fetch,
-  tokenCache: commonTokenStorage,
+  tokenCache: tokenStorage,
 };
 
 const anonymousAuthMiddlewareOptions: AnonymousAuthMiddlewareOptions = {
@@ -34,6 +32,7 @@ const anonymousAuthMiddlewareOptions: AnonymousAuthMiddlewareOptions = {
   },
   scopes,
   fetch,
+  tokenCache: tokenStorage,
 };
 
 const httpMiddlewareOptions: HttpMiddlewareOptions = {
@@ -58,7 +57,7 @@ function getPasswordAuthMiddlewareOptions(
     },
     scopes,
     fetch,
-    tokenCache: clientTokenStorage,
+    tokenCache: tokenStorage,
   };
 }
 
@@ -78,6 +77,13 @@ function getAuthClient(): Client {
     .build();
 }
 
+function getClientWithExistingToken(token: string): Client {
+  return clientObject
+    .withExistingTokenFlow(`Bearer ${token}`, {force: true})
+    .withHttpMiddleware(httpMiddlewareOptions)
+    .build();
+}
+
 function getAnonymousAuthClient(): Client {
   return clientObject
     .withAnonymousSessionFlow(anonymousAuthMiddlewareOptions)
@@ -89,5 +95,6 @@ export {
   getAuthClient,
   getPasswordAuthClient,
   getAnonymousAuthClient,
+  getClientWithExistingToken,
   projectKey,
 };
