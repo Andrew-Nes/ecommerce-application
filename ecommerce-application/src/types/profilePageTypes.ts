@@ -137,6 +137,20 @@ interface EditAddressFormProps {
   addressID: string;
 }
 
+interface SetDefaultShippingButtonProps {
+  text: string;
+  isUpdateData: Dispatch<SetStateAction<boolean>>;
+  addressID: string;
+  version: string;
+  action:
+    | 'removeShippingAddressId'
+    | 'removeBillingAddressId'
+    | 'setDefaultShippingAddress'
+    | 'setDefaultBillingAddress'
+    | 'addShippingAddressId'
+    | 'addBillingAddressId';
+}
+
 export type {
   ProfileCardAddressProps,
   AddressItemProps,
@@ -152,4 +166,5 @@ export type {
   AddAddressFormProps,
   EditAddressFormData,
   EditAddressFormProps,
+  SetDefaultShippingButtonProps
 };
