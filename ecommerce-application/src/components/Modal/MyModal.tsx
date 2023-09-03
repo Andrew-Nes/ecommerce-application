@@ -1,3 +1,4 @@
+import { FC } from 'react';
 import './MyModal.scss';
 interface MyModalProps {
   active: boolean;
@@ -5,7 +6,7 @@ interface MyModalProps {
   children?: React.ReactNode | string;
 }
 
-const MyModal = ({ active, setActive, children }: MyModalProps) => {
+const MyModal: FC<MyModalProps> = ({ active, setActive, children }: MyModalProps) => {
   return (
     <div
       className={active ? 'modal active' : 'modal'}
