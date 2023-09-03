@@ -76,7 +76,9 @@ const EditPassForm: FC<EditPassFormProps> = (props: EditPassFormProps) => {
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <span className='error__message'>{errors.root?.passErrors.message}</span>
+        <span className="error__message">
+          {errors.root?.passErrors.message}
+        </span>
         <EditPassInput
           register={register}
           name="currentPass"

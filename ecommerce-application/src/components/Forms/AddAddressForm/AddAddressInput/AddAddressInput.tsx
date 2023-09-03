@@ -5,7 +5,7 @@ export const MyAddressInput: FC<MyAddressInputProps> = (
   props: MyAddressInputProps
 ) => {
   return (
-    <div className='edit-profile-input-wrapper'>
+    <div className="edit-profile-input-wrapper">
       <label className="edit-profile-label">{props.title}</label>
       <input
         className={`input edit-profile__input ${
