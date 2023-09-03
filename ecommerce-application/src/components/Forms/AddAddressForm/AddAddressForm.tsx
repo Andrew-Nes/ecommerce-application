@@ -124,12 +124,10 @@ export const AddAddressForm: FC<AddAddressFormProps> = (
           <label>Set as shipping</label>
           <input
             type="checkbox"
-            onChange={() => {
-              if (isShipping) {
-                setShipping(false);
-              } else {
-                setShipping(true);
-              }
+            onChange={(e) => {
+              e.target.value === 'true'
+                ? setShipping(true)
+                : setShipping(false);
             }}
           />
         </div>
@@ -138,12 +136,8 @@ export const AddAddressForm: FC<AddAddressFormProps> = (
           <label>Set as billing</label>
           <input
             type="checkbox"
-            onChange={() => {
-              if (isBilling) {
-                setBilling(false);
-              } else {
-                setBilling(true);
-              }
+            onChange={(e) => {
+              e.target.value === 'true' ? setBilling(true) : setBilling(false);
             }}
           />
         </div>
