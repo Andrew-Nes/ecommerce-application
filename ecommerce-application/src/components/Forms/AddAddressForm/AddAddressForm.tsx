@@ -16,8 +16,8 @@ import { UpdateCustomer } from '../../../api/apiFunctions';
 export const AddAddressForm: FC<AddAddressFormProps> = (
   props: AddAddressFormProps
 ) => {
-  const [isShipping, setShipping] = useState(false);
-  const [isBilling, setBilling] = useState(false);
+  const [isShipping, setShipping] = useState<boolean>(false);
+  const [isBilling, setBilling] = useState<boolean>(false);
   const {
     register,
     handleSubmit,
@@ -125,7 +125,7 @@ export const AddAddressForm: FC<AddAddressFormProps> = (
           <input
             type="checkbox"
             onChange={(e) => {
-              e.target.value === 'true'
+              e.target.checked
                 ? setShipping(true)
                 : setShipping(false);
             }}
@@ -137,7 +137,8 @@ export const AddAddressForm: FC<AddAddressFormProps> = (
           <input
             type="checkbox"
             onChange={(e) => {
-              e.target.value === 'true' ? setBilling(true) : setBilling(false);
+              e.target.checked ? setBilling(true) : setBilling(false)
+              console.log(isBilling)
             }}
           />
         </div>
