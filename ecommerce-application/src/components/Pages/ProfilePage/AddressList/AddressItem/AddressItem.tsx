@@ -7,6 +7,7 @@ import {
   MyCustomerUpdateAction,
 } from '@commercetools/platform-sdk';
 import { UpdateCustomer } from '../../../../../api/apiFunctions';
+import EditAddressForm from '../../../../Forms/EditAddressForm/EditAddressForm';
 
 const AddressItem: FC<AddressItemProps> = (props: AddressItemProps) => {
   const [isModalActive, setModalActive] = useState(false);
@@ -92,6 +93,7 @@ const AddressItem: FC<AddressItemProps> = (props: AddressItemProps) => {
           Edit
         </button>
         <button
+          className="address-edit_button"
           onClick={() => {
             deleteAddress();
           }}
@@ -100,7 +102,20 @@ const AddressItem: FC<AddressItemProps> = (props: AddressItemProps) => {
         </button>
       </div>
 
-      <MyModal active={isModalActive} setActive={setModalActive}></MyModal>
+      <MyModal active={isModalActive} setActive={setModalActive}>
+        <EditAddressForm
+          setModalActive={setModalActive}
+          isUpdateData={props.isUpdateData}
+          address={props.address}
+          activeModal={isModalActive}
+          addressID={props.addressID}
+          version={props.version?.toString() || ''}
+          isShipping={props.isShipping}
+          isBilling={props.isBilling}
+          isDefaultBilling={props.isDefaultBilling}
+          isDefaultShipping={props.isDefaultShipping}
+        />
+      </MyModal>
     </li>
   );
 };

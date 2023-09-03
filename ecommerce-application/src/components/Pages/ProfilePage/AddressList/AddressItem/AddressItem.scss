@@ -5,6 +5,7 @@
   width: 350px;
   padding: 5px 10px;
   border: 1px solid black;
+  justify-content: space-between;
 }
 
 .default-shipping {
@@ -49,6 +50,12 @@
   padding: 5px 8px;
   background-color: #cba662;
   cursor: pointer;
-  width: 100%;
+  width: 40%;
   font-weight: 500;
+}
+
+.address-item__buttons-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
 }
