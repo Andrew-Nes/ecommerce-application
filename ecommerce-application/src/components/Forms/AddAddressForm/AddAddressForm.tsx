@@ -125,9 +125,7 @@ export const AddAddressForm: FC<AddAddressFormProps> = (
           <input
             type="checkbox"
             onChange={(e) => {
-              e.target.checked
-                ? setShipping(true)
-                : setShipping(false);
+              e.target.checked ? setShipping(true) : setShipping(false);
             }}
           />
         </div>
@@ -137,8 +135,8 @@ export const AddAddressForm: FC<AddAddressFormProps> = (
           <input
             type="checkbox"
             onChange={(e) => {
-              e.target.checked ? setBilling(true) : setBilling(false)
-              console.log(isBilling)
+              e.target.checked ? setBilling(true) : setBilling(false);
+              console.log(isBilling);
             }}
           />
         </div>
