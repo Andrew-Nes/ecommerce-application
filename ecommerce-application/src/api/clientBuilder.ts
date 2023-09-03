@@ -79,7 +79,7 @@ function getAuthClient(): Client {
 
 function getClientWithExistingToken(token: string): Client {
   return clientObject
-    .withExistingTokenFlow(`Bearer ${token}`, {force: true})
+    .withExistingTokenFlow(`Bearer ${token}`, { force: true })
     .withHttpMiddleware(httpMiddlewareOptions)
     .build();
 }

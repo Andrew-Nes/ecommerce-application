@@ -9,7 +9,6 @@ import RedirectButton from '../../RedirectButton/RedirectButton';
 import './mainPage.scss';
 
 const MainPage: FC = () => {
-  console.log('main page');
   return (
     <main className="main main-page">
       <div className="wrapper main-page__wrapper">
