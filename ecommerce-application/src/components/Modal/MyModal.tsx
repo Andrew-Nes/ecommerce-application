@@ -6,7 +6,11 @@ interface MyModalProps {
   children?: React.ReactNode | string;
 }
 
-const MyModal: FC<MyModalProps> = ({ active, setActive, children }: MyModalProps) => {
+const MyModal: FC<MyModalProps> = ({
+  active,
+  setActive,
+  children,
+}: MyModalProps) => {
   return (
     <div
       className={active ? 'modal active' : 'modal'}
