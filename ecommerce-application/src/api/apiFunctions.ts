@@ -11,6 +11,9 @@ import {
 } from './clientBuilder';
 import { ByProjectKeyRequestBuilder } from '@commercetools/platform-sdk/dist/declarations/src/generated/client/by-project-key-request-builder';
 import tokenStorage from './tokenStorage';
+import { PriceCountry, PriceCurrency } from '../types/commonDataTypes';
+import { filtersCheckboxes } from '../types/categoryTypes';
+import { getFiltersString, getPriceFilterString } from '../utils/apiHelpers';
 
 let loggedClient: ByProjectKeyRequestBuilder | undefined = undefined;
 
@@ -104,8 +107,8 @@ export const getItems = async (id: string = '', sort: string) => {
     .search()
     .get({
       queryArgs: {
-        priceCurrency: 'USD',
-        priceCountry: 'US',
+        priceCurrency: PriceCurrency.DOLLAR,
+        priceCountry: PriceCountry.USA,
         filter: `categories.id:"${id}"`,
         limit: 100,
         sort: `${sort}`,
@@ -119,36 +122,8 @@ export const getFilteredItems = async (
   sort: string,
   filters?: filtersCheckboxes
 ) => {
-  const filtersString: string[] = [];
-  const prices: filtersCheckboxes = {};
-  if (filters) {
-    for (const key of Object.keys(filters)) {
-      if (key === 'price') {
-        prices[key] = filters[key];
-        continue;
-      }
-      if (filters[key] && filters[key].length > 0) {
-        const value = filters[key].map((value) => `"${value}"`).join(',');
-        const string = `variants.attributes.${key}:${value}`;
-        filtersString.push(string);
-      }
-    }
-  }
-
-  const priceRange: number[] = [];
-  if (prices.price && prices.price.length > 0) {
-    const array = prices.price
-      .map((value) => value.split(' - '))
-      .flat()
-      .map((value) => Number(value));
-    priceRange.push(array[0], array[array.length - 1]);
-  }
-  const priceString =
-    priceRange.length > 0
-      ? `variants.price.centAmount:range (${priceRange[0] * 100} to ${
-          priceRange[1] * 100
-        })`
-      : 'variants.prices:exists';
+  const filtersString: string[] = getFiltersString(filters);
+  const priceString = getPriceFilterString(filters);
 
   const client = getCurrentClient();
   return await client
@@ -156,8 +131,8 @@ export const getFilteredItems = async (
     .search()
     .get({
       queryArgs: {
-        priceCurrency: 'USD',
-        priceCountry: 'US',
+        priceCurrency: PriceCurrency.DOLLAR,
+        priceCountry: PriceCountry.USA,
         filter: [`categories.id:"${id}"`, ...filtersString, priceString],
         limit: 100,
         sort: `${sort}`,
@@ -165,22 +140,3 @@ export const getFilteredItems = async (
     })
     .execute();
 };
-
-interface filtersCheckboxes {
-  [key: string]: string[];
-}
-
-// const val = await client
-//     .productProjections()
-//     .search()
-//     .get({
-//       queryArgs: {
-//         // filter: [`categories.id:"${id}"`],
-//         // limit: 20,
-//         // priceCurrency: 'USD',
-//         facet: ['variants.attributes.age'],
-//         // 'variants.attributes.age'
-//       }
-//     })
-//     .execute()
-// console.log('VAL', val)
