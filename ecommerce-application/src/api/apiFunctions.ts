@@ -6,7 +6,6 @@ import {
 import {
   getPasswordAuthClient,
   projectKey,
-  // getAuthClient,
   getClientWithExistingToken,
   getAnonymousAuthClient,
 } from './clientBuilder';
@@ -106,9 +105,7 @@ export const GetCustomer = async () => {
   return await client.me().get().execute();
 };
 
-export const UpdateCustomer = async (
-  updateCustomer: MyCustomerUpdate
-) => {
+export const UpdateCustomer = async (updateCustomer: MyCustomerUpdate) => {
   const client = getCurrentClient();
   return await client
     .me()
