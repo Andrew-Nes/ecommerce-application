@@ -16,7 +16,8 @@ import { validateFields } from '../RegistrationForm/validateFields';
 import MyAddressSelectInput from '../AddAddressForm/AddAddressInput/AddAddressSelect';
 import { errorsMessage, serviceErrors } from '../../../types/formTypes';
 import { toast } from 'react-toastify';
-
+import { popupText } from '../../../types/elementsText';
+import './EditAddressForm.scss'
 const EditAddressForm: FC<EditAddressFormProps> = (
   props: EditAddressFormProps
 ) => {
@@ -67,7 +68,13 @@ const EditAddressForm: FC<EditAddressFormProps> = (
       await UpdateCustomer(UpdateCustomerData);
       props.isUpdateData(true);
       props.setModalActive(false);
+      toast.success(popupText.EDIT_ADDRESS_SUCCESS, {
+        position: 'bottom-center',
+      });
     } catch (error) {
+      toast.error(popupText.EDIT_ADDRESS_FAILED, {
+        position: 'bottom-center',
+      });
       const errorResponse = JSON.parse(
         JSON.stringify(error)
       ) as ClientResponse<ErrorResponse>;
@@ -130,11 +137,12 @@ const EditAddressForm: FC<EditAddressFormProps> = (
           title="Country:"
           countries={['US']}
         />
-
-        <button type="submit" disabled={!isValid || isLoad}>
+  <div className='edit-address-form__btn-container'>
+  <button className='edit-address-form_button' type="submit" disabled={!isValid || isLoad}>
           Save
         </button>
         <button
+        className='edit-address-form_button'
           onClick={(e) => {
             e.preventDefault();
             props.setModalActive(false);
@@ -142,6 +150,8 @@ const EditAddressForm: FC<EditAddressFormProps> = (
         >
           Back
         </button>
+  </div>
+
       </form>
     </div>
   );

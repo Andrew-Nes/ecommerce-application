@@ -44,6 +44,16 @@ enum popupText {
   LOGIN_SUCCESS = 'Login completed successfully!',
   CHANGE_PASSWORD_SUCCESS = 'Your password has been changed!',
   CHANGE_PASSWORD_FAILED = 'Failed to change password! Something happened!',
+  ADD_ADDRESS_SUCCESS = 'A new address has been added!',
+  ADD_ADDRESS_FAILED = 'Failed to add address!',
+  EDIT_PROFILE_SUCCESS = 'Profile has been updated',
+  EDIT_PROFILE_FAILED = 'Failed to update profile!',
+  EDIT_ADDRESS_SUCCESS = 'The address has been updated!',
+  EDIT_ADDRESS_FAILED = 'Failed to update address!',
+  DELETE_ADDRESS_SUCCESS = 'The address has been deleted',
+  DELETE_ADDRESS_FAILED = 'Failed to delete address!'
+
+  
 }
 
 export {

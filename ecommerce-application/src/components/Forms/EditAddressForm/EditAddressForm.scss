@@ -1,0 +1,16 @@
+.edit-address-form_button {
+    padding: 5px 10px;
+    background-color: #cba662;
+    transition: 0.5s;
+    &:hover,
+    &:disabled {
+      background-color: rgba(203, 166, 98, 0.5);
+    }
+  }
+  
+  .edit-address-form__btn-container {
+    margin-top: 10px;
+    display: flex;
+    gap: 10px;
+  }
+  

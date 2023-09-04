@@ -17,6 +17,7 @@ import { UpdateCustomer } from '../../../api/apiFunctions';
 import './AddAddressForm.scss';
 import { toast } from 'react-toastify';
 import { serviceErrors } from '../../../types/formTypes';
+import { popupText } from '../../../types/elementsText';
 export const AddAddressForm: FC<AddAddressFormProps> = (
   props: AddAddressFormProps
 ) => {
@@ -75,6 +76,9 @@ export const AddAddressForm: FC<AddAddressFormProps> = (
         };
         await UpdateCustomer(UpdateCustomerData);
       }
+      toast.success(popupText.ADD_ADDRESS_SUCCESS, {
+        position: 'bottom-center',
+      });
       reset();
       props.isUpdateData(true);
       props.setModalActive(false);
@@ -85,7 +89,9 @@ export const AddAddressForm: FC<AddAddressFormProps> = (
 
       const errorCode = errorResponse.body.statusCode;
       const errorMessage = errorResponse.body.message;
-
+      toast.error(popupText.EDIT_ADDRESS_FAILED, {
+        position: 'bottom-center',
+      });
       if (
         errorCode === serviceErrors.SERVICE_UNAVAILABLE ||
         errorCode === serviceErrors.BAD_GATEWAY ||

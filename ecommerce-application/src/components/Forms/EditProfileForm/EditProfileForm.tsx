@@ -79,7 +79,13 @@ const EditProfileForm: FC<EditProfileFormProps> = (
       await UpdateCustomer(UpdateCustomerData);
       props.isUpdateData(true);
       props.setModalActive(false);
+      toast.success(popupText.EDIT_PROFILE_SUCCESS, {
+        position: 'bottom-center',
+      });
     } catch (error) {
+      toast.error(popupText.EDIT_PROFILE_FAILED, {
+        position: 'bottom-center',
+      });
       const errorResponse = JSON.parse(
         JSON.stringify(error)
       ) as ClientResponse<ErrorResponse>;
