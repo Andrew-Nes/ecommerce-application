@@ -5,7 +5,7 @@ import { anchorsText } from '../../../types/elementsText';
 import BreadcrumbsList from '../../Breadcrumbs/BreadcrumbsList';
 import { Category, ProductProjection } from '@commercetools/platform-sdk';
 import { Languages } from '../../../types/commonDataTypes';
-import { FC, useEffect, useState } from 'react';
+import { Dispatch, FC, SetStateAction, useEffect, useState } from 'react';
 import { getFilteredItems, getItems } from '../../../api/apiFunctions';
 import { TailSpin } from 'react-loader-spinner';
 import Sidebar from '../../Sidebar/Sidebar';
@@ -18,6 +18,7 @@ import NotFoundPage from '../../Pages/NotFoundPage/NotFoundPage';
 interface SubcategoryProps {
   mainCategories: Category[];
   subCategories: Category[];
+  setProductId: Dispatch<SetStateAction<string>>;
 }
 
 const Subcategory: FC<SubcategoryProps> = (props: SubcategoryProps) => {
@@ -130,6 +131,7 @@ const Subcategory: FC<SubcategoryProps> = (props: SubcategoryProps) => {
               sortingVariants={sortingVariant}
               setSortingVariants={setSortingVariant}
               setSearchText={setSearchText}
+              setProductId={props.setProductId}
             />
           )}
         </div>

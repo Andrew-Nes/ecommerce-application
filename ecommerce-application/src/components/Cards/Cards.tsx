@@ -5,14 +5,19 @@ import { Languages } from '../../types/commonDataTypes';
 import NonExistentProducts from '../Catalog/NonExistingProducts.tsx/NonExistentProducts';
 import SearchForm from '../Forms/SearchForm/SearchForm';
 
+import { routes } from '../../types/routingTypes';
+import { useNavigate } from 'react-router-dom';
+
 interface cardsProps {
   products: ProductProjection[];
   sortingVariants: string;
   setSortingVariants: Dispatch<SetStateAction<string>>;
   setSearchText: Dispatch<SetStateAction<string>>;
+  setProductId: Dispatch<SetStateAction<string>>;
 }
 
 const Cards: FC<cardsProps> = (props: cardsProps) => {
+  const redirect = useNavigate();
   return (
     <div className="cards__wrapper">
       <div className="cards__header">
@@ -34,7 +39,14 @@ const Cards: FC<cardsProps> = (props: cardsProps) => {
           props.products.map((product) => {
             const image: string = product.masterVariant.images?.[0]?.url || '';
             return (
-              <div className="card" key={product.id} id={product.id}>
+              <div
+                className="card"
+                key={product.id}
+                onClick={() => {
+                  props.setProductId(product.id);
+                  redirect(routes.PRODUCT);
+                }}
+              >
                 <img className="card__image" src={image} />
                 <h3 className="card__heading">
                   {product.name[Languages.ENGLISH]}

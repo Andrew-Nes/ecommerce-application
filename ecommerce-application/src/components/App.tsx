@@ -14,6 +14,7 @@ import BasicCatalog from './Catalog/CatalogElements/BasicCatalog';
 import CategoryComponent from './Catalog/CatalogElements/CategoryComponent';
 import BasicCategory from './Catalog/CategoryElements/BasicCategory';
 import Subcategory from './Catalog/CategoryElements/Subcategory';
+import ProductPage from './Pages/ProductPage/ProductPage';
 
 export const LogInContext = createContext(false);
 
@@ -24,6 +25,7 @@ const App: FC = () => {
 
   const [basicCategories, setBasicCategories] = useState<Category[]>([]);
   const [subCategories, setSubCategories] = useState<Category[]>([]);
+  const [productId, setProductId] = useState<string>('');
 
   function logInStateChange(newValue: boolean): void {
     setIsLoggedIn(newValue);
@@ -83,6 +85,7 @@ const App: FC = () => {
                   <BasicCategory
                     basicCategories={basicCategories}
                     subCategories={subCategories}
+                    setProductId={setProductId}
                   />
                 }
               />
@@ -92,11 +95,13 @@ const App: FC = () => {
                   <Subcategory
                     mainCategories={basicCategories}
                     subCategories={subCategories}
+                    setProductId={setProductId}
                   />
                 }
               />
             </Route>
           </Route>
+          <Route path="product" element={<ProductPage id={productId} />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </BrowserRouter>
