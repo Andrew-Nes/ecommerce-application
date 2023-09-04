@@ -1,10 +1,12 @@
 import './EditProfileForm.scss';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { validateFields } from '../RegistrationForm/validateFields';
-import { FC, useEffect } from 'react';
+import { FC, useEffect, useState } from 'react';
 import MyProfileInput from './EditProfileInput/EditProfileInput';
 import {
+  ClientResponse,
   CustomerUpdateAction,
+  ErrorResponse,
   MyCustomerUpdate,
 } from '@commercetools/platform-sdk';
 import { UpdateCustomer } from '../../../api/apiFunctions';
@@ -12,14 +14,19 @@ import {
   EditProfileFormData,
   EditProfileFormProps,
 } from '../../../types/profilePageTypes';
+import { toast } from 'react-toastify';
+import { serviceErrors, errorsMessage } from '../../../types/formTypes';
+import { popupText } from '../../../types/elementsText';
 
 const EditProfileForm: FC<EditProfileFormProps> = (
   props: EditProfileFormProps
 ) => {
+  const [isLoad, setLoad] = useState(false)
   const {
     register,
     handleSubmit,
     setValue,
+    setError,
     formState: { errors, isValid },
   } = useForm<EditProfileFormData>({ mode: 'all' });
 
@@ -37,7 +44,7 @@ const EditProfileForm: FC<EditProfileFormProps> = (
     props.currentCustomer?.email,
   ]);
 
-  const onSubmit: SubmitHandler<EditProfileFormData> = (
+  const onSubmit: SubmitHandler<EditProfileFormData> = async (
     data: EditProfileFormData
   ) => {
     const setFirstNameAction: CustomerUpdateAction = {
@@ -68,14 +75,47 @@ const EditProfileForm: FC<EditProfileFormProps> = (
       version: Number(props.currentCustomer?.version),
     };
     try {
-      UpdateCustomer(UpdateCustomerData).then(() => {
+      setLoad(true)
+      await UpdateCustomer(UpdateCustomerData)
         props.isUpdateData(true);
         props.setModalActive(false);
-      });
+
     } catch (error) {
-      console.log(error);
+      const errorResponse = JSON.parse(
+        JSON.stringify(error)
+      ) as ClientResponse<ErrorResponse>;
+
+      const errorCode = errorResponse.body.statusCode;
+      const errorMessage = errorResponse.body.message;
+
+      if (errorMessage === serviceErrors.DUPLICATE_FIELD) {
+        setError('email', {
+          type: 'existEmail',
+          message: errorsMessage.EXIST_EMAIL,
+        });
+      } else if (
+        errorCode === serviceErrors.INVALID_CUSTOMER_CREDENTIALS &&
+        errorMessage !== serviceErrors.DUPLICATE_FIELD
+      ) {
+        toast.error(popupText.REGISTRATION_FAIL, {
+          position: 'bottom-center',
+        });
+      }
+      if (
+        errorCode === serviceErrors.SERVICE_UNAVAILABLE ||
+        errorCode === serviceErrors.BAD_GATEWAY ||
+        errorCode === serviceErrors.INTERNAL_SERVER_ERROR
+      ) {
+        toast.info(errorsMessage.TOAST_SERVER_ERROR, {
+          position: 'bottom-center',
+        });
+      }
+    }  
+    finally{
+      setLoad(false)
     }
-  };
+  }
+    ;
   return (
     <div>
       <form className="edit-profile__form" onSubmit={handleSubmit(onSubmit)}>
@@ -112,7 +152,7 @@ const EditProfileForm: FC<EditProfileFormProps> = (
           <button
             className="profile-edit-form_button"
             type="submit"
-            disabled={!isValid}
+            disabled={!isValid || isLoad}
           >
             Save
           </button>
