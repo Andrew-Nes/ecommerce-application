@@ -98,14 +98,15 @@ const AddressItem: FC<AddressItemProps> = (props: AddressItemProps) => {
         </span>
       </div>
       {props.address.state ? (
-      <div className="address-data_item">
-      <label className="address-data-item_label">State:</label>
-      <span className="address-data-item_content">{props.address.state}</span>
-    </div>
-      )
-      : ''
-      
-    }
+        <div className="address-data_item">
+          <label className="address-data-item_label">State:</label>
+          <span className="address-data-item_content">
+            {props.address.state}
+          </span>
+        </div>
+      ) : (
+        ''
+      )}
 
       <div className="address-item__buttons-container address-detail">
         {props.isShipping && !props.isDefaultShipping ? (

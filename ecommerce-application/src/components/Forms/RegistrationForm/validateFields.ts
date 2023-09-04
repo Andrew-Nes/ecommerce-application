@@ -99,9 +99,9 @@ export const validateFields = {
   },
   STATE_VALIDATE: {
     digitExisting: (value: string) =>
-    !/[0-9]/.test(value) || errorsMessage.STATE_NUMBERS,
+      !/[0-9]/.test(value) || errorsMessage.STATE_NUMBERS,
     specialCharacter: (value: string) =>
-    !/[-=+!@"№;:?#$%_()><,.|{}'`~/\\^&[*\]]/.test(value) ||
-    errorsMessage.STATE_SPECIAL_CHARACTER,
+      !/[-=+!@"№;:?#$%_()><,.|{}'`~/\\^&[*\]]/.test(value) ||
+      errorsMessage.STATE_SPECIAL_CHARACTER,
   },
 };

@@ -36,7 +36,7 @@ enum errorsMessage {
   TOAST_SERVER_ERROR = 'Server problems. Please try to register later.',
   CHANGE_PASSWORD_NOT_MATCH = 'The given current password does not match.',
   STATE_NUMBERS = 'State must not contain numbers',
-  STATE_SPECIAL_CHARACTER = 'State must not contain special characters'
+  STATE_SPECIAL_CHARACTER = 'State must not contain special characters',
 }
 
 enum serviceErrors {

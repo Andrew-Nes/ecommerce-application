@@ -13,7 +13,7 @@ export const MyAddressInput: FC<MyAddressInputProps> = (
         }`}
         type={props.type}
         {...props.register(props.name, {
-          required: (props.name === 'state') ? false : `${props.title} is required`,
+          required: `${props.title} is required`,
           validate: props.validate,
         })}
         title={props.name}
