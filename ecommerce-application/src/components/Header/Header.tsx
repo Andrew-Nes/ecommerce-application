@@ -16,7 +16,8 @@ const Header: FC<loginStateChangeProp> = ({ loginStateChange }) => {
   const redirect = useNavigate();
   const logout = () => {
     loginStateChange(false);
-    window.localStorage.clear();
+    window.localStorage.removeItem('token');
+    window.localStorage.removeItem('IsLoggedIn');
     redirect(routes.MAIN);
   };
   const path = useLocation();
