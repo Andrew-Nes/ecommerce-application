@@ -19,5 +19,10 @@ interface AddressItemProps {
   defaultShippingID: string | undefined;
   defaultBillingID: string | undefined;
 }
+interface MyModalProps {
+  active: boolean;
+  setActive: React.Dispatch<React.SetStateAction<boolean>>;
+  children?: React.ReactNode | string;
+}
 
-export type { ProfileCardAddressProps, AddressItemProps };
+export type { ProfileCardAddressProps, AddressItemProps, MyModalProps };
