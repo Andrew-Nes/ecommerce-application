@@ -41,6 +41,7 @@ const Cards: FC<cardsProps> = (props: cardsProps) => {
                 key={product.id}
                 onClick={() => {
                   props.setProductId(product.id);
+                  window.localStorage.setItem('id', product.id);
                   redirect(routes.PRODUCT);
                 }}
               >
