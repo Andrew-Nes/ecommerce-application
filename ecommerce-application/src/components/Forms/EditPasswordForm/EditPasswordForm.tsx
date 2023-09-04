@@ -19,7 +19,7 @@ import { redirect } from 'react-router-dom';
 import { errorsMessage, serviceErrors } from '../../../types/formTypes';
 
 const EditPassForm: FC<EditPassFormProps> = (props: EditPassFormProps) => {
-  const [isLoad, setLoad] = useState(false)
+  const [isLoad, setLoad] = useState(false);
   const {
     register,
     handleSubmit,
@@ -86,9 +86,8 @@ const EditPassForm: FC<EditPassFormProps> = (props: EditPassFormProps) => {
           position: 'bottom-center',
         });
       }
-    }
-    finally{
-      setLoad(false)
+    } finally {
+      setLoad(false);
     }
   };
   return (
@@ -126,16 +125,15 @@ const EditPassForm: FC<EditPassFormProps> = (props: EditPassFormProps) => {
             Change Password
           </button>
           <button
-        onClick={(e) => {
-          e.preventDefault()
-          props.setModalActive(false);
-        }}
-      >
-        Back
-      </button>
+            onClick={(e) => {
+              e.preventDefault();
+              props.setModalActive(false);
+            }}
+          >
+            Back
+          </button>
         </div>
       </form>
-
     </div>
   );
 };
