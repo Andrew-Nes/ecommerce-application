@@ -116,8 +116,6 @@ export const UpdateCustomer = async (updateCustomer: MyCustomerUpdate) => {
     .execute();
 };
 
-
-
 export const UpdateCustomerPassword = async (
   updateCustomer: CustomerChangePassword
 ) => {
@@ -193,4 +191,3 @@ export const getProduct = async (ID: string) => {
     .execute();
   return product;
 };
-

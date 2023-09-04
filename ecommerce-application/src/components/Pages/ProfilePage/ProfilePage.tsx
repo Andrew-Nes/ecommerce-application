@@ -12,12 +12,13 @@ import {
 } from '@commercetools/platform-sdk';
 import { GetCustomer } from '../../../api/apiFunctions';
 import AddressLists from './AddressList/AddressList';
+import { ProfilePageProp } from '../../../types/profilePageTypes';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { popupText } from '../../../types/elementsText';
 import { serviceErrors, errorsMessage } from '../../../types/formTypes';
 
-const ProfilePage: FC = () => {
+const ProfilePage: FC<ProfilePageProp> = (props) => {
   const isLoggedIn = useContext(LogInContext);
   const path = useLocation();
   const redirect = useNavigate();
@@ -72,18 +73,23 @@ const ProfilePage: FC = () => {
 
   useEffect(() => {
     setProfile();
+    if (isUpdateData) {
+      setIsUpdateData(false);
+    }
   }, [isUpdateData]);
 
   return (
     <div className="profile-page__wrapper">
       <h1>Profile Page</h1>
       <ProfileCard
+        loginStateChange={props.loginStateChange}
         isUpdateData={setIsUpdateData}
         currentCustomer={currentCustomer}
       />
       <AddressLists
         currentCustomer={currentCustomer}
         isUpdateData={setIsUpdateData}
+        loginStateChange={props.loginStateChange}
       />
     </div>
   );
