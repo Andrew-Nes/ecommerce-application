@@ -1,7 +1,6 @@
 import './catalogHeader.scss';
 import { Category } from '@commercetools/platform-sdk';
 import { Languages } from '../../../types/commonDataTypes';
-import { routes } from '../../../types/routingTypes';
 import { Link } from 'react-router-dom';
 import { Tooltip } from 'react-tooltip';
 import { FC } from 'react';
@@ -15,34 +14,39 @@ const CatalogHeader: FC<CatalogHeaderProp> = (props: CatalogHeaderProp) => {
   return (
     <header className="catalog__header">
       <ul className="list catalog__header__list">
-        {props.mainCategories.map((category) => (
-          <li className="list__item catalog__header__item" key={category.key}>
+        {props.mainCategories.map((mainCategory) => (
+          <li
+            className="list__item catalog__header__item"
+            key={mainCategory.key}
+          >
             <Link
-              id={category.key}
+              id={mainCategory.key}
               className="list__link catalog__header__link"
-              to={routes.CATALOG}
+              to={`${mainCategory.key}`}
             >
-              {category.name[Languages.ENGLISH]}
+              {mainCategory.name[Languages.ENGLISH]}
             </Link>
             <Tooltip
               className="tooltip"
-              anchorSelect={`#${category.key}`}
+              anchorSelect={`#${mainCategory.key}`}
               place="bottom"
               clickable
             >
               <ul className="list tooltip__list">
                 {props.subCategories
-                  .filter((cat) => cat.parent?.id === category.id)
-                  .map((cat) => (
+                  .filter(
+                    (subCategory) => subCategory.parent?.id === mainCategory.id
+                  )
+                  .map((subCategory) => (
                     <li
-                      key={cat.key}
+                      key={subCategory.key}
                       className="list__item tooltip__list__item"
                     >
                       <Link
                         className="list__link tooltip__list__link"
-                        to={routes.CATALOG}
+                        to={`${mainCategory.key}/${subCategory.key}`}
                       >
-                        {cat.key}
+                        {subCategory.name[Languages.ENGLISH]}
                       </Link>
                     </li>
                   ))}

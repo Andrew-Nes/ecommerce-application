@@ -11,6 +11,9 @@ import {
 } from './clientBuilder';
 import { ByProjectKeyRequestBuilder } from '@commercetools/platform-sdk/dist/declarations/src/generated/client/by-project-key-request-builder';
 import tokenStorage from './tokenStorage';
+import { PriceCountry, PriceCurrency } from '../types/commonDataTypes';
+import { filtersCheckboxes } from '../types/categoryTypes';
+import { getFiltersString, getPriceFilterString } from '../utils/apiHelpers';
 
 let loggedClient: ByProjectKeyRequestBuilder | undefined = undefined;
 
@@ -102,12 +105,68 @@ export const GetCustomer = async () => {
   return await client.me().get().execute();
 };
 
-export const UpdateCustomer = async (updateCustomer: MyCustomerUpdate) => {
+export const UpdateCustomer = async (
+  updateCustomer: MyCustomerUpdate
+) => {
   const client = getCurrentClient();
   return await client
     .me()
     .post({
       body: updateCustomer,
+    })
+    .execute();
+};
+
+export const getItems = async (id: string = '', sort: string) => {
+  const client = getCurrentClient();
+  return await client
+    .productProjections()
+    .search()
+    .get({
+      queryArgs: {
+        priceCurrency: PriceCurrency.DOLLAR,
+        priceCountry: PriceCountry.USA,
+        filter: `categories.id:"${id}"`,
+        limit: 100,
+        sort: `${sort}`,
+      },
+    })
+    .execute();
+};
+
+export const getFilteredItems = async (
+  id: string = '',
+  sort: string,
+  text: string,
+  filters?: filtersCheckboxes
+) => {
+  const filtersString: string[] = getFiltersString(filters);
+  const priceString = getPriceFilterString(filters);
+  const query =
+    text.length > 0
+      ? {
+          priceCurrency: PriceCurrency.DOLLAR,
+          priceCountry: PriceCountry.USA,
+          filter: [`categories.id:"${id}"`, ...filtersString, priceString],
+          limit: 100,
+          sort: `${sort}`,
+          ['text.en-US']: `"${text}"`,
+          // fuzzy: true,
+        }
+      : {
+          priceCurrency: PriceCurrency.DOLLAR,
+          priceCountry: PriceCountry.USA,
+          filter: [`categories.id:"${id}"`, ...filtersString, priceString],
+          limit: 100,
+          sort: `${sort}`,
+        };
+
+  const client = getCurrentClient();
+  return await client
+    .productProjections()
+    .search()
+    .get({
+      queryArgs: query,
     })
     .execute();
 };
