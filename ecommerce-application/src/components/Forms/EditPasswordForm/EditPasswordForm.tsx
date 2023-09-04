@@ -11,7 +11,7 @@ import {
   EditPassFormProps,
   EditPassFormData,
 } from '../../../types/profilePageTypes';
-import { FC, useEffect } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { popupText } from '../../../types/elementsText';
 import { routes } from '../../../types/routingTypes';
@@ -19,6 +19,7 @@ import { redirect } from 'react-router-dom';
 import { errorsMessage, serviceErrors } from '../../../types/formTypes';
 
 const EditPassForm: FC<EditPassFormProps> = (props: EditPassFormProps) => {
+  const [isLoad, setLoad] = useState(false)
   const {
     register,
     handleSubmit,
@@ -34,13 +35,6 @@ const EditPassForm: FC<EditPassFormProps> = (props: EditPassFormProps) => {
 
   const onSubmit: SubmitHandler<EditPassFormData> = async (data) => {
     clearErrors();
-    /* if (data.currentPass !== props.customerPassword) {
-      setError('root.passErrors', {
-        type: 'wrongPass',
-        message: 'Wrong current password!',
-      });
-     
-    }*/
     if (data.newPass !== data.confirmNewPass) {
       setError('root.passErrors', {
         type: 'wrongConfirmPass',
@@ -56,6 +50,7 @@ const EditPassForm: FC<EditPassFormProps> = (props: EditPassFormProps) => {
       newPassword: data.newPass,
     };
     try {
+      setLoad(true);
       clearErrors();
       await UpdateCustomerPassword(UpdateCustomerPassData);
       window.localStorage.clear();
@@ -92,6 +87,9 @@ const EditPassForm: FC<EditPassFormProps> = (props: EditPassFormProps) => {
         });
       }
     }
+    finally{
+      setLoad(false)
+    }
   };
   return (
     <div>
@@ -124,18 +122,20 @@ const EditPassForm: FC<EditPassFormProps> = (props: EditPassFormProps) => {
           clearErrors={clearErrors}
         />
         <div className="edit-pass__button-container">
-          <button type="submit" disabled={!isValid}>
+          <button type="submit" disabled={!isValid || isLoad}>
             Change Password
           </button>
-        </div>
-      </form>
-      <button
-        onClick={() => {
+          <button
+        onClick={(e) => {
+          e.preventDefault()
           props.setModalActive(false);
         }}
       >
         Back
       </button>
+        </div>
+      </form>
+
     </div>
   );
 };
