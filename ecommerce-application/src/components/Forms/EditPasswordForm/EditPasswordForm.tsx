@@ -2,7 +2,11 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import EditPassInput from './EditPassInput/EditPassInput';
 import { validateFields } from '../RegistrationForm/validateFields';
 import { UpdateCustomerPassword, loginClient } from '../../../api/apiFunctions';
-import { CustomerChangePassword } from '@commercetools/platform-sdk';
+import {
+  ClientResponse,
+  CustomerChangePassword,
+  ErrorResponse,
+} from '@commercetools/platform-sdk';
 import {
   EditPassFormProps,
   EditPassFormData,
@@ -12,6 +16,7 @@ import { toast } from 'react-toastify';
 import { popupText } from '../../../types/elementsText';
 import { routes } from '../../../types/routingTypes';
 import { redirect } from 'react-router-dom';
+import { errorsMessage, serviceErrors } from '../../../types/formTypes';
 
 const EditPassForm: FC<EditPassFormProps> = (props: EditPassFormProps) => {
   const {
@@ -29,24 +34,21 @@ const EditPassForm: FC<EditPassFormProps> = (props: EditPassFormProps) => {
 
   const onSubmit: SubmitHandler<EditPassFormData> = async (data) => {
     clearErrors();
-    if (data.currentPass !== props.customerPassword) {
+    /* if (data.currentPass !== props.customerPassword) {
       setError('root.passErrors', {
         type: 'wrongPass',
         message: 'Wrong current password!',
       });
-    }
+     
+    }*/
     if (data.newPass !== data.confirmNewPass) {
       setError('root.passErrors', {
         type: 'wrongConfirmPass',
         message: 'New password not confirmed!',
       });
+      return;
     }
-    if (data.newPass === props.customerPassword) {
-      setError('root.passErrors', {
-        type: 'setSamePass',
-        message: 'You must input new password!',
-      });
-    }
+
     const UpdateCustomerPassData: CustomerChangePassword = {
       id: props.customerID || '',
       version: Number(props.version),
@@ -54,10 +56,9 @@ const EditPassForm: FC<EditPassFormProps> = (props: EditPassFormProps) => {
       newPassword: data.newPass,
     };
     try {
+      clearErrors();
       await UpdateCustomerPassword(UpdateCustomerPassData);
-      props.loginStateChange(false);
       window.localStorage.clear();
-
       await loginClient(props.email, data.newPass);
       props.loginStateChange(true);
       redirect(routes.PROFILE);
@@ -68,9 +69,28 @@ const EditPassForm: FC<EditPassFormProps> = (props: EditPassFormProps) => {
         position: 'bottom-center',
       });
     } catch (error) {
-      toast.error(popupText.CHANGE_PASSWORD_FAILED, {
-        position: 'bottom-center',
-      });
+      const errorResponse = JSON.parse(
+        JSON.stringify(error)
+      ) as ClientResponse<ErrorResponse>;
+
+      const errorCode = errorResponse.body.statusCode;
+      const errorMessage = errorResponse.body.message;
+
+      if (errorMessage === errorsMessage.CHANGE_PASSWORD_NOT_MATCH) {
+        setError('root.passErrors', {
+          type: 'wrongPass',
+          message: 'Wrong current password!',
+        });
+      }
+      if (
+        errorCode === serviceErrors.SERVICE_UNAVAILABLE ||
+        errorCode === serviceErrors.BAD_GATEWAY ||
+        errorCode === serviceErrors.INTERNAL_SERVER_ERROR
+      ) {
+        toast.error(popupText.CHANGE_PASSWORD_FAILED, {
+          position: 'bottom-center',
+        });
+      }
     }
   };
   return (
