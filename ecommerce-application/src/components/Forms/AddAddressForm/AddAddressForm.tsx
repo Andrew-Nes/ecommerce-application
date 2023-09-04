@@ -22,7 +22,7 @@ export const AddAddressForm: FC<AddAddressFormProps> = (
 ) => {
   const [isShipping, setShipping] = useState<boolean>(false);
   const [isBilling, setBilling] = useState<boolean>(false);
-  const [isLoad, setLoad] = useState(false)
+  const [isLoad, setLoad] = useState(false);
   const {
     register,
     handleSubmit,
@@ -51,7 +51,7 @@ export const AddAddressForm: FC<AddAddressFormProps> = (
       version: Number(props.version),
     };
     try {
-      setLoad(true)
+      setLoad(true);
       await UpdateCustomer(UpdateCustomerData);
       if (isShipping) {
         const addShippingAddressAction: MyCustomerUpdateAction = {
@@ -95,9 +95,8 @@ export const AddAddressForm: FC<AddAddressFormProps> = (
           position: 'bottom-center',
         });
       }
-    }
-    finally{
-      setLoad(false)
+    } finally {
+      setLoad(false);
     }
   };
 
