@@ -28,7 +28,7 @@
 }
 
 .sidebar__content {
-  padding: 30px 15px 40px;
+  padding: 0 15px 40px;
   display: flex;
   flex-direction: column;
   row-gap: 15px;
@@ -95,4 +95,39 @@
 
 .sidebar__label:hover {
   color: #cba662;
+}
+
+.sidebar__trigger {
+  text-align: center;
+  padding: 20px 0 0;
+  font-variant: small-caps;
+  font-size: 25px;
+}
+
+@media screen and (max-width: 700px) {
+  .sidebar {
+    position: absolute;
+    background: white;
+    transform: translateX(-100%);
+    transition: 0.5s;
+    width: 50%;
+  }
+
+  .sidebar__trigger {
+    width: 25px;
+    height: 100px;
+    position: absolute;
+    top: 0;
+    right: -25px;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    border: 1px solid black;
+    text-align: center;
+    font-size: 20px;
+    padding: 0;
+  }
+
+  .sidebar:hover {
+    transform: translateX(-30px);
+  }
 }

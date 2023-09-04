@@ -198,3 +198,9 @@
   display: flex;
   justify-content: center;
 }
+
+@media screen and (max-width: 500px) {
+  .card {
+    width: calc(50% - 5px);
+  }
+}
