@@ -150,7 +150,6 @@ export const getFilteredItems = async (
           limit: 100,
           sort: `${sort}`,
           ['text.en-US']: `"${text}"`,
-          // fuzzy: true,
         }
       : {
           priceCurrency: PriceCurrency.DOLLAR,

@@ -108,7 +108,6 @@ const Subcategory: FC<SubcategoryProps> = (props: SubcategoryProps) => {
       } catch (error) {
         // TODO
         // handle error
-        console.log('ERROR', error);
       }
     };
     fetchData();
