@@ -4,17 +4,24 @@ import Slider from '../../Slider/Slider';
 import './productPage.scss';
 import { ProductProjection } from '@commercetools/platform-sdk';
 import { Languages } from '../../../types/commonDataTypes';
+import { useNavigate } from 'react-router-dom';
+import { routes } from '../../../types/routingTypes';
 const noImagePic = '../../../../assets/img/slider-no-image.jpg';
 
 const ProductPage: FC<{ id: string }> = (props) => {
   const [product, setProduct] = useState<ProductProjection>();
+  const redirect = useNavigate();
   useEffect(() => {
     const currentProduct = async () => {
-      const prod = await getProduct(props.id);
-      setProduct(prod.body);
+      try {
+        const prod = await getProduct(props.id);
+        setProduct(prod.body);
+      } catch {
+        redirect(routes.NOTFOUND);
+      }
     };
     currentProduct();
-  }, [setProduct, props.id]);
+  }, [setProduct, props.id, redirect]);
   return (
     <div className="product-page">
       <div className="product-page__wrapper">
