@@ -1,6 +1,7 @@
 import {
   createApiBuilderFromCtpClient,
   CustomerDraft,
+  MyCustomerUpdate,
 } from '@commercetools/platform-sdk';
 import {
   getPasswordAuthClient,
@@ -100,6 +101,23 @@ export const getCategories = async () => {
   return await client.categories().get().execute();
 };
 
+export const GetCustomer = async () => {
+  const client = getCurrentClient();
+  return await client.me().get().execute();
+};
+
+export const UpdateCustomer = async (
+  updateCustomer: MyCustomerUpdate
+) => {
+  const client = getCurrentClient();
+  return await client
+    .me()
+    .post({
+      body: updateCustomer,
+    })
+    .execute();
+};
+
 export const getItems = async (id: string = '', sort: string) => {
   const client = getCurrentClient();
   return await client
@@ -152,4 +170,14 @@ export const getFilteredItems = async (
       queryArgs: query,
     })
     .execute();
+};
+
+export const getProduct = async (ID: string) => {
+  const client = getCurrentClient();
+  const product = await client
+    .productProjections()
+    .withId({ ID })
+    .get()
+    .execute();
+  return product;
 };
