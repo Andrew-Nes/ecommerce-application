@@ -22,8 +22,11 @@
   background-color: white;
   transform: scale(0.5);
   transition: 0.4s all;
-  width: 50vw;
+  width: fit-content;
   &.active {
     transform: scale(1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }
