@@ -6,14 +6,14 @@ export const MyAddressInput: FC<MyAddressInputProps> = (
 ) => {
   return (
     <div className="edit-profile-input-wrapper">
-      <label className="edit-profile-label">{props.title}</label>
+      <label className="edit-profile-label">{props.title}:</label>
       <input
         className={`input edit-profile__input ${
           props.errors[props.name] ? 'input__error' : ''
         }`}
         type={props.type}
         {...props.register(props.name, {
-          required: 'required',
+          required: (props.name === 'state') ? false : `${props.title} is required`,
           validate: props.validate,
         })}
         title={props.name}

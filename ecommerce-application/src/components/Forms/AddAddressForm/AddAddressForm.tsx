@@ -113,7 +113,7 @@ export const AddAddressForm: FC<AddAddressFormProps> = (
           register={register}
           errors={errors}
           name="city"
-          title="City:"
+          title="City"
           validate={validateFields.CITY_VALIDATE}
         />
 
@@ -121,7 +121,7 @@ export const AddAddressForm: FC<AddAddressFormProps> = (
           register={register}
           errors={errors}
           name="streetName"
-          title="Street:"
+          title="Street"
           validate={validateFields.STREET_VALIDATE}
         />
 
@@ -129,7 +129,7 @@ export const AddAddressForm: FC<AddAddressFormProps> = (
           register={register}
           errors={errors}
           name="postalCode"
-          title="Postal Code:"
+          title="Postal Code"
           validate={validateFields.POSTAL_CODE_VALIDATE}
         />
 
@@ -137,15 +137,15 @@ export const AddAddressForm: FC<AddAddressFormProps> = (
           register={register}
           errors={errors}
           name="state"
-          title="State:"
-          validate={validateFields.CITY_VALIDATE}
+          title="State"
+          validate={validateFields.STATE_VALIDATE}
         />
 
         <MyAddressSelectInput
           register={register}
           errors={errors}
           name="country"
-          title="Country:"
+          title="Country"
           countries={['US']}
         />
 

@@ -97,4 +97,11 @@ export const validateFields = {
       /(^\d{5}$)|(^\d{5}-\d{4}$)/.test(value) ||
       errorsMessage.POSTAL_CODE_FORMAT,
   },
+  STATE_VALIDATE: {
+    digitExisting: (value: string) =>
+    !/[0-9]/.test(value) || errorsMessage.STATE_NUMBERS,
+    specialCharacter: (value: string) =>
+    !/[-=+!@"№;:?#$%_()><,.|{}'`~/\\^&[*\]]/.test(value) ||
+    errorsMessage.STATE_SPECIAL_CHARACTER,
+  },
 };
