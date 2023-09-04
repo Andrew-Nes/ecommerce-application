@@ -34,6 +34,7 @@ enum errorsMessage {
   TOAST_EMAIL_EXIST = 'This email address already exists in the system. Log in or use another email address.',
   TOAST_INVALID_INPUT = 'Invalid input that bypasses client-side validation.',
   TOAST_SERVER_ERROR = 'Server problems. Please try to register later.',
+  CHANGE_PASSWORD_NOT_MATCH = 'The given current password does not match.'
 }
 
 enum serviceErrors {
