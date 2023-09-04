@@ -31,6 +31,7 @@ const Subcategory: FC<SubcategoryProps> = (props: SubcategoryProps) => {
   const [sortingVariant, setSortingVariant] = useState<string>(
     SortingVariants.NAME_ASC
   );
+  const [searchText, setSearchText] = useState<string>('');
 
   const currentCategory = props.subCategories.find(
     (category) => category.key === currentSubCategoryKey
@@ -91,15 +92,13 @@ const Subcategory: FC<SubcategoryProps> = (props: SubcategoryProps) => {
   }, [getItems, props, currentCategory]);
 
   useEffect(() => {
-    if (props.subCategories.length === 0) {
-      return;
-    }
     setProductLoading(true);
     const fetchData = async () => {
       try {
         const response = await getFilteredItems(
           currentCategoryId,
           sortingVariant,
+          searchText,
           chosenFilter
         );
         const filteredProducts = response.body.results;
@@ -112,7 +111,7 @@ const Subcategory: FC<SubcategoryProps> = (props: SubcategoryProps) => {
       }
     };
     fetchData();
-  }, [getFilteredItems, chosenFilter, sortingVariant]);
+  }, [getFilteredItems, chosenFilter, sortingVariant, searchText]);
 
   if (!currentCategory) {
     return <NotFoundPage />;
@@ -130,6 +129,7 @@ const Subcategory: FC<SubcategoryProps> = (props: SubcategoryProps) => {
               products={filteredProducts}
               sortingVariants={sortingVariant}
               setSortingVariants={setSortingVariant}
+              setSearchText={setSearchText}
             />
           )}
         </div>

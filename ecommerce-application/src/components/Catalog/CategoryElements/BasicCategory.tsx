@@ -31,6 +31,7 @@ const BasicCategory: FC<BasicCategoryProps> = (props: BasicCategoryProps) => {
   const [sortingVariant, setSortingVariant] = useState<string>(
     SortingVariants.NAME_ASC
   );
+  const [searchText, setSearchText] = useState<string>('');
 
   const currentCategory = props.basicCategories.find(
     (category) => category.key === currentCategoryKey
@@ -77,22 +78,19 @@ const BasicCategory: FC<BasicCategoryProps> = (props: BasicCategoryProps) => {
       } catch (error) {
         // TODO
         // handle error
-        console.log('ERROR', error);
       }
     };
     fetchData();
   }, [getItems, props, currentCategory]);
 
   useEffect(() => {
-    if (props.basicCategories.length === 0) {
-      return;
-    }
     setProductLoading(true);
     const fetchData = async () => {
       try {
         const response = await getFilteredItems(
           currentCategoryId,
           sortingVariant,
+          searchText,
           chosenFilter
         );
         const filteredProducts = response.body.results;
@@ -101,11 +99,10 @@ const BasicCategory: FC<BasicCategoryProps> = (props: BasicCategoryProps) => {
       } catch (error) {
         // TODO
         // handle error
-        console.log('ERROR', error);
       }
     };
     fetchData();
-  }, [getFilteredItems, chosenFilter, sortingVariant]);
+  }, [getFilteredItems, chosenFilter, sortingVariant, searchText]);
 
   if (!currentCategory) {
     return <NotFoundPage />;
@@ -127,6 +124,7 @@ const BasicCategory: FC<BasicCategoryProps> = (props: BasicCategoryProps) => {
               products={filteredProducts}
               sortingVariants={sortingVariant}
               setSortingVariants={setSortingVariant}
+              setSearchText={setSearchText}
             />
           )}
         </div>

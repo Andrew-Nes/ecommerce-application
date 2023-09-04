@@ -120,23 +120,36 @@ export const getItems = async (id: string = '', sort: string) => {
 export const getFilteredItems = async (
   id: string = '',
   sort: string,
+  text: string,
   filters?: filtersCheckboxes
 ) => {
   const filtersString: string[] = getFiltersString(filters);
   const priceString = getPriceFilterString(filters);
+  const query =
+    text.length > 0
+      ? {
+          priceCurrency: PriceCurrency.DOLLAR,
+          priceCountry: PriceCountry.USA,
+          filter: [`categories.id:"${id}"`, ...filtersString, priceString],
+          limit: 100,
+          sort: `${sort}`,
+          ['text.en-US']: `"${text}"`,
+          // fuzzy: true,
+        }
+      : {
+          priceCurrency: PriceCurrency.DOLLAR,
+          priceCountry: PriceCountry.USA,
+          filter: [`categories.id:"${id}"`, ...filtersString, priceString],
+          limit: 100,
+          sort: `${sort}`,
+        };
 
   const client = getCurrentClient();
   return await client
     .productProjections()
     .search()
     .get({
-      queryArgs: {
-        priceCurrency: PriceCurrency.DOLLAR,
-        priceCountry: PriceCountry.USA,
-        filter: [`categories.id:"${id}"`, ...filtersString, priceString],
-        limit: 100,
-        sort: `${sort}`,
-      },
+      queryArgs: query,
     })
     .execute();
 };

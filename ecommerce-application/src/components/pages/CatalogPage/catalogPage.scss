@@ -144,6 +144,11 @@
   column-gap: 5px;
 }
 
+.cards__form_search {
+  display: flex;
+  column-gap: 0;
+}
+
 .cards__form__select {
   border: none;
   font-size: 16px;
@@ -167,4 +172,21 @@
   text-decoration: none;
   color: black;
   font-size: 20px;
+}
+
+.search-form__input {
+  height: 25px;
+}
+
+.search-form__button {
+  height: 25px;
+  border-radius: 0;
+  padding: 3px 10px;
+  font-weight: normal;
+  background-color: #cba662;
+  transition: 0.3s;
+}
+
+.search-form__button:hover {
+  background-color: rgba(203, 166, 98, 0.5);
 }

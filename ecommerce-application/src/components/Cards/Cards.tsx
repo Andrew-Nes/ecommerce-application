@@ -3,11 +3,13 @@ import { Dispatch, FC, SetStateAction } from 'react';
 import SortForm from '../Forms/SortForm/SortForm';
 import { Languages } from '../../types/commonDataTypes';
 import NonExistentProducts from '../Catalog/NonExistingProducts.tsx/NonExistentProducts';
+import SearchForm from '../Forms/SearchForm/SearchForm';
 
 interface cardsProps {
   products: ProductProjection[];
   sortingVariants: string;
   setSortingVariants: Dispatch<SetStateAction<string>>;
+  setSearchText: Dispatch<SetStateAction<string>>;
 }
 
 const Cards: FC<cardsProps> = (props: cardsProps) => {
@@ -15,6 +17,13 @@ const Cards: FC<cardsProps> = (props: cardsProps) => {
     <div className="cards__wrapper">
       <div className="cards__header">
         <p className="text">{`${props.products.length} Results`}</p>
+        <div>
+          <SearchForm setSearchText={props.setSearchText} />
+          {/* <label>
+            <input type='text' />
+            </label>
+          <button onClick={() => props.setSearchText('dog')}>Search</button> */}
+        </div>
         <SortForm
           setSorting={props.setSortingVariants}
           sortString={props.sortingVariants}
