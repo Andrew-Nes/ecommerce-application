@@ -17,7 +17,7 @@ import MyAddressSelectInput from '../AddAddressForm/AddAddressInput/AddAddressSe
 import { errorsMessage, serviceErrors } from '../../../types/formTypes';
 import { toast } from 'react-toastify';
 import { popupText } from '../../../types/elementsText';
-import './EditAddressForm.scss'
+import './EditAddressForm.scss';
 const EditAddressForm: FC<EditAddressFormProps> = (
   props: EditAddressFormProps
 ) => {
@@ -137,21 +137,24 @@ const EditAddressForm: FC<EditAddressFormProps> = (
           title="Country:"
           countries={['US']}
         />
-  <div className='edit-address-form__btn-container'>
-  <button className='edit-address-form_button' type="submit" disabled={!isValid || isLoad}>
-          Save
-        </button>
-        <button
-        className='edit-address-form_button'
-          onClick={(e) => {
-            e.preventDefault();
-            props.setModalActive(false);
-          }}
-        >
-          Back
-        </button>
-  </div>
-
+        <div className="edit-address-form__btn-container">
+          <button
+            className="edit-address-form_button"
+            type="submit"
+            disabled={!isValid || isLoad}
+          >
+            Save
+          </button>
+          <button
+            className="edit-address-form_button"
+            onClick={(e) => {
+              e.preventDefault();
+              props.setModalActive(false);
+            }}
+          >
+            Back
+          </button>
+        </div>
       </form>
     </div>
   );

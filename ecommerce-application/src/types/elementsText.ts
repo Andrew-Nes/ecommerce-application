@@ -51,9 +51,7 @@ enum popupText {
   EDIT_ADDRESS_SUCCESS = 'The address has been updated!',
   EDIT_ADDRESS_FAILED = 'Failed to update address!',
   DELETE_ADDRESS_SUCCESS = 'The address has been deleted',
-  DELETE_ADDRESS_FAILED = 'Failed to delete address!'
-
-  
+  DELETE_ADDRESS_FAILED = 'Failed to delete address!',
 }
 
 export {

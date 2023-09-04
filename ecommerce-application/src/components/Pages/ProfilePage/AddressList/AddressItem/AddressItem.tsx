@@ -31,13 +31,11 @@ const AddressItem: FC<AddressItemProps> = (props: AddressItemProps) => {
       toast.success(popupText.DELETE_ADDRESS_SUCCESS, {
         position: 'bottom-center',
       });
-    }
-    catch (error) {
+    } catch (error) {
       toast.error(popupText.DELETE_ADDRESS_FAILED, {
         position: 'bottom-center',
       });
     }
-
   };
 
   return (
@@ -79,8 +77,6 @@ const AddressItem: FC<AddressItemProps> = (props: AddressItemProps) => {
         <span className="address-data-item_content">{props.address.city}</span>
       </div>
 
-
-
       <div className="address-data_item">
         <label className="address-data-item_label">Country:</label>
         <span className="address-data-item_content">
@@ -103,9 +99,7 @@ const AddressItem: FC<AddressItemProps> = (props: AddressItemProps) => {
       </div>
       <div className="address-data_item">
         <label className="address-data-item_label">State:</label>
-        <span className="address-data-item_content">
-          {props.address.state}
-        </span>
+        <span className="address-data-item_content">{props.address.state}</span>
       </div>
       <div className="address-item__buttons-container address-detail">
         {props.isShipping && !props.isDefaultShipping ? (
