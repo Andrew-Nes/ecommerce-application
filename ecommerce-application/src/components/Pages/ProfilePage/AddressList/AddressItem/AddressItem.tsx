@@ -3,7 +3,7 @@ import './AddressItem.scss';
 import MyModal from '../../../../Modal/MyModal';
 import { AddressItemProps } from '../../../../../types/profilePageTypes';
 
-const AddressItem: FC<AddressItemProps> = (props: AddressItemProps) => {
+const AddressItem: FC<AddressItemProps> = (props) => {
   const [isModalActive, setModalActive] = useState(false);
   return (
     <li

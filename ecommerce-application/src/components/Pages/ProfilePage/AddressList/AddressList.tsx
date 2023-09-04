@@ -3,9 +3,7 @@ import { ProfileCardAddressProps } from '../../../../types/profilePageTypes';
 import AddressItem from './AddressItem/AddressItem';
 import './AddressList.scss';
 
-const AddressLists: FC<ProfileCardAddressProps> = (
-  props: ProfileCardAddressProps
-) => {
+const AddressLists: FC<ProfileCardAddressProps> = (props) => {
   return (
     <fieldset className="address-list__wrapper">
       <legend>Addresses</legend>

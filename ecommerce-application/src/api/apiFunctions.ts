@@ -121,4 +121,3 @@ export const getProduct = async (ID: string) => {
     .execute();
   return product;
 };
-

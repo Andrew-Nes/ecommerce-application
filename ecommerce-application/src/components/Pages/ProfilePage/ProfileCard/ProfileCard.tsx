@@ -3,9 +3,7 @@ import './ProfileCard.scss';
 import MyModal from '../../../../components/Modal/MyModal';
 import { ProfileCardAddressProps } from '../../../../types/profilePageTypes';
 
-const ProfileCard: FC<ProfileCardAddressProps> = (
-  props: ProfileCardAddressProps
-) => {
+const ProfileCard: FC<ProfileCardAddressProps> = (props) => {
   const [modalActive, setModalActive] = useState(false);
   const [modalPassActive, setPassModalActive] = useState(false);
 
