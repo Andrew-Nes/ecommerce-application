@@ -17,7 +17,7 @@ import { popupText } from '../../../types/elementsText';
 import { routes } from '../../../types/routingTypes';
 import { redirect } from 'react-router-dom';
 import { errorsMessage, serviceErrors } from '../../../types/formTypes';
-
+import './EditPasswordForm.scss'
 const EditPassForm: FC<EditPassFormProps> = (props: EditPassFormProps) => {
   const [isLoad, setLoad] = useState(false);
   const {
@@ -121,10 +121,11 @@ const EditPassForm: FC<EditPassFormProps> = (props: EditPassFormProps) => {
           clearErrors={clearErrors}
         />
         <div className="edit-pass__button-container">
-          <button type="submit" disabled={!isValid || isLoad}>
+          <button className='edit-pass_button' type="submit" disabled={!isValid || isLoad}>
             Change Password
           </button>
           <button
+          className='edit-pass_button'
             onClick={(e) => {
               e.preventDefault();
               props.setModalActive(false);

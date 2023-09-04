@@ -21,7 +21,7 @@ import { popupText } from '../../../types/elementsText';
 const EditProfileForm: FC<EditProfileFormProps> = (
   props: EditProfileFormProps
 ) => {
-  const [isLoad, setLoad] = useState(false)
+  const [isLoad, setLoad] = useState(false);
   const {
     register,
     handleSubmit,
@@ -75,11 +75,10 @@ const EditProfileForm: FC<EditProfileFormProps> = (
       version: Number(props.currentCustomer?.version),
     };
     try {
-      setLoad(true)
-      await UpdateCustomer(UpdateCustomerData)
-        props.isUpdateData(true);
-        props.setModalActive(false);
-
+      setLoad(true);
+      await UpdateCustomer(UpdateCustomerData);
+      props.isUpdateData(true);
+      props.setModalActive(false);
     } catch (error) {
       const errorResponse = JSON.parse(
         JSON.stringify(error)
@@ -110,12 +109,10 @@ const EditProfileForm: FC<EditProfileFormProps> = (
           position: 'bottom-center',
         });
       }
-    }  
-    finally{
-      setLoad(false)
+    } finally {
+      setLoad(false);
     }
-  }
-    ;
+  };
   return (
     <div>
       <form className="edit-profile__form" onSubmit={handleSubmit(onSubmit)}>
