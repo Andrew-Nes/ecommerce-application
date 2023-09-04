@@ -8,16 +8,21 @@ import {
 } from '../../../types/profilePageTypes';
 import MyAddressSelectInput from './AddAddressInput/AddAddressSelect';
 import {
+  ClientResponse,
+  ErrorResponse,
   MyCustomerUpdate,
   MyCustomerUpdateAction,
 } from '@commercetools/platform-sdk';
 import { UpdateCustomer } from '../../../api/apiFunctions';
-import './AddAddressForm.scss'
+import './AddAddressForm.scss';
+import { toast } from 'react-toastify';
+import { serviceErrors } from '../../../types/formTypes';
 export const AddAddressForm: FC<AddAddressFormProps> = (
   props: AddAddressFormProps
 ) => {
   const [isShipping, setShipping] = useState<boolean>(false);
   const [isBilling, setBilling] = useState<boolean>(false);
+  const [isLoad, setLoad] = useState(false)
   const {
     register,
     handleSubmit,
@@ -46,6 +51,7 @@ export const AddAddressForm: FC<AddAddressFormProps> = (
       version: Number(props.version),
     };
     try {
+      setLoad(true)
       await UpdateCustomer(UpdateCustomerData);
       if (isShipping) {
         const addShippingAddressAction: MyCustomerUpdateAction = {
@@ -73,7 +79,25 @@ export const AddAddressForm: FC<AddAddressFormProps> = (
       props.isUpdateData(true);
       props.setModalActive(false);
     } catch (error) {
-      console.log(error);
+      const errorResponse = JSON.parse(
+        JSON.stringify(error)
+      ) as ClientResponse<ErrorResponse>;
+
+      const errorCode = errorResponse.body.statusCode;
+      const errorMessage = errorResponse.body.message;
+
+      if (
+        errorCode === serviceErrors.SERVICE_UNAVAILABLE ||
+        errorCode === serviceErrors.BAD_GATEWAY ||
+        errorCode === serviceErrors.INTERNAL_SERVER_ERROR
+      ) {
+        toast.error(errorMessage, {
+          position: 'bottom-center',
+        });
+      }
+    }
+    finally{
+      setLoad(false)
     }
   };
 
@@ -140,17 +164,24 @@ export const AddAddressForm: FC<AddAddressFormProps> = (
             }}
           />
         </div>
-        <div className='add-address-form__btn-container'>
-        <button className='add-address-form_button' type="submit" disabled={!isValid}>
-          Add
-        </button>
-        <button className='add-address-form_button'
-        onClick={(e) => {
-          e.preventDefault()
-          props.setModalActive(false)
-        }}>Back</button>
+        <div className="add-address-form__btn-container">
+          <button
+            className="add-address-form_button"
+            type="submit"
+            disabled={!isValid || isLoad}
+          >
+            Add
+          </button>
+          <button
+            className="add-address-form_button"
+            onClick={(e) => {
+              e.preventDefault();
+              props.setModalActive(false);
+            }}
+          >
+            Back
+          </button>
         </div>
-
       </form>
     </div>
   );
