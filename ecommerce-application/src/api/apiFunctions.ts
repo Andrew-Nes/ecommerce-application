@@ -1,12 +1,12 @@
 import {
   createApiBuilderFromCtpClient,
+  CustomerChangePassword,
   CustomerDraft,
   MyCustomerUpdate,
 } from '@commercetools/platform-sdk';
 import {
   getPasswordAuthClient,
   projectKey,
-  // getAuthClient,
   getClientWithExistingToken,
   getAnonymousAuthClient,
 } from './clientBuilder';
@@ -116,6 +116,21 @@ export const UpdateCustomer = async (updateCustomer: MyCustomerUpdate) => {
     .execute();
 };
 
+
+
+export const UpdateCustomerPassword = async (
+  updateCustomer: CustomerChangePassword
+) => {
+  const client = getCurrentClient();
+  return await client
+    .me()
+    .password()
+    .post({
+      body: updateCustomer,
+    })
+    .execute();
+};
+
 export const getItems = async (id: string = '', sort: string) => {
   const client = getCurrentClient();
   return await client
@@ -178,3 +193,4 @@ export const getProduct = async (ID: string) => {
     .execute();
   return product;
 };
+

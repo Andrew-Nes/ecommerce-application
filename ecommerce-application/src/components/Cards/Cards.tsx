@@ -4,6 +4,7 @@ import SortForm from '../Forms/SortForm/SortForm';
 import { Languages } from '../../types/commonDataTypes';
 import NonExistentProducts from '../Catalog/NonExistingProducts.tsx/NonExistentProducts';
 import SearchForm from '../Forms/SearchForm/SearchForm';
+const noImagePic = '../../../../assets/img/slider-no-image.jpg';
 
 import { routes } from '../../types/routingTypes';
 import { useNavigate } from 'react-router-dom';
@@ -43,7 +44,14 @@ const Cards: FC<cardsProps> = (props: cardsProps) => {
                   redirect(routes.PRODUCT);
                 }}
               >
-                <img className="card__image" src={image} />
+                <img
+                  className="card__image"
+                  src={image}
+                  onError={({ currentTarget }) => {
+                    currentTarget.onerror = null;
+                    currentTarget.src = noImagePic;
+                  }}
+                />
                 <h3 className="card__heading">
                   {product.name[Languages.ENGLISH]}
                 </h3>

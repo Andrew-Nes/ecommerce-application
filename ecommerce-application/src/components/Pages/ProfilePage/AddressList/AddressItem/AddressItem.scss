@@ -1,0 +1,68 @@
+.address__container {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 350px;
+  padding: 5px 10px;
+  border: 1px solid black;
+  justify-content: space-between;
+}
+
+.default-shipping {
+  order: -1;
+}
+
+.default-billing {
+  order: -1;
+}
+.address-data_item {
+  display: flex;
+}
+
+.address-data-item_label {
+  width: 40%;
+  font-weight: 600;
+}
+
+.address-type__container {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+
+.address-type {
+  padding: 5px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.billing {
+  border: 1px solid green;
+  color: green;
+}
+
+.shipping {
+  border: 1px solid blue;
+  color: blue;
+}
+
+.address-edit_button {
+  padding: 5px 8px;
+  background-color: #cba662;
+  cursor: pointer;
+  width: 40%;
+  font-weight: 500;
+}
+
+.address-item__buttons-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.address-detail {
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 5px;
+}
