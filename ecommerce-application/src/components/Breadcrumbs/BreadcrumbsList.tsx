@@ -9,8 +9,6 @@ interface BreadcrumbsListProps {
 const BreadcrumbsList: FC<BreadcrumbsListProps> = (
   props: BreadcrumbsListProps
 ) => {
-  // const items = props.items.slice(0, -1);
-  // const lastItem = props.items[props.items.length - 1];
   return (
     <ul className="breadcrumbs list">
       {props.items.map((item) => (
@@ -27,12 +25,6 @@ const BreadcrumbsList: FC<BreadcrumbsListProps> = (
           </Link>
         </li>
       ))}
-      {/* <li
-        className={`list__item breadcrumbs__item ${lastItem.listClassName}`}
-        key={lastItem.key}
-      >
-        {lastItem.name}
-      </li> */}
     </ul>
   );
 };

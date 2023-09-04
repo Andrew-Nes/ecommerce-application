@@ -15,6 +15,7 @@ interface SidebarProps {
 const Sidebar: FC<SidebarProps> = (props: SidebarProps) => {
   return (
     <div className="sidebar">
+      <div className="sidebar__trigger">filters</div>
       <div className="sidebar__content">
         {props.childCategories && (
           <div

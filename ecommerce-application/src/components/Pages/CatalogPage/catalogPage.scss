@@ -136,6 +136,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
   border-bottom: 1px solid #909096;
 }
 
@@ -189,4 +190,17 @@
 
 .search-form__button:hover {
   background-color: rgba(203, 166, 98, 0.5);
+}
+
+.search-form__wrapper {
+  padding-top: 10px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+@media screen and (max-width: 500px) {
+  .card {
+    width: calc(50% - 5px);
+  }
 }
