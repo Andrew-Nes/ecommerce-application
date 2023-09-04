@@ -1,4 +1,6 @@
 import {
+  ClientResponse,
+  ErrorResponse,
   MyCustomerUpdate,
   MyCustomerUpdateAction,
 } from '@commercetools/platform-sdk';
@@ -8,10 +10,12 @@ import {
   EditAddressFormData,
   EditAddressFormProps,
 } from '../../../types/profilePageTypes';
-import { FC, useEffect } from 'react';
+import { FC, useEffect, useState } from 'react';
 import MyAddressInput from '../AddAddressForm/AddAddressInput/AddAddressInput';
 import { validateFields } from '../RegistrationForm/validateFields';
 import MyAddressSelectInput from '../AddAddressForm/AddAddressInput/AddAddressSelect';
+import { errorsMessage, serviceErrors } from '../../../types/formTypes';
+import { toast } from 'react-toastify';
 
 const EditAddressForm: FC<EditAddressFormProps> = (
   props: EditAddressFormProps
@@ -22,6 +26,8 @@ const EditAddressForm: FC<EditAddressFormProps> = (
     setValue,
     formState: { errors, isValid },
   } = useForm<EditAddressFormData>({ mode: 'all' });
+
+  const [isLoad, setLoad] = useState(false);
 
   useEffect(() => {
     setValue('city', props.address.city || '');
@@ -37,7 +43,7 @@ const EditAddressForm: FC<EditAddressFormProps> = (
     setValue,
   ]);
 
-  const onSubmit: SubmitHandler<EditAddressFormData> = (
+  const onSubmit: SubmitHandler<EditAddressFormData> = async (
     data: EditAddressFormData
   ) => {
     const changeAddressAction: MyCustomerUpdateAction = {
@@ -57,12 +63,28 @@ const EditAddressForm: FC<EditAddressFormProps> = (
     };
 
     try {
-      UpdateCustomer(UpdateCustomerData).then(() => {
-        props.isUpdateData(true);
-        props.setModalActive(false);
-      });
+      setLoad(true);
+      await UpdateCustomer(UpdateCustomerData);
+      props.isUpdateData(true);
+      props.setModalActive(false);
     } catch (error) {
-      console.log(error);
+      const errorResponse = JSON.parse(
+        JSON.stringify(error)
+      ) as ClientResponse<ErrorResponse>;
+
+      const errorCode = errorResponse.body.statusCode;
+
+      if (
+        errorCode === serviceErrors.SERVICE_UNAVAILABLE ||
+        errorCode === serviceErrors.BAD_GATEWAY ||
+        errorCode === serviceErrors.INTERNAL_SERVER_ERROR
+      ) {
+        toast.info(errorsMessage.TOAST_SERVER_ERROR, {
+          position: 'bottom-center',
+        });
+      }
+    } finally {
+      setLoad(false);
     }
   };
 
@@ -109,7 +131,7 @@ const EditAddressForm: FC<EditAddressFormProps> = (
           countries={['US']}
         />
 
-        <button type="submit" disabled={!isValid}>
+        <button type="submit" disabled={!isValid || isLoad}>
           Save
         </button>
         <button
