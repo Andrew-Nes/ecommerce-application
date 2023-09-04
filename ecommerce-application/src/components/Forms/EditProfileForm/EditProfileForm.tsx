@@ -162,8 +162,8 @@ const EditProfileForm: FC<EditProfileFormProps> = (
           <button
             className="profile-edit-form_button"
             onClick={(e) => {
-              e.preventDefault()
-              props.setModalActive(false)
+              e.preventDefault();
+              props.setModalActive(false);
             }}
           >
             Back
