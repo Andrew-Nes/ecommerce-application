@@ -4,6 +4,7 @@ import SortForm from '../Forms/SortForm/SortForm';
 import { Languages } from '../../types/commonDataTypes';
 import NonExistentProducts from '../Catalog/NonExistingProducts.tsx/NonExistentProducts';
 import SearchForm from '../Forms/SearchForm/SearchForm';
+const noImagePic = '../../../../assets/img/slider-no-image.jpg';
 
 interface cardsProps {
   products: ProductProjection[];
@@ -35,7 +36,14 @@ const Cards: FC<cardsProps> = (props: cardsProps) => {
             const image: string = product.masterVariant.images?.[0]?.url || '';
             return (
               <div className="card" key={product.id} id={product.id}>
-                <img className="card__image" src={image} />
+                <img
+                  className="card__image"
+                  src={image}
+                  onError={({ currentTarget }) => {
+                    currentTarget.onerror = null;
+                    currentTarget.src = noImagePic;
+                  }}
+                />
                 <h3 className="card__heading">
                   {product.name[Languages.ENGLISH]}
                 </h3>

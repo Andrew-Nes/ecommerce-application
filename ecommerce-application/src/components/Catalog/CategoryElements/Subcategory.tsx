@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { BreadcrumbsItem } from '../../../types/breadcrumbsTypes';
 import { routes } from '../../../types/routingTypes';
 import { anchorsText } from '../../../types/elementsText';
@@ -70,7 +70,7 @@ const Subcategory: FC<SubcategoryProps> = (props: SubcategoryProps) => {
       name: `${currentCategoryName}`,
     },
   ];
-
+  const redirect = useNavigate();
   /* eslint-disable react-hooks/exhaustive-deps*/
   useEffect(() => {
     if (props.subCategories.length === 0) {
@@ -84,8 +84,8 @@ const Subcategory: FC<SubcategoryProps> = (props: SubcategoryProps) => {
         setFilteredProducts(products);
         setProductLoading(false);
       } catch (error) {
-        // TODO
-        // handle error
+        redirect(routes.NOTFOUND);
+        console.log('ERROR', error);
       }
     };
     fetchData();
@@ -105,8 +105,7 @@ const Subcategory: FC<SubcategoryProps> = (props: SubcategoryProps) => {
         setFilteredProducts(filteredProducts);
         setProductLoading(false);
       } catch (error) {
-        // TODO
-        // handle error
+        redirect(routes.NOTFOUND);
         console.log('ERROR', error);
       }
     };
