@@ -12,7 +12,7 @@ import {
   MyCustomerUpdateAction,
 } from '@commercetools/platform-sdk';
 import { UpdateCustomer } from '../../../api/apiFunctions';
-
+import './AddAddressForm.scss'
 export const AddAddressForm: FC<AddAddressFormProps> = (
   props: AddAddressFormProps
 ) => {
@@ -140,9 +140,17 @@ export const AddAddressForm: FC<AddAddressFormProps> = (
             }}
           />
         </div>
-        <button type="submit" disabled={!isValid}>
+        <div className='add-address-form__btn-container'>
+        <button className='add-address-form_button' type="submit" disabled={!isValid}>
           Add
         </button>
+        <button className='add-address-form_button'
+        onClick={(e) => {
+          e.preventDefault()
+          props.setModalActive(false)
+        }}>Back</button>
+        </div>
+
       </form>
     </div>
   );
