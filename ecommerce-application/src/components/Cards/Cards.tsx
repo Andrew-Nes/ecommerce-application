@@ -22,17 +22,13 @@ const Cards: FC<cardsProps> = (props: cardsProps) => {
     <div className="cards__wrapper">
       <div className="cards__header">
         <p className="text">{`${props.products.length} Results`}</p>
-        <div>
-          <SearchForm setSearchText={props.setSearchText} />
-          {/* <label>
-            <input type='text' />
-            </label>
-          <button onClick={() => props.setSearchText('dog')}>Search</button> */}
-        </div>
         <SortForm
           setSorting={props.setSortingVariants}
           sortString={props.sortingVariants}
         />
+        <div className="search-form__wrapper">
+          <SearchForm setSearchText={props.setSearchText} />
+        </div>
       </div>
       <div className="cards">
         {props.products.length > 0 ? (
