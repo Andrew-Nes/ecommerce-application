@@ -10,6 +10,10 @@ import ProfilePage from './Pages/ProfilePage/ProfilePage';
 import CatalogPage from './Pages/CatalogPage/CatalogPage';
 import { getCategories } from '../api/apiFunctions';
 import { Category } from '@commercetools/platform-sdk';
+import BasicCatalog from './Catalog/CatalogElements/BasicCatalog';
+import CategoryComponent from './Catalog/CatalogElements/CategoryComponent';
+import BasicCategory from './Catalog/CategoryElements/BasicCategory';
+import Subcategory from './Catalog/CategoryElements/Subcategory';
 
 export const LogInContext = createContext(false);
 
@@ -18,21 +22,31 @@ const App: FC = () => {
     window.localStorage.getItem('isLoggedIn') === 'true' || false
   );
 
-  const [categories, setCategories] = useState<Category[]>([]);
+  const [basicCategories, setBasicCategories] = useState<Category[]>([]);
+  const [subCategories, setSubCategories] = useState<Category[]>([]);
 
   function logInStateChange(newValue: boolean): void {
     setIsLoggedIn(newValue);
     window.localStorage.setItem('isLoggedIn', newValue.toString());
   }
+
   /* eslint-disable react-hooks/exhaustive-deps*/
   useEffect(() => {
     const fetchData = async () => {
-      const categories = await getCategories();
-      const results = categories.body.results;
-      setCategories(results);
+      const response = await getCategories();
+      const allCategories = response.body.results;
+      const mainCategories = allCategories.filter(
+        (category) => !category.parent
+      );
+      const childCategories = allCategories.filter(
+        (category) => category.parent
+      );
+      setBasicCategories(mainCategories);
+      setSubCategories(childCategories);
     };
     fetchData();
   }, [getCategories]);
+
   return (
     <LogInContext.Provider value={isLoggedIn}>
       <BrowserRouter>
@@ -54,8 +68,38 @@ const App: FC = () => {
           />
           <Route
             path="catalog"
-            element={<CatalogPage categories={categories} />}
-          />
+            element={
+              <CatalogPage
+                basicCategories={basicCategories}
+                subCategories={subCategories}
+              />
+            }
+          >
+            <Route
+              index
+              element={<BasicCatalog basicCategories={basicCategories} />}
+            />
+            <Route path=":currentCategoryKey" element={<CategoryComponent />}>
+              <Route
+                index
+                element={
+                  <BasicCategory
+                    basicCategories={basicCategories}
+                    subCategories={subCategories}
+                  />
+                }
+              />
+              <Route
+                path=":currentSubCategoryKey"
+                element={
+                  <Subcategory
+                    mainCategories={basicCategories}
+                    subCategories={subCategories}
+                  />
+                }
+              />
+            </Route>
+          </Route>
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </BrowserRouter>

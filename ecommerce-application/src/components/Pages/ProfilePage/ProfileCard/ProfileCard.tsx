@@ -5,12 +5,9 @@ import { ProfileCardAddressProps } from '../../../../types/profilePageTypes';
 import EditProfileForm from '../../../Forms/EditProfileForm/EditProfileForm';
 import EditPassForm from '../../../Forms/EditPasswordForm/EditPasswordForm';
 
-const ProfileCard: FC<ProfileCardAddressProps> = (
-  props: ProfileCardAddressProps
-) => {
-  const [modalEditActive, setModalEditActive] = useState(false);
+const ProfileCard: FC<ProfileCardAddressProps> = (props) => {
   const [modalPassActive, setPassModalActive] = useState(false);
-
+  const [modalEditActive, setModalEditActive] = useState(false);
   return (
     <fieldset className="customer-data__container">
       <legend>Customer Data</legend>

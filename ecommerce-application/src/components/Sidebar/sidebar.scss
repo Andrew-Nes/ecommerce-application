@@ -1,0 +1,98 @@
+.slider_price {
+  width: 100%;
+  height: 2px;
+  background-color: #cba662;
+}
+
+.slider_price .thumb {
+  width: 20px;
+  height: 20px;
+  cursor: grab;
+  background-color: white;
+  border: 2px solid #aeaeba;
+  border-radius: 50%;
+  top: -10px;
+}
+
+.track-0,
+.track-2 {
+  height: 2px;
+  background-color: #aeaeba;
+}
+
+.sidebar {
+  width: 30%;
+  min-width: 30%;
+  border: 1px solid #aeaeba;
+  height: fit-content;
+}
+
+.sidebar__content {
+  padding: 30px 15px 40px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 15px;
+}
+
+.sidebar__block {
+  padding: 10px;
+  position: relative;
+  border-bottom: 1px solid #aeaeba;
+}
+
+.sidebar__block__mark {
+  width: 10px;
+  height: 10px;
+  border-bottom: 1px solid black;
+  border-left: 1px solid black;
+  transform: rotate(135deg);
+  transition: 0.5s;
+  position: absolute;
+  left: calc(100% - 30px);
+  top: 25px;
+}
+
+.sidebar__block_close > .sidebar__block__mark {
+  transform: rotate(-45deg);
+}
+
+.sidebar__block_close > .sidebar__variants {
+  display: none;
+}
+
+.sidebar__heading {
+  font-variant: small-caps;
+  font-size: 20px;
+}
+
+.sidebar__variants {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 5px;
+}
+
+.sidebar__item {
+  padding: 5px;
+}
+
+.sidebar__link {
+  display: inline-block;
+  padding: 5px;
+  width: 100%;
+}
+
+.sidebar__link:hover {
+  color: #cba662;
+}
+
+.sidebar__label {
+  padding: 5px;
+  cursor: pointer;
+  font-size: 18px;
+  transition: 0.3s;
+}
+
+.sidebar__label:hover {
+  color: #cba662;
+}

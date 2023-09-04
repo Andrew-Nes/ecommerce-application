@@ -1,11 +1,8 @@
+import { FC } from 'react';
 import './MyModal.scss';
-interface MyModalProps {
-  active: boolean;
-  setActive: React.Dispatch<React.SetStateAction<boolean>>;
-  children?: React.ReactNode | string;
-}
+import { MyModalProps } from '../../types/profilePageTypes';
 
-const MyModal = ({ active, setActive, children }: MyModalProps) => {
+const MyModal: FC<MyModalProps> = ({ active, setActive, children }) => {
   return (
     <div
       className={active ? 'modal active' : 'modal'}

@@ -29,6 +29,11 @@ interface AddressItemProps {
   defaultShippingID: string | undefined;
   defaultBillingID: string | undefined;
 }
+interface MyModalProps {
+  active: boolean;
+  setActive: React.Dispatch<React.SetStateAction<boolean>>;
+  children?: React.ReactNode | string;
+}
 
 interface EditProfileFormProps {
   currentCustomer: Customer | undefined;
@@ -167,4 +172,5 @@ export type {
   EditAddressFormData,
   EditAddressFormProps,
   SetDefaultShippingButtonProps,
+  MyModalProps
 };

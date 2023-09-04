@@ -29,6 +29,7 @@ enum headingText {
   SHIPPING_ADDRESS_FORM = 'Shipping address',
   BILLING_ADDRESS_FORM = 'Billing address',
   NOT_FOUND_PAGE_HEADING = 'Oops! Something went wrong',
+  NOT_FOUND_PRODUCT_HEADING = 'What a Cat-astrophe!',
 }
 
 enum paragraphText {
@@ -36,6 +37,7 @@ enum paragraphText {
   LOGIN_PAGE_PARAGRAPH = 'Not registered? ',
   REGISTRATION_PAGE_PARAGRAPH = 'Already registered? ',
   NOT_FOUND_PAGE_PARAGRAPH_1 = "We can't find the page you're looking for.",
+  NOT_FOUND_PRODUCT_PARAGRAPH = "We looked everywhere and we couldn't find products matching the selection..",
 }
 
 enum popupText {

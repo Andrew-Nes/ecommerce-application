@@ -5,11 +5,12 @@ import './AddressList.scss';
 import MyModal from '../../../Modal/MyModal';
 import AddAddressForm from '../../../Forms/AddAddressForm/AddAddressForm';
 
-const AddressLists: FC<ProfileCardAddressProps> = (
-  props: ProfileCardAddressProps
-) => {
-  const [isActiveModal, setActiveModal] = useState(false);
 
+
+
+const AddressLists: FC<ProfileCardAddressProps> = (props) => {
+
+  const [isActiveModal, setActiveModal] = useState(false);
   return (
     <fieldset className="address-list__wrapper">
       <legend>Addresses</legend>

@@ -12,7 +12,7 @@ import SetDefaultButton from './SetDefaultButton/SetDefaultButton';
 import { toast } from 'react-toastify';
 import { popupText } from '../../../../../types/elementsText';
 
-const AddressItem: FC<AddressItemProps> = (props: AddressItemProps) => {
+const AddressItem: FC<AddressItemProps> = (props) => {
   const [isModalActive, setModalActive] = useState(false);
 
   const deleteAddress = async () => {
