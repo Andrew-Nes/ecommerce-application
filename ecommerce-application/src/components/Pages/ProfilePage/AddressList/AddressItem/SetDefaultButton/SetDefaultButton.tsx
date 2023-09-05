@@ -1,10 +1,13 @@
 import {
+  ClientResponse,
+  ErrorResponse,
   MyCustomerUpdate,
   MyCustomerUpdateAction,
 } from '@commercetools/platform-sdk';
 import { UpdateCustomer } from '../../../../../../api/apiFunctions';
 import { FC } from 'react';
 import { SetDefaultShippingButtonProps } from '../../../../../../types/profilePageTypes';
+import { serviceErrors } from '../../../../../../types/formTypes';
 
 const SetDefaultButton: FC<SetDefaultShippingButtonProps> = (
   props: SetDefaultShippingButtonProps
@@ -22,7 +25,15 @@ const SetDefaultButton: FC<SetDefaultShippingButtonProps> = (
       await UpdateCustomer(UpdateCustomerData);
       props.isUpdateData(true);
     } catch (error) {
-      console.log(error);
+      const errorResponse = JSON.parse(
+        JSON.stringify(error)
+      ) as ClientResponse<ErrorResponse>;
+      if (errorResponse.body.statusCode === serviceErrors.INVALID_TOKEN) {
+        window.localStorage.clear();
+        location.reload();
+        // TODO
+        // redirect to component
+      }
     }
   };
   return (

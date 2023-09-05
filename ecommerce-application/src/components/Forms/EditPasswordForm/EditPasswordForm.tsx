@@ -86,6 +86,12 @@ const EditPassForm: FC<EditPassFormProps> = (props: EditPassFormProps) => {
           position: 'bottom-center',
         });
       }
+      if (errorResponse.body.statusCode === serviceErrors.INVALID_TOKEN) {
+        window.localStorage.clear();
+        location.reload();
+        // TODO
+        // redirect to component
+      }
     } finally {
       setLoad(false);
     }

@@ -2,10 +2,15 @@ import { FC, useEffect, useState } from 'react';
 import { getProduct } from '../../../api/apiFunctions';
 import Slider from '../../Slider/Slider';
 import './productPage.scss';
-import { ProductProjection } from '@commercetools/platform-sdk';
+import {
+  ClientResponse,
+  ErrorResponse,
+  ProductProjection,
+} from '@commercetools/platform-sdk';
 import { Languages } from '../../../types/commonDataTypes';
 import { useNavigate } from 'react-router-dom';
 import { routes } from '../../../types/routingTypes';
+import { serviceErrors } from '../../../types/formTypes';
 const noImagePic = '../../../../assets/img/slider-no-image.jpg';
 
 const ProductPage: FC<{ id: string }> = (props) => {
@@ -16,8 +21,18 @@ const ProductPage: FC<{ id: string }> = (props) => {
       try {
         const prod = await getProduct(props.id);
         setProduct(prod.body);
-      } catch {
-        redirect(routes.NOTFOUND);
+      } catch (error) {
+        const errorResponse = JSON.parse(
+          JSON.stringify(error)
+        ) as ClientResponse<ErrorResponse>;
+        if (errorResponse.body.statusCode === serviceErrors.INVALID_TOKEN) {
+          window.localStorage.clear();
+          location.reload();
+          // TODO
+          // redirect to component
+        } else {
+          redirect(routes.NOTFOUND);
+        }
       }
     };
     currentProduct();

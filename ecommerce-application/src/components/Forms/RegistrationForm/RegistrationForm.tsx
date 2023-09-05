@@ -85,6 +85,12 @@ const RegistrationForm: FC<LoginProps> = ({ logIn }) => {
           position: 'bottom-center',
         });
       }
+      if (errorResponse.body.statusCode === serviceErrors.INVALID_TOKEN) {
+        window.localStorage.clear();
+        location.reload();
+        // TODO
+        // redirect to component
+      }
     }
   };
 

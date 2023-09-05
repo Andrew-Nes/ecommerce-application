@@ -74,6 +74,13 @@ const LoginForm: FC<LoginProps> = ({ logIn }) => {
           type: `${errorResponse.body.statusCode}`,
           message: errorsMessage.WRONG_LOGIN,
         });
+      } else if (
+        errorResponse.body.statusCode === serviceErrors.INVALID_TOKEN
+      ) {
+        window.localStorage.clear();
+        location.reload();
+        // TODO
+        // redirect to component
       }
     }
   };

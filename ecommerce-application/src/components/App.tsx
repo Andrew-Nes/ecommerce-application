@@ -9,12 +9,17 @@ import RegistrationPage from './Pages/RegistrationPage/RegistrationPage';
 import ProfilePage from './Pages/ProfilePage/ProfilePage';
 import CatalogPage from './Pages/CatalogPage/CatalogPage';
 import { getCategories } from '../api/apiFunctions';
-import { Category } from '@commercetools/platform-sdk';
+import {
+  Category,
+  ClientResponse,
+  ErrorResponse,
+} from '@commercetools/platform-sdk';
 import BasicCatalog from './Catalog/CatalogElements/BasicCatalog';
 import CategoryComponent from './Catalog/CatalogElements/CategoryComponent';
 import BasicCategory from './Catalog/CategoryElements/BasicCategory';
 import Subcategory from './Catalog/CategoryElements/Subcategory';
 import ProductPage from './Pages/ProductPage/ProductPage';
+import { serviceErrors } from '../types/formTypes';
 
 export const LogInContext = createContext(false);
 
@@ -37,16 +42,28 @@ const App: FC = () => {
   /* eslint-disable react-hooks/exhaustive-deps*/
   useEffect(() => {
     const fetchData = async () => {
-      const response = await getCategories();
-      const allCategories = response.body.results;
-      const mainCategories = allCategories.filter(
-        (category) => !category.parent
-      );
-      const childCategories = allCategories.filter(
-        (category) => category.parent
-      );
-      setBasicCategories(mainCategories);
-      setSubCategories(childCategories);
+      try {
+        const response = await getCategories();
+        const allCategories = response.body.results;
+        const mainCategories = allCategories.filter(
+          (category) => !category.parent
+        );
+        const childCategories = allCategories.filter(
+          (category) => category.parent
+        );
+        setBasicCategories(mainCategories);
+        setSubCategories(childCategories);
+      } catch (error) {
+        const errorResponse = JSON.parse(
+          JSON.stringify(error)
+        ) as ClientResponse<ErrorResponse>;
+        if (errorResponse.body.statusCode === serviceErrors.INVALID_TOKEN) {
+          window.localStorage.clear();
+          location.reload();
+          // TODO
+          // redirect to component
+        }
+      }
     };
     fetchData();
   }, [getCategories]);

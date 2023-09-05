@@ -62,6 +62,12 @@ const ProfilePage: FC<ProfilePageProp> = (props) => {
           position: 'bottom-center',
         });
       }
+      if (errorCode === serviceErrors.INVALID_TOKEN) {
+        window.localStorage.clear();
+        location.reload();
+        // TODO
+        // redirect to component
+      }
     }
   }
 
