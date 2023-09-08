@@ -18,7 +18,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import { popupText } from '../../../types/elementsText';
 import { serviceErrors, errorsMessage } from '../../../types/formTypes';
 
-
 const ProfilePage: FC<ProfilePageProp> = (props) => {
   const isLoggedIn = useContext(LogInContext);
   const path = useLocation();
