@@ -25,7 +25,9 @@ const App: FC = () => {
 
   const [basicCategories, setBasicCategories] = useState<Category[]>([]);
   const [subCategories, setSubCategories] = useState<Category[]>([]);
-  const [productId, setProductId] = useState<string>('');
+  const [productId, setProductId] = useState<string>(
+    window.localStorage.getItem('id') || 'id'
+  );
 
   function logInStateChange(newValue: boolean): void {
     setIsLoggedIn(newValue);
