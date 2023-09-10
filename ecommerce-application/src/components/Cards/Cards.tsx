@@ -83,7 +83,7 @@ const Cards: FC<cardsProps> = (props: cardsProps) => {
                       {`$${product.masterVariant.price.value.centAmount / 100}`}
                     </p>
                   )}
-                  <BasketButton product={product}/>
+                  <BasketButton product={product} />
                 </div>
               </div>
             );
