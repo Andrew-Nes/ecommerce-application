@@ -8,6 +8,7 @@ const noImagePic = '../../../../assets/img/slider-no-image.jpg';
 
 import { routes } from '../../types/routingTypes';
 import { useNavigate } from 'react-router-dom';
+import BasketButton from './BasketButton/BasketButton';
 
 interface cardsProps {
   products: ProductProjection[];
@@ -82,6 +83,7 @@ const Cards: FC<cardsProps> = (props: cardsProps) => {
                       {`$${product.masterVariant.price.value.centAmount / 100}`}
                     </p>
                   )}
+                  <BasketButton product={product}/>
                 </div>
               </div>
             );

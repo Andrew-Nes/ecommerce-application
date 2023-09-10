@@ -1,7 +1,10 @@
 import {
+  CartDraft,
+  CartUpdate,
   createApiBuilderFromCtpClient,
   CustomerChangePassword,
   CustomerDraft,
+  MyCartDraft,
   MyCustomerUpdate,
 } from '@commercetools/platform-sdk';
 import {
@@ -191,3 +194,87 @@ export const getProduct = async (ID: string) => {
     .execute();
   return product;
 };
+
+
+export const CreateCart = async (cartDraft: CartDraft) => {
+  const client = getCurrentClient()
+  const cart = await client
+    .carts()
+    .post(
+      {body: cartDraft}
+    )
+    .execute()
+    window.localStorage.setItem('cart', cart.body.id)
+    return cart
+
+}
+
+
+export const CreateMyCart = async (cartDraft: MyCartDraft) => {
+  const client = getCurrentClient()
+  const cart = await client
+  .me()
+  .carts()
+  .post({body: cartDraft})
+  .execute()
+  window.localStorage.setItem('cart', cart.body.id)
+ 
+}
+
+export const GetCart = async (cartId: string) => {
+  const client = getCurrentClient()
+ return await client
+  .carts()
+  .withId({ID: cartId})
+  .get()
+  .execute()
+
+}
+
+
+export const AddProductToCart = async (cartId: string, productId: string) => {
+
+  const cartVersion = (await GetCart(cartId)).body.version
+
+  const cartUpdate: CartUpdate = {
+    version: cartVersion,
+    actions: [
+      {
+        action: 'addLineItem',
+        productId: productId,
+      }
+    ]
+  }
+  const client = getCurrentClient()
+   await client
+  .carts()
+  .withId({ID: cartId})
+  .post({
+    body: cartUpdate
+  })
+  .execute()
+}
+
+export const RemoveProductToCart = async (cartId: string, lineItemId: string, quantity: number | undefined = undefined) => {
+
+  const cartVersion = (await GetCart(cartId)).body.version
+
+  const cartUpdate: CartUpdate = {
+    version: cartVersion,
+    actions: [
+      {
+        action: 'removeLineItem',
+        lineItemId: lineItemId,
+        quantity: quantity
+      }
+    ]
+  }
+  const client = getCurrentClient()
+   await client
+  .carts()
+  .withId({ID: cartId})
+  .post({
+    body: cartUpdate
+  })
+  .execute()
+}
