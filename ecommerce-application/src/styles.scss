@@ -21,6 +21,8 @@ body {
   padding: 0;
   width: calc(100vw - 17px);
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 li {
@@ -57,9 +59,13 @@ a {
   margin: 0;
 }
 
-.main__wrapper {
-  padding-top: 25px;
-  padding-bottom: 15px;
+.main {
+  flex: 1;
+}
+
+.list {
+  margin: 0;
+  padding: 0;
 }
 
 .input {
@@ -86,6 +92,7 @@ a {
   font-size: 12px;
   min-height: 25px;
   padding: 3px 5px 5px;
+  max-width: 250px;
   // visibility: hidden;
 }
 

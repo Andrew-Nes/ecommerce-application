@@ -1,0 +1,32 @@
+.profile-card__buttons-container {
+  display: flex;
+  gap: 5px;
+}
+.profile-page_title {
+  text-align: center;
+}
+
+.customer-data__container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 300px;
+}
+
+.edit-profile_button {
+  padding: 5px 8px;
+  background-color: #cba662;
+  cursor: pointer;
+  width: 100%;
+  font-weight: 500;
+}
+
+.customer-data_item {
+  max-width: 400px;
+  display: flex;
+}
+
+.customer-data-item_label {
+  width: 40%;
+  font-weight: 600;
+}
