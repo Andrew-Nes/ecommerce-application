@@ -41,6 +41,11 @@ const Header: FC<loginStateChangeProp> = ({ loginStateChange }) => {
                   {anchorsText.CATALOG}
                 </Link>
               </li>
+              <li className="list__item" key="about">
+                <Link className="list__link" to={routes.ABOUT}>
+                  {anchorsText.ABOUT}
+                </Link>
+              </li>
             </ul>
           </nav>
           <div className="header__buttons">
