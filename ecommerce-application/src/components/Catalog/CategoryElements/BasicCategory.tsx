@@ -3,7 +3,12 @@ import { BreadcrumbsItem } from '../../../types/breadcrumbsTypes';
 import { routes } from '../../../types/routingTypes';
 import { anchorsText } from '../../../types/elementsText';
 import BreadcrumbsList from '../../Breadcrumbs/BreadcrumbsList';
-import { Category, ProductProjection } from '@commercetools/platform-sdk';
+import {
+  Category,
+  ClientResponse,
+  ErrorResponse,
+  ProductProjection,
+} from '@commercetools/platform-sdk';
 import { Languages } from '../../../types/commonDataTypes';
 import { Dispatch, FC, SetStateAction, useEffect, useState } from 'react';
 import { getFilteredItems, getItems } from '../../../api/apiFunctions';
@@ -11,9 +16,10 @@ import { TailSpin } from 'react-loader-spinner';
 import Sidebar from '../../Sidebar/Sidebar';
 import createFilterObject from '../../../utils/filterCreation';
 import { filtersCheckboxes } from '../../../types/categoryTypes';
-import { SortingVariants } from '../../../types/formTypes';
+import { SortingVariants, serviceErrors } from '../../../types/formTypes';
 import Cards from '../../Cards/Cards';
 import NotFoundPage from '../../Pages/NotFoundPage/NotFoundPage';
+import { reloadPage } from '../../../utils/apiHelpers';
 
 interface BasicCategoryProps {
   basicCategories: Category[];
@@ -77,7 +83,15 @@ const BasicCategory: FC<BasicCategoryProps> = (props: BasicCategoryProps) => {
         setFilteredProducts(products);
         setProductLoading(false);
       } catch (error) {
-        redirect(routes.NOTFOUND);
+        const errorResponse = JSON.parse(
+          JSON.stringify(error)
+        ) as ClientResponse<ErrorResponse>;
+        const errorCode = errorResponse.body.statusCode;
+        if (errorCode === serviceErrors.INVALID_TOKEN) {
+          reloadPage();
+        } else {
+          redirect(routes.NOTFOUND);
+        }
       }
     };
     fetchData();
@@ -97,7 +111,15 @@ const BasicCategory: FC<BasicCategoryProps> = (props: BasicCategoryProps) => {
         setFilteredProducts(filteredProducts);
         setProductLoading(false);
       } catch (error) {
-        redirect(routes.NOTFOUND);
+        const errorResponse = JSON.parse(
+          JSON.stringify(error)
+        ) as ClientResponse<ErrorResponse>;
+        const errorCode = errorResponse.body.statusCode;
+        if (errorCode === serviceErrors.INVALID_TOKEN) {
+          reloadPage();
+        } else {
+          redirect(routes.NOTFOUND);
+        }
       }
     };
     fetchData();

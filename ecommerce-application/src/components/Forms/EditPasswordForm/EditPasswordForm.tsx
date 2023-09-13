@@ -18,6 +18,7 @@ import { routes } from '../../../types/routingTypes';
 import { redirect } from 'react-router-dom';
 import { errorsMessage, serviceErrors } from '../../../types/formTypes';
 import './EditPasswordForm.scss';
+import { reloadPage } from '../../../utils/apiHelpers';
 const EditPassForm: FC<EditPassFormProps> = (props: EditPassFormProps) => {
   const [isLoad, setLoad] = useState(false);
   const {
@@ -85,6 +86,9 @@ const EditPassForm: FC<EditPassFormProps> = (props: EditPassFormProps) => {
         toast.error(popupText.CHANGE_PASSWORD_FAILED, {
           position: 'bottom-center',
         });
+      }
+      if (errorCode === serviceErrors.INVALID_TOKEN) {
+        reloadPage();
       }
     } finally {
       setLoad(false);

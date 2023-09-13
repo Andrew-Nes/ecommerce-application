@@ -41,6 +41,7 @@ enum errorsMessage {
 
 enum serviceErrors {
   INVALID_CUSTOMER_CREDENTIALS = 400,
+  INVALID_TOKEN = 401,
   DUPLICATE_FIELD = 'There is already an existing customer with the provided email.',
   SERVICE_UNAVAILABLE = 503,
   BAD_GATEWAY = 502,

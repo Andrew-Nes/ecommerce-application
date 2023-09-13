@@ -18,6 +18,7 @@ import { errorsMessage, serviceErrors } from '../../../types/formTypes';
 import { toast } from 'react-toastify';
 import { popupText } from '../../../types/elementsText';
 import './EditAddressForm.scss';
+import { reloadPage } from '../../../utils/apiHelpers';
 const EditAddressForm: FC<EditAddressFormProps> = (
   props: EditAddressFormProps
 ) => {
@@ -89,6 +90,9 @@ const EditAddressForm: FC<EditAddressFormProps> = (
         toast.info(errorsMessage.TOAST_SERVER_ERROR, {
           position: 'bottom-center',
         });
+      }
+      if (errorCode === serviceErrors.INVALID_TOKEN) {
+        reloadPage();
       }
     } finally {
       setLoad(false);
