@@ -17,6 +17,7 @@ import {
 import { toast } from 'react-toastify';
 import { serviceErrors, errorsMessage } from '../../../types/formTypes';
 import { popupText } from '../../../types/elementsText';
+import { reloadPage } from '../../../utils/apiHelpers';
 
 const EditProfileForm: FC<EditProfileFormProps> = (
   props: EditProfileFormProps
@@ -115,11 +116,8 @@ const EditProfileForm: FC<EditProfileFormProps> = (
           position: 'bottom-center',
         });
       }
-      if (errorResponse.body.statusCode === serviceErrors.INVALID_TOKEN) {
-        window.localStorage.clear();
-        location.reload();
-        // TODO
-        // redirect to component
+      if (errorCode === serviceErrors.INVALID_TOKEN) {
+        reloadPage();
       }
     } finally {
       setLoad(false);

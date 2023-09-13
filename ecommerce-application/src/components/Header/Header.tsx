@@ -81,7 +81,6 @@ const Header: FC<loginStateChangeProp> = ({ loginStateChange }) => {
               <p className="logo__text">{logoText.LOGO}</p>
             </Link>
           </div>
-          {/* <div onClick={() => {window.localStorage.clear(); location.reload()}}>TEST</div> */}
         </div>
       </div>
     </header>

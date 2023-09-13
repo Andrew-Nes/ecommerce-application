@@ -49,4 +49,9 @@ function getPriceFilterString(
   return customPriceFilterString;
 }
 
-export { getFiltersString, getPriceFilterString };
+function reloadPage(): void {
+  window.localStorage.clear();
+  location.reload();
+}
+
+export { getFiltersString, getPriceFilterString, reloadPage };

@@ -20,6 +20,7 @@ import BasicCategory from './Catalog/CategoryElements/BasicCategory';
 import Subcategory from './Catalog/CategoryElements/Subcategory';
 import ProductPage from './Pages/ProductPage/ProductPage';
 import { serviceErrors } from '../types/formTypes';
+import { reloadPage } from '../utils/apiHelpers';
 
 export const LogInContext = createContext(false);
 
@@ -57,11 +58,9 @@ const App: FC = () => {
         const errorResponse = JSON.parse(
           JSON.stringify(error)
         ) as ClientResponse<ErrorResponse>;
-        if (errorResponse.body.statusCode === serviceErrors.INVALID_TOKEN) {
-          window.localStorage.clear();
-          location.reload();
-          // TODO
-          // redirect to component
+        const errorCode = errorResponse.body.statusCode;
+        if (errorCode === serviceErrors.INVALID_TOKEN) {
+          reloadPage();
         }
       }
     };

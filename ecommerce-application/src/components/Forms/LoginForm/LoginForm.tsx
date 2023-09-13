@@ -19,6 +19,7 @@ import './loginForm.scss';
 import closeEyeIcon from '../../../../assets/img/close-eye.png';
 import openEyeIcon from '../../../../assets/img/open-eye.png';
 import 'react-toastify/dist/ReactToastify.css';
+import { reloadPage } from '../../../utils/apiHelpers';
 
 interface LoginFormData {
   email: string;
@@ -65,22 +66,15 @@ const LoginForm: FC<LoginProps> = ({ logIn }) => {
         JSON.stringify(error)
       ) as ClientResponse<ErrorResponse>;
 
-      if (
-        errorResponse.body.statusCode ===
-        serviceErrors.INVALID_CUSTOMER_CREDENTIALS
-      ) {
+      const errorCode = errorResponse.body.statusCode;
+      if (errorCode === serviceErrors.INVALID_CUSTOMER_CREDENTIALS) {
         reset({ password: '' });
         setError('root.serverError', {
           type: `${errorResponse.body.statusCode}`,
           message: errorsMessage.WRONG_LOGIN,
         });
-      } else if (
-        errorResponse.body.statusCode === serviceErrors.INVALID_TOKEN
-      ) {
-        window.localStorage.clear();
-        location.reload();
-        // TODO
-        // redirect to component
+      } else if (errorCode === serviceErrors.INVALID_TOKEN) {
+        reloadPage();
       }
     }
   };

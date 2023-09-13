@@ -18,6 +18,7 @@ import { routes } from '../../../types/routingTypes';
 import { redirect } from 'react-router-dom';
 import { errorsMessage, serviceErrors } from '../../../types/formTypes';
 import './EditPasswordForm.scss';
+import { reloadPage } from '../../../utils/apiHelpers';
 const EditPassForm: FC<EditPassFormProps> = (props: EditPassFormProps) => {
   const [isLoad, setLoad] = useState(false);
   const {
@@ -86,11 +87,8 @@ const EditPassForm: FC<EditPassFormProps> = (props: EditPassFormProps) => {
           position: 'bottom-center',
         });
       }
-      if (errorResponse.body.statusCode === serviceErrors.INVALID_TOKEN) {
-        window.localStorage.clear();
-        location.reload();
-        // TODO
-        // redirect to component
+      if (errorCode === serviceErrors.INVALID_TOKEN) {
+        reloadPage();
       }
     } finally {
       setLoad(false);

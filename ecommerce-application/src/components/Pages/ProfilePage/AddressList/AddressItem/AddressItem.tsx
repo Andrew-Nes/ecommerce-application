@@ -14,6 +14,7 @@ import SetDefaultButton from './SetDefaultButton/SetDefaultButton';
 import { toast } from 'react-toastify';
 import { popupText } from '../../../../../types/elementsText';
 import { serviceErrors } from '../../../../../types/formTypes';
+import { reloadPage } from '../../../../../utils/apiHelpers';
 
 const AddressItem: FC<AddressItemProps> = (props) => {
   const [isModalActive, setModalActive] = useState(false);
@@ -38,11 +39,9 @@ const AddressItem: FC<AddressItemProps> = (props) => {
       const errorResponse = JSON.parse(
         JSON.stringify(error)
       ) as ClientResponse<ErrorResponse>;
-      if (errorResponse.body.statusCode === serviceErrors.INVALID_TOKEN) {
-        window.localStorage.clear();
-        location.reload();
-        // TODO
-        // redirect to component
+      const errorCode = errorResponse.body.statusCode;
+      if (errorCode === serviceErrors.INVALID_TOKEN) {
+        reloadPage();
       } else {
         toast.error(popupText.DELETE_ADDRESS_FAILED, {
           position: 'bottom-center',

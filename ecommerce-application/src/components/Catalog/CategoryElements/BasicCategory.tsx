@@ -19,6 +19,7 @@ import { filtersCheckboxes } from '../../../types/categoryTypes';
 import { SortingVariants, serviceErrors } from '../../../types/formTypes';
 import Cards from '../../Cards/Cards';
 import NotFoundPage from '../../Pages/NotFoundPage/NotFoundPage';
+import { reloadPage } from '../../../utils/apiHelpers';
 
 interface BasicCategoryProps {
   basicCategories: Category[];
@@ -85,11 +86,9 @@ const BasicCategory: FC<BasicCategoryProps> = (props: BasicCategoryProps) => {
         const errorResponse = JSON.parse(
           JSON.stringify(error)
         ) as ClientResponse<ErrorResponse>;
-        if (errorResponse.body.statusCode === serviceErrors.INVALID_TOKEN) {
-          window.localStorage.clear();
-          location.reload();
-          // TODO
-          // redirect to component
+        const errorCode = errorResponse.body.statusCode;
+        if (errorCode === serviceErrors.INVALID_TOKEN) {
+          reloadPage();
         } else {
           redirect(routes.NOTFOUND);
         }
@@ -115,11 +114,9 @@ const BasicCategory: FC<BasicCategoryProps> = (props: BasicCategoryProps) => {
         const errorResponse = JSON.parse(
           JSON.stringify(error)
         ) as ClientResponse<ErrorResponse>;
-        if (errorResponse.body.statusCode === serviceErrors.INVALID_TOKEN) {
-          window.localStorage.clear();
-          location.reload();
-          // TODO
-          // redirect to component
+        const errorCode = errorResponse.body.statusCode;
+        if (errorCode === serviceErrors.INVALID_TOKEN) {
+          reloadPage();
         } else {
           redirect(routes.NOTFOUND);
         }

@@ -19,6 +19,7 @@ import createFilterObject from '../../../utils/filterCreation';
 import { SortingVariants, serviceErrors } from '../../../types/formTypes';
 import Cards from '../../Cards/Cards';
 import NotFoundPage from '../../Pages/NotFoundPage/NotFoundPage';
+import { reloadPage } from '../../../utils/apiHelpers';
 
 interface SubcategoryProps {
   mainCategories: Category[];
@@ -93,11 +94,9 @@ const Subcategory: FC<SubcategoryProps> = (props: SubcategoryProps) => {
         const errorResponse = JSON.parse(
           JSON.stringify(error)
         ) as ClientResponse<ErrorResponse>;
-        if (errorResponse.body.statusCode === serviceErrors.INVALID_TOKEN) {
-          window.localStorage.clear();
-          location.reload();
-          // TODO
-          // redirect to component
+        const errorCode = errorResponse.body.statusCode;
+        if (errorCode === serviceErrors.INVALID_TOKEN) {
+          reloadPage();
         } else {
           redirect(routes.NOTFOUND);
         }
@@ -123,11 +122,9 @@ const Subcategory: FC<SubcategoryProps> = (props: SubcategoryProps) => {
         const errorResponse = JSON.parse(
           JSON.stringify(error)
         ) as ClientResponse<ErrorResponse>;
-        if (errorResponse.body.statusCode === serviceErrors.INVALID_TOKEN) {
-          window.localStorage.clear();
-          location.reload();
-          // TODO
-          // redirect to component
+        const errorCode = errorResponse.body.statusCode;
+        if (errorCode === serviceErrors.INVALID_TOKEN) {
+          reloadPage();
         } else {
           redirect(routes.NOTFOUND);
         }
