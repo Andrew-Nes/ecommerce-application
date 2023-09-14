@@ -8,7 +8,7 @@ import NotFoundPage from './Pages/NotFoundPage/NotFoundPage';
 import RegistrationPage from './Pages/RegistrationPage/RegistrationPage';
 import ProfilePage from './Pages/ProfilePage/ProfilePage';
 import CatalogPage from './Pages/CatalogPage/CatalogPage';
-import { getCategories } from '../api/apiFunctions';
+import { CreateCart, getCategories } from '../api/apiFunctions';
 import {
   Category,
   ClientResponse,
@@ -21,6 +21,7 @@ import Subcategory from './Catalog/CategoryElements/Subcategory';
 import ProductPage from './Pages/ProductPage/ProductPage';
 import { serviceErrors } from '../types/formTypes';
 import { reloadPage } from '../utils/apiHelpers';
+import CartPage from './Pages/CartPage/CartPage';
 
 export const LogInContext = createContext(false);
 
@@ -38,6 +39,20 @@ const App: FC = () => {
   function logInStateChange(newValue: boolean): void {
     setIsLoggedIn(newValue);
     window.localStorage.setItem('isLoggedIn', newValue.toString());
+  }
+  async function createNewCart() {
+    try {
+      const cart = await CreateCart();
+      window.localStorage.setItem('anonymousId', cart.body.anonymousId || '');
+      window.localStorage.setItem('cartId', cart.body.id);
+      console.log(cart.body.anonymousId);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  if (!window.localStorage.getItem('cartId')) {
+    createNewCart();
   }
 
   /* eslint-disable react-hooks/exhaustive-deps*/
@@ -85,6 +100,10 @@ const App: FC = () => {
           <Route
             path="profile"
             element={<ProfilePage loginStateChange={logInStateChange} />}
+          />
+          <Route
+            path="cart"
+            element={<CartPage loginStateChange={logInStateChange} />}
           />
           <Route
             path="catalog"
