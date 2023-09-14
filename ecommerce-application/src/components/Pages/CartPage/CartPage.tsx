@@ -31,7 +31,7 @@ const CartPage: FC<CartPageProp> = () => {
   const [isUpdateData, setIsUpdateData] = useState(false);
   const [isModalActive, setModalActive] = useState(false);
   const [totalPrice, setTotalPrice] = useState<number>();
-  const cartId = window.localStorage.getItem('cart') || '';
+  const cartId = window.localStorage.getItem('cartId') || '';
   async function setCart() {
     try {
       // const cartId = window.localStorage.getItem('cart') || '';
@@ -71,10 +71,11 @@ const CartPage: FC<CartPageProp> = () => {
 
   const removeCart = async () => {
     try {
+      const cartId = window.localStorage.getItem('cartId') || '';
       await RemoveCart(cartId);
       const newCart = await CreateCart();
       const newCartId = newCart.body.id;
-      window.localStorage.setItem('cart', newCartId);
+      window.localStorage.setItem('cartId', newCartId);
       setIsUpdateData(true);
     } catch (error) {
       console.log(error);
