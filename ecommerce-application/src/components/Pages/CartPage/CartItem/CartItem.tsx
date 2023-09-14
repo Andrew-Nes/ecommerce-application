@@ -42,7 +42,6 @@ const CartItem: FC<CartItemProps> = (props: CartItemProps) => {
       props.isUpdateData(true);
     } catch {
       throw new Error('changeLineItemQuantity');
-
     }
   };
 

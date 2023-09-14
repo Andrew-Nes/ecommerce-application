@@ -12,8 +12,8 @@ const BasketButton: FC<BasketButtonProps> = (props) => {
       const cartId = window.localStorage.getItem('cartId') || '';
       const productId = props.product.id;
       await AddProductToCart(cartId, productId);
-    } catch (error) {
-      console.log(error);
+    } catch {
+      throw new Error('addProduct');
     }
   };
   return (

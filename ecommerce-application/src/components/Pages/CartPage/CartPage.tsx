@@ -34,14 +34,13 @@ const CartPage: FC<CartPageProp> = () => {
   const cartId = window.localStorage.getItem('cartId') || '';
   async function setCart() {
     try {
-      // const cartId = window.localStorage.getItem('cart') || '';
       const cart = await GetActiveCart();
 
       setCartItems(cart.body);
       setTotalPrice(cart.body.totalPrice.centAmount);
-      console.log(`Active cart ${cart.body}`);
-    } catch (error) {
-      console.log(error);
+      
+    } catch {
+      throw new Error('setCart');
     }
   }
 
@@ -64,8 +63,8 @@ const CartPage: FC<CartPageProp> = () => {
       await CartUpdateFunction(cartId, updateAction);
       setIsUpdateData(true);
       reset();
-    } catch (error) {
-      console.log(error);
+    } catch {
+      throw new Error('addDiscountCode');
     }
   };
 
@@ -77,8 +76,8 @@ const CartPage: FC<CartPageProp> = () => {
       const newCartId = newCart.body.id;
       window.localStorage.setItem('cartId', newCartId);
       setIsUpdateData(true);
-    } catch (error) {
-      console.log(error);
+    } catch {
+      throw new Error('removeCart');
     }
   };
 
