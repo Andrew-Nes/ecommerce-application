@@ -38,7 +38,6 @@ const CartPage: FC<CartPageProp> = () => {
 
       setCartItems(cart.body);
       setTotalPrice(cart.body.totalPrice.centAmount);
-      
     } catch {
       throw new Error('setCart');
     }
