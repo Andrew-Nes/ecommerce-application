@@ -1,7 +1,11 @@
 import {
+  CartDraft,
+  CartUpdate,
+  CartUpdateAction,
   createApiBuilderFromCtpClient,
   CustomerChangePassword,
   CustomerDraft,
+  MyCartDraft,
   MyCustomerUpdate,
 } from '@commercetools/platform-sdk';
 import {
@@ -190,4 +194,81 @@ export const getProduct = async (ID: string) => {
     .get()
     .execute();
   return product;
+};
+
+export const CreateCart = async () => {
+  const cartDraft: CartDraft = {
+    currency: 'USD',
+  };
+  const client = getCurrentClient();
+  const cart = await client.me().carts().post({ body: cartDraft }).execute();
+  return cart;
+};
+
+export const CreateMyCart = async (cartDraft: MyCartDraft) => {
+  const client = getCurrentClient();
+  const cart = await client.me().carts().post({ body: cartDraft }).execute();
+  window.localStorage.setItem('cart', cart.body.id);
+};
+
+export const GetCart = async (cartId: string) => {
+  const client = getCurrentClient();
+  return await client.carts().withId({ ID: cartId }).get().execute();
+};
+
+export const GetActiveCart = async () => {
+  const client = getCurrentClient();
+  return await client.me().activeCart().get().execute();
+};
+
+export const RemoveCart = async (cartId: string) => {
+  const cartVersion = (await GetCart(cartId)).body.version;
+  const client = getCurrentClient();
+  return await client
+    .carts()
+    .withId({ ID: cartId })
+    .delete({ queryArgs: { version: cartVersion } })
+    .execute();
+};
+
+export const AddProductToCart = async (cartId: string, productId: string) => {
+  const cartVersion = (await GetCart(cartId)).body.version;
+
+  const cartUpdate: CartUpdate = {
+    version: cartVersion,
+    actions: [
+      {
+        action: 'addLineItem',
+        productId: productId,
+      },
+    ],
+  };
+  const client = getCurrentClient();
+  await client
+    .carts()
+    .withId({ ID: cartId })
+    .post({
+      body: cartUpdate,
+    })
+    .execute();
+};
+
+export const CartUpdateFunction = async (
+  cartId: string,
+  updateAction: CartUpdateAction
+) => {
+  const cartVersion = (await GetCart(cartId)).body.version;
+
+  const cartUpdate: CartUpdate = {
+    version: cartVersion,
+    actions: [updateAction],
+  };
+  const client = getCurrentClient();
+  await client
+    .carts()
+    .withId({ ID: cartId })
+    .post({
+      body: cartUpdate,
+    })
+    .execute();
 };
