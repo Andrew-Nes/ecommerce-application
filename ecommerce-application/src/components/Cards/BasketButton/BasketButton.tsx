@@ -1,9 +1,6 @@
 import { FC } from 'react';
 import { ProductProjection } from '@commercetools/platform-sdk';
-import {
-
-  AddProductToCart,
-} from '../../../api/apiFunctions';
+import { AddProductToCart } from '../../../api/apiFunctions';
 
 interface BasketButtonProps {
   product: ProductProjection;
@@ -11,9 +8,8 @@ interface BasketButtonProps {
 
 const BasketButton: FC<BasketButtonProps> = (props) => {
   const addProduct = async () => {
-
     try {
-      const cartId = window.localStorage.getItem('cartId') || ''
+      const cartId = window.localStorage.getItem('cartId') || '';
       const productId = props.product.id;
       await AddProductToCart(cartId, productId);
     } catch (error) {

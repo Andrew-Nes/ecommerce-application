@@ -1,7 +1,7 @@
 import { CartUpdateAction, LineItem } from '@commercetools/platform-sdk';
 import './CartItem.scss';
 import { CartUpdateFunction } from '../../../../api/apiFunctions';
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, FC, SetStateAction } from 'react';
 interface CartItemProps {
   cartItem: LineItem;
   index: number;
@@ -9,7 +9,7 @@ interface CartItemProps {
   isUpdateData: Dispatch<SetStateAction<boolean>>;
 }
 
-const CartItem = (props: CartItemProps) => {
+const CartItem: FC<CartItemProps> = (props: CartItemProps) => {
   const itemName = Object.values(props.cartItem.name)[0];
   const itemImage = props.cartItem.variant.images?.[0].url;
   const itemPrice = props.cartItem.price.value.centAmount;
@@ -26,8 +26,8 @@ const CartItem = (props: CartItemProps) => {
       };
       await CartUpdateFunction(cartId, updateAction);
       props.isUpdateData(true);
-    } catch (error) {
-      console.log(error);
+    } catch {
+      throw new Error('changeLineItemQuantity');
     }
   };
   const addProductQuantity = async () => {
@@ -40,8 +40,9 @@ const CartItem = (props: CartItemProps) => {
     try {
       await CartUpdateFunction(cartId, updateAction);
       props.isUpdateData(true);
-    } catch (error) {
-      console.log(error);
+    } catch {
+      throw new Error('changeLineItemQuantity');
+
     }
   };
 
@@ -55,8 +56,8 @@ const CartItem = (props: CartItemProps) => {
     try {
       await CartUpdateFunction(cartId, updateAction);
       props.isUpdateData(true);
-    } catch (error) {
-      console.log(error);
+    } catch {
+      throw new Error('changeLineItemQuantity');
     }
   };
 
