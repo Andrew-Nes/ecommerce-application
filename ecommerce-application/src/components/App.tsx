@@ -47,7 +47,7 @@ const App: FC = () => {
       window.localStorage.setItem('cartId', cart.body.id);
       console.log(cart.body.anonymousId);
     } catch {
-      throw new Error('crateNewCart')
+      throw new Error('crateNewCart');
     }
   }
 

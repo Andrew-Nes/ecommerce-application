@@ -77,9 +77,8 @@ const CartPage: FC<CartPageProp> = () => {
           position: 'bottom-center',
         });
       }
-     // throw new Error('addDiscountCode');
+      // throw new Error('addDiscountCode');
     }
-    
   };
 
   const removeCart = async () => {
@@ -90,7 +89,7 @@ const CartPage: FC<CartPageProp> = () => {
       const newCartId = newCart.body.id;
       window.localStorage.setItem('cartId', newCartId);
       setIsUpdateData(true);
-      setModalActive(false)
+      setModalActive(false);
     } catch (error) {
       throw new Error('removeCart');
     }
