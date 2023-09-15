@@ -214,7 +214,7 @@ export const CreateMyCart = async (cartDraft: MyCartDraft) => {
 
 export const GetCart = async (cartId: string) => {
   const client = getCurrentClient();
-  return await client.carts().withId({ ID: cartId }).get().execute();
+  return await client.me().carts().withId({ ID: cartId }).get().execute();
 };
 
 export const GetActiveCart = async () => {
@@ -226,6 +226,7 @@ export const RemoveCart = async (cartId: string) => {
   const cartVersion = (await GetCart(cartId)).body.version;
   const client = getCurrentClient();
   return await client
+    .me()
     .carts()
     .withId({ ID: cartId })
     .delete({ queryArgs: { version: cartVersion } })
