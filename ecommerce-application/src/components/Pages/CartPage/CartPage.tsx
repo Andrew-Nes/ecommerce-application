@@ -2,9 +2,7 @@ import { FC, useEffect, useState } from 'react';
 import {
   CartUpdateFunction,
   CreateCart,
-  GetCart,
-  // GetCart,
-  // GetCustomer,
+  GetActiveCart,
   RemoveCart,
 } from '../../../api/apiFunctions';
 import {
@@ -12,8 +10,6 @@ import {
   CartUpdateAction,
   ClientResponse,
   ErrorResponse,
-  //LineItem,
-  // MyCartDraft,
 } from '@commercetools/platform-sdk';
 import CartItem from './CartItem/CartItem';
 import './CartPage.scss';
@@ -37,12 +33,10 @@ const CartPage: FC<CartPageProp> = () => {
   const [totalPrice, setTotalPrice] = useState<number>();
   const cartId = window.localStorage.getItem('cartId') || '';
   async function setCart() {
-    const cartId = window.localStorage.getItem('cartId') || '';
     try {
-      const cart = await GetCart(cartId);
-
+      const cart = await GetActiveCart();
       setCartItems(cart.body);
-      setTotalPrice(cart.body.totalPrice.centAmount);
+      setTotalPrice(cart.body.totalPrice.centAmount / 100);
     } catch {
       throw new Error('setCart');
     }
@@ -77,7 +71,6 @@ const CartPage: FC<CartPageProp> = () => {
           position: 'bottom-center',
         });
       }
-      // throw new Error('addDiscountCode');
     }
   };
 
@@ -97,35 +90,58 @@ const CartPage: FC<CartPageProp> = () => {
 
   return (
     <div className="cart-page__wrapper">
-      <button onClick={() => setModalActive(true)}>Remove Cart</button>
       <MyModal active={isModalActive} setActive={setModalActive}>
-        <p>Delete current cart?</p>
-        <button onClick={removeCart}>ОК</button>
-        <button onClick={() => setModalActive(false)}>Back</button>
+        <div className="delete-cart-modal">
+          <h3>Delete current cart?</h3>
+          <div className="delete-cart-button__container">
+            <button className="cart_button" onClick={removeCart}>
+              ОК
+            </button>
+            <button
+              className="cart_button"
+              onClick={() => setModalActive(false)}
+            >
+              Back
+            </button>
+          </div>
+        </div>
       </MyModal>
-      <h2>Cart page</h2>
-      <div>
-        <strong>Total price: </strong> <span>{totalPrice}</span>
+      <div className="cart-page__title-container">
+        <h2>Cart page</h2>
+        <button className="cart_button" onClick={() => setModalActive(true)}>
+          Remove Cart
+        </button>
       </div>
-      <div>
+
+      <div className="total-price__container">
+        <strong className="cart-total-price">
+          Total price: {totalPrice} $
+        </strong>
+      </div>
+
+      <div className="promo-code__container">
         <h3>Promo code:</h3>
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form className="promo-form" onSubmit={handleSubmit(onSubmit)}>
           <input type="text" {...register('promo')} />
-          <button type="submit">Apply</button>
+          <button className="cart_button" type="submit">
+            Apply
+          </button>
         </form>
       </div>
-      {cartItems
-        ? cartItems.lineItems.map((item, index) => {
-            return (
-              <CartItem
-                cartItem={item}
-                index={index}
-                key={index}
-                isUpdateData={setIsUpdateData}
-              />
-            );
-          })
-        : 'Cart is Empty'}
+      <div className="cartItems-wrapper">
+        {cartItems?.lineItems.length
+          ? cartItems.lineItems.map((item, index) => {
+              return (
+                <CartItem
+                  cartItem={item}
+                  index={index}
+                  key={index}
+                  isUpdateData={setIsUpdateData}
+                />
+              );
+            })
+          : 'Cart is Empty, here will be a link to the catalog'}
+      </div>
     </div>
   );
 };

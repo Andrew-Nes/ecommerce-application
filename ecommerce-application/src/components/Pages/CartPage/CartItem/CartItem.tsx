@@ -12,7 +12,7 @@ interface CartItemProps {
 const CartItem: FC<CartItemProps> = (props: CartItemProps) => {
   const itemName = Object.values(props.cartItem.name)[0];
   const itemImage = props.cartItem.variant.images?.[0].url;
-  const itemPrice = props.cartItem.price.value.centAmount;
+  const itemPrice = props.cartItem.price.value.centAmount / 100;
   const itemCount = props.cartItem.quantity;
 
   const removeProduct = async () => {
@@ -62,10 +62,15 @@ const CartItem: FC<CartItemProps> = (props: CartItemProps) => {
 
   return (
     <div key={props.index} className="cart-item__container">
+      <button className="cart_button" onClick={removeProduct}>
+        Remove from Cart
+      </button>
       <h3>{itemName}</h3>
+
       <img src={itemImage} alt="image" width={'100%'} />
-      <p>Price: {itemPrice}</p>
+      <strong className="cart-item_price">Price: {itemPrice} $</strong>
       <div className="count-buttons__container">
+        <strong className="cart-item_price">Quantity:</strong>
         <button
           className="count-button"
           onClick={removedProductQuantity}
@@ -78,9 +83,6 @@ const CartItem: FC<CartItemProps> = (props: CartItemProps) => {
           +
         </button>
       </div>
-      <button className="remove-button" onClick={removeProduct}>
-        Remove from Cart
-      </button>
     </div>
   );
 };

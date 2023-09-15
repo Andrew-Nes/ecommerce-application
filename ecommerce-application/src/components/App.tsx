@@ -45,14 +45,9 @@ const App: FC = () => {
       const cart = await CreateCart();
       window.localStorage.setItem('anonymousId', cart.body.anonymousId || '');
       window.localStorage.setItem('cartId', cart.body.id);
-      console.log(cart.body.anonymousId);
     } catch {
       throw new Error('crateNewCart');
     }
-  }
-
-  if (!window.localStorage.getItem('cartId')) {
-    createNewCart();
   }
 
   /* eslint-disable react-hooks/exhaustive-deps*/
@@ -69,6 +64,9 @@ const App: FC = () => {
         );
         setBasicCategories(mainCategories);
         setSubCategories(childCategories);
+        if (!window.localStorage.getItem('cartId')) {
+          createNewCart();
+        }
       } catch (error) {
         const errorResponse = JSON.parse(
           JSON.stringify(error)
