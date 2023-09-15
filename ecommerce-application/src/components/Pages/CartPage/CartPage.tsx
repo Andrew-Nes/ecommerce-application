@@ -2,7 +2,7 @@ import { FC, useEffect, useState } from 'react';
 import {
   CartUpdateFunction,
   CreateCart,
-  GetActiveCart,
+  GetCart,
   // GetCart,
   // GetCustomer,
   RemoveCart,
@@ -10,6 +10,8 @@ import {
 import {
   Cart,
   CartUpdateAction,
+  ClientResponse,
+  ErrorResponse,
   //LineItem,
   // MyCartDraft,
 } from '@commercetools/platform-sdk';
@@ -17,6 +19,8 @@ import CartItem from './CartItem/CartItem';
 import './CartPage.scss';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import MyModal from '../../Modal/MyModal';
+import { toast } from 'react-toastify';
+import { errorsMessage } from '../../../types/formTypes';
 
 interface CartPageProp {
   loginStateChange: (newValue: boolean) => void;
@@ -33,8 +37,9 @@ const CartPage: FC<CartPageProp> = () => {
   const [totalPrice, setTotalPrice] = useState<number>();
   const cartId = window.localStorage.getItem('cartId') || '';
   async function setCart() {
+    const cartId = window.localStorage.getItem('cartId') || '';
     try {
-      const cart = await GetActiveCart();
+      const cart = await GetCart(cartId);
 
       setCartItems(cart.body);
       setTotalPrice(cart.body.totalPrice.centAmount);
@@ -62,9 +67,19 @@ const CartPage: FC<CartPageProp> = () => {
       await CartUpdateFunction(cartId, updateAction);
       setIsUpdateData(true);
       reset();
-    } catch {
-      throw new Error('addDiscountCode');
+    } catch (error) {
+      const errorResponse = JSON.parse(
+        JSON.stringify(error)
+      ) as ClientResponse<ErrorResponse>;
+      const errorCode = errorResponse.body.statusCode;
+      if (errorCode === 400) {
+        toast.error(errorsMessage.NOT_FOUND_DISCOUNT_CODE, {
+          position: 'bottom-center',
+        });
+      }
+     // throw new Error('addDiscountCode');
     }
+    
   };
 
   const removeCart = async () => {
@@ -75,7 +90,8 @@ const CartPage: FC<CartPageProp> = () => {
       const newCartId = newCart.body.id;
       window.localStorage.setItem('cartId', newCartId);
       setIsUpdateData(true);
-    } catch {
+      setModalActive(false)
+    } catch (error) {
       throw new Error('removeCart');
     }
   };

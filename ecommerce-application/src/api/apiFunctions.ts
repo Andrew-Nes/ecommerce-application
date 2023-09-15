@@ -199,6 +199,7 @@ export const getProduct = async (ID: string) => {
 export const CreateCart = async () => {
   const cartDraft: CartDraft = {
     currency: 'USD',
+    country: 'US'
   };
   const client = getCurrentClient();
   const cart = await client.me().carts().post({ body: cartDraft }).execute();
