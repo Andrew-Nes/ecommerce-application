@@ -7,6 +7,7 @@ import { Languages } from '../../../types/commonDataTypes';
 import { useNavigate } from 'react-router-dom';
 import { routes } from '../../../types/routingTypes';
 const noImagePic = '../../../../assets/img/slider-no-image.jpg';
+import ButtonAddRemove from '../../ButtonAddRemove/ButtonAddRemove';
 
 const ProductPage: FC<{ id: string }> = (props) => {
   const [product, setProduct] = useState<ProductProjection>();
@@ -79,6 +80,7 @@ const ProductPage: FC<{ id: string }> = (props) => {
                   })
                 : null}
             </ul>
+            <ButtonAddRemove id={props.id} />
           </div>
         </div>
         {
