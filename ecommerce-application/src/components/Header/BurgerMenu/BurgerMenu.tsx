@@ -28,6 +28,9 @@ const BurgerMenu: FC<loginStateChangeProp> = ({ loginStateChange }) => {
         >
           {anchorsText.CATALOG}
         </Link>
+        <Link className="burger__link" to={routes.CART} onClick={() => close()}>
+          {anchorsText.CART}
+        </Link>
         {!isLoggedIn ? (
           <Link
             className="burger__link"

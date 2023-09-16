@@ -10,6 +10,7 @@ import Logo from '../../../assets/img/shopLogo.png';
 import './header.scss';
 import ProfileIcon from '../../../assets/img/user-profile.svg';
 import RedirectIcon from '../RedirectButton/RedirectIcon';
+import CartIcon from '../../../assets/img/shopping-cart.svg';
 
 const Header: FC<loginStateChangeProp> = ({ loginStateChange }) => {
   const isLoggedIn = useContext(LogInContext);
@@ -18,6 +19,7 @@ const Header: FC<loginStateChangeProp> = ({ loginStateChange }) => {
     loginStateChange(false);
     window.localStorage.removeItem('token');
     window.localStorage.removeItem('IsLoggedIn');
+    window.localStorage.removeItem('cartId');
     redirect(routes.MAIN);
   };
   const path = useLocation();
@@ -44,6 +46,12 @@ const Header: FC<loginStateChangeProp> = ({ loginStateChange }) => {
             </ul>
           </nav>
           <div className="header__buttons">
+            <RedirectIcon
+              className="profile_icon"
+              alt={'Cart'}
+              route={routes.CART}
+              src={CartIcon}
+            />
             {!isLoggedIn ? (
               <RedirectButton
                 className="button header__button header__button_login"

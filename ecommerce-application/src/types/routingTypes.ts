@@ -7,6 +7,7 @@ export enum routes {
   NOTFOUND = '*',
   SEARCH = '/catalog/search',
   PRODUCT = '/product',
+  CART = '/cart',
 }
 
 export interface buttonProps {

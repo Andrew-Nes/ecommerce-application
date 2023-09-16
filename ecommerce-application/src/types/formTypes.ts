@@ -37,6 +37,7 @@ enum errorsMessage {
   CHANGE_PASSWORD_NOT_MATCH = 'The given current password does not match.',
   STATE_NUMBERS = 'State must not contain numbers',
   STATE_SPECIAL_CHARACTER = 'State must not contain special characters',
+  NOT_FOUND_DISCOUNT_CODE = 'Fail! The discount code was not found!',
 }
 
 enum serviceErrors {
