@@ -112,7 +112,7 @@ export const loginClient = async (username: string, password: string) => {
       .execute();
     tokenStorage.clear();
     loggedClient = createClientPasswordFlow(username, password);
-    return response
+    return response;
   } catch (error) {
     loggedClient = undefined;
     throw error;

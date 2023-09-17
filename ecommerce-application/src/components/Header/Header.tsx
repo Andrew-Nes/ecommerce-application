@@ -32,7 +32,7 @@ const Header: FC<loginStateChangeProp> = ({ loginStateChange }) => {
     window.localStorage.removeItem('IsLoggedIn');
     window.localStorage.removeItem('cartId');
     redirect(routes.MAIN);
-    createNewCart()
+    createNewCart();
     //reloadPage()
   };
   const path = useLocation();
