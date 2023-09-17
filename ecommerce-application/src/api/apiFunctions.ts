@@ -351,3 +351,11 @@ export const CartUpdateFunction = async (
     })
     .execute();
 };
+
+export const GetDiscount = async () => {
+  const client = getCurrentClient();
+  return await client
+  .discountCodes()
+  .get()
+  .execute()
+};
