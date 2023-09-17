@@ -57,7 +57,26 @@
   display: flex;
   gap: 10px;
 }
-.cart-total-price {
+.cart-total-price,
+.total-discount-price,
+.total-price {
   font-size: 20px;
   font-weight: 500;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.total-discount-price {
+  color: red;
+}
+.inactive {
+  opacity: .6;
+  text-decoration: line-through;
+}
+
+.discounted-price__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }

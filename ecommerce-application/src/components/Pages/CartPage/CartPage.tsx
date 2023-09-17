@@ -2,8 +2,9 @@ import { FC, useEffect, useState } from 'react';
 import {
   CartUpdateFunction,
   CreateCart,
+  GetActiveCart,
   // GetActiveCart,
-  GetCart,
+  //GetCart,
   RemoveCart,
 } from '../../../api/apiFunctions';
 import {
@@ -11,6 +12,7 @@ import {
   CartUpdateAction,
   ClientResponse,
   ErrorResponse,
+  LineItem,
 } from '@commercetools/platform-sdk';
 import CartItem from './CartItem/CartItem';
 import './CartPage.scss';
@@ -18,6 +20,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import MyModal from '../../Modal/MyModal';
 import { toast } from 'react-toastify';
 import { errorsMessage } from '../../../types/formTypes';
+
 
 interface CartPageProp {
   loginStateChange: (newValue: boolean) => void;
@@ -27,19 +30,31 @@ type PromoFormData = {
   promo: string;
 };
 
+const getLineItemsPrice = (lineItems: LineItem []) => {
+  const totalPrice = lineItems.reduce((acc, cur) => {
+    return acc + (cur.price.value.centAmount * cur.quantity)
+  }, 0)
+  return totalPrice
+}
+
 const CartPage: FC<CartPageProp> = () => {
   const [cartItems, setCartItems] = useState<Cart | undefined>();
   const [isUpdateData, setIsUpdateData] = useState(false);
   const [isModalActive, setModalActive] = useState(false);
   const [totalPrice, setTotalPrice] = useState<number>();
+  const [totalDiscountPrice, setTotalDiscountPrice] = useState<number>();
+  
+
   //const cartId = window.localStorage.getItem('cartId') || '';
   async function setCart() {
     try {
       //const cart = await GetActiveCart();
-      const cartId = window.localStorage.getItem('cartId') || '';
-      const cart = await GetCart(cartId);
+      //const cartId = window.localStorage.getItem('cartId') || '';
+      const cart = await GetActiveCart();
+      const cartDiscountPrice = getLineItemsPrice(cart.body.lineItems) / 100
       setCartItems(cart.body);
-      setTotalPrice(cart.body.totalPrice.centAmount / 100);
+      setTotalPrice(cartDiscountPrice)
+      setTotalDiscountPrice(cart.body.totalPrice.centAmount / 100);
     } catch {
       throw new Error('setCart');
     }
@@ -116,10 +131,22 @@ const CartPage: FC<CartPageProp> = () => {
         </button>
       </div>
 
+ 
       <div className="total-price__container">
-        <strong className="cart-total-price">
-          Total price: {totalPrice} $
-        </strong>
+        
+        <strong className="cart-total-price">Total price:</strong>
+        {totalPrice !== totalDiscountPrice ? (
+          <div className='discounted-price__container'>
+            <span className='total-discount-price'>{totalDiscountPrice} $</span>
+             <span className='total-price inactive'>{totalPrice} $</span>
+          </div>
+
+        ): (
+          <span className='total-price'>{totalPrice} $</span>
+        )}
+        
+        
+        
       </div>
 
       <div className="promo-code__container">
