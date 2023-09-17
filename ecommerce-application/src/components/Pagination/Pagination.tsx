@@ -1,3 +1,4 @@
+import './pagination.scss';
 import { FC } from 'react';
 
 interface PaginationProps {
@@ -12,10 +13,11 @@ const Pagination: FC<PaginationProps> = (props: PaginationProps) => {
   const { page, totalPages, prevPage, setPage, nextPage } = props;
   return (
     <div className="pagination">
-      <p className="text">
-        {page}/{totalPages}
-      </p>
-      <button onClick={prevPage} className="page">
+      <button
+        onClick={prevPage}
+        className="pagination__button"
+        disabled={page === 1 ? true : false}
+      >
         &larr;
       </button>
 
@@ -23,12 +25,18 @@ const Pagination: FC<PaginationProps> = (props: PaginationProps) => {
         <button
           onClick={() => setPage(el + 1)}
           key={el}
-          className={`page ${page === el + 1 ? 'active' : ''}`}
+          className={`pagination__button ${
+            page === el + 1 ? 'pagination__button_active' : ''
+          }`}
         >
           {el + 1}
         </button>
       ))}
-      <button onClick={nextPage} className="page">
+      <button
+        onClick={nextPage}
+        className="pagination__button"
+        disabled={page === totalPages ? true : false}
+      >
         &rarr;
       </button>
     </div>

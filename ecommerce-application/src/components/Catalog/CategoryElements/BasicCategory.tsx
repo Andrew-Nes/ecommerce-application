@@ -184,7 +184,7 @@ const BasicCategory: FC<BasicCategoryProps> = (props: BasicCategoryProps) => {
           {isProductLoading ? (
             <TailSpin wrapperClass="loader-spinner" />
           ) : (
-            <div>
+            <div className="products__wrapper">
               <Cards
                 products={filteredProducts}
                 sortingVariants={sortingVariant}
