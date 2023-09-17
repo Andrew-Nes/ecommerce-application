@@ -13,6 +13,7 @@ interface cardsProps {
   products: ProductProjection[];
   sortingVariants: string;
   setSortingVariants: Dispatch<SetStateAction<string>>;
+  searchText: string;
   setSearchText: Dispatch<SetStateAction<string>>;
   setProductId: Dispatch<SetStateAction<string>>;
   productNumber: number;
@@ -29,7 +30,10 @@ const Cards: FC<cardsProps> = (props: cardsProps) => {
           sortString={props.sortingVariants}
         />
         <div className="search-form__wrapper">
-          <SearchForm setSearchText={props.setSearchText} />
+          <SearchForm
+            setSearchText={props.setSearchText}
+            searchText={props.searchText}
+          />
         </div>
       </div>
       <div className="cards">

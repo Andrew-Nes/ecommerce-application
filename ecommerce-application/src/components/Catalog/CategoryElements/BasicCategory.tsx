@@ -15,7 +15,7 @@ import { getFilteredItems, getItems } from '../../../api/apiFunctions';
 import { TailSpin } from 'react-loader-spinner';
 import Sidebar from '../../Sidebar/Sidebar';
 import createFilterObject from '../../../utils/filterCreation';
-import { filtersCheckboxes } from '../../../types/categoryTypes';
+import { Filters, filtersCheckboxes } from '../../../types/categoryTypes';
 import { SortingVariants, serviceErrors } from '../../../types/formTypes';
 import Cards from '../../Cards/Cards';
 import NotFoundPage from '../../Pages/NotFoundPage/NotFoundPage';
@@ -38,6 +38,8 @@ const BasicCategory: FC<BasicCategoryProps> = (props: BasicCategoryProps) => {
   const [filteredProducts, setFilteredProducts] = useState<ProductProjection[]>(
     []
   );
+  const [isNewCategory, changeIsNewCategory] = useState<boolean>(true);
+  const [filters, setFilters] = useState<Filters[]>([]);
   const [isProductLoading, setProductLoading] = useState<boolean>(true);
   const [chosenFilter, setChosenFilter] = useState<filtersCheckboxes>({});
   const [sortingVariant, setSortingVariant] = useState<string>(
@@ -45,18 +47,11 @@ const BasicCategory: FC<BasicCategoryProps> = (props: BasicCategoryProps) => {
   );
   const [searchText, setSearchText] = useState<string>('');
 
-  const {
-    firstContentIndex,
-    // lastContentIndex,
-    nextPage,
-    prevPage,
-    page,
-    setPage,
-    totalPages,
-  } = usePagination({
-    contentPerPage: productsPerPage,
-    count: totalProducts,
-  });
+  const { firstContentIndex, nextPage, prevPage, page, setPage, totalPages } =
+    usePagination({
+      contentPerPage: productsPerPage,
+      count: totalProducts,
+    });
 
   const currentCategory = props.basicCategories.find(
     (category) => category.key === currentCategoryKey
@@ -67,8 +62,6 @@ const BasicCategory: FC<BasicCategoryProps> = (props: BasicCategoryProps) => {
   const childCategories = props.subCategories.filter(
     (subCategory) => subCategory.parent?.id === currentCategory?.id
   );
-
-  const filters = createFilterObject(allProducts);
 
   const lists: BreadcrumbsItem[] = [
     {
@@ -88,27 +81,23 @@ const BasicCategory: FC<BasicCategoryProps> = (props: BasicCategoryProps) => {
     },
   ];
   const redirect = useNavigate();
+
   /* eslint-disable react-hooks/exhaustive-deps*/
   useEffect(() => {
-    console.log(1);
     if (props.basicCategories.length === 0) {
       return;
     }
-    console.log(1.1);
+
     setProductLoading(true);
-    setPage(1);
-    setChosenFilter({});
-    // setTotalProducts(0);
-    // setProductsPerPage(0);
+    changeIsNewCategory(true);
+    setSearchText('');
+
     const fetchData = async () => {
       try {
         const response = await getItems(currentCategoryId, sortingVariant);
         const products = response.body.results;
         setAllProducts(products);
-        // setFilteredProducts(products);
         setTotalProducts(response.body.total || response.body.count);
-        // setProductsPerPage(response.body.limit);
-        // setProductLoading(false);
       } catch (error) {
         const errorResponse = JSON.parse(
           JSON.stringify(error)
@@ -121,13 +110,13 @@ const BasicCategory: FC<BasicCategoryProps> = (props: BasicCategoryProps) => {
         }
       } finally {
         setProductLoading(false);
+        changeIsNewCategory(false);
       }
     };
     fetchData();
   }, [getItems, currentCategory]);
 
   useEffect(() => {
-    console.log(2, totalProducts);
     setProductLoading(true);
 
     const fetchData = async () => {
@@ -143,7 +132,6 @@ const BasicCategory: FC<BasicCategoryProps> = (props: BasicCategoryProps) => {
         setFilteredProducts(filteredProducts);
         setTotalProducts(response.body.total || response.body.count);
         setProductsPerPage(response.body.limit);
-        setProductLoading(false);
       } catch (error) {
         const errorResponse = JSON.parse(
           JSON.stringify(error)
@@ -154,19 +142,21 @@ const BasicCategory: FC<BasicCategoryProps> = (props: BasicCategoryProps) => {
         } else {
           redirect(routes.NOTFOUND);
         }
+      } finally {
+        setProductLoading(false);
       }
     };
     fetchData();
   }, [chosenFilter, sortingVariant, searchText, firstContentIndex]);
 
   useEffect(() => {
-    console.log(3, page);
-  }, [page]);
+    setFilters(createFilterObject(allProducts));
+    setChosenFilter({});
+  }, [allProducts]);
 
   useEffect(() => {
-    console.log(4, page);
     setPage(1);
-  }, [chosenFilter]);
+  }, [chosenFilter, searchText]);
 
   if (!currentCategory) {
     return <NotFoundPage />;
@@ -180,6 +170,7 @@ const BasicCategory: FC<BasicCategoryProps> = (props: BasicCategoryProps) => {
             childCategories={childCategories}
             filters={filters}
             setFilters={setChosenFilter}
+            isNew={isNewCategory}
           />
           {isProductLoading ? (
             <TailSpin wrapperClass="loader-spinner" />
@@ -189,6 +180,7 @@ const BasicCategory: FC<BasicCategoryProps> = (props: BasicCategoryProps) => {
                 products={filteredProducts}
                 sortingVariants={sortingVariant}
                 setSortingVariants={setSortingVariant}
+                searchText={searchText}
                 setSearchText={setSearchText}
                 setProductId={props.setProductId}
                 productNumber={totalProducts}

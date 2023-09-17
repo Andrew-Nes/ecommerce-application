@@ -2,11 +2,15 @@ import { Dispatch, FC, SetStateAction } from 'react';
 import { useForm } from 'react-hook-form';
 
 interface SearchFormProps {
+  searchText: string;
   setSearchText: Dispatch<SetStateAction<string>>;
 }
 
 const SearchForm: FC<SearchFormProps> = (props: SearchFormProps) => {
-  const { register, handleSubmit, getValues } = useForm({ mode: 'onSubmit' });
+  const { register, handleSubmit, getValues } = useForm({
+    mode: 'onSubmit',
+    defaultValues: { search: props.searchText },
+  });
   const onSubmit = () => {
     props.setSearchText(getValues().search);
   };
