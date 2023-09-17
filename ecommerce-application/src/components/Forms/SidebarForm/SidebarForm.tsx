@@ -18,7 +18,7 @@ const SidebarForm: FC<SidebarFormProps> = (props: SidebarFormProps) => {
     if (props.isNew) {
       reset();
     }
-  });
+  }, [props, reset]);
 
   return (
     <div className="sidebar__element">
