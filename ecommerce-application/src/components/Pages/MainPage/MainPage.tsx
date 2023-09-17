@@ -12,18 +12,17 @@ import { DiscountCode } from '@commercetools/platform-sdk';
 import DiscountCodeCard from './DiscountCodeCard/DiscountCodeCard';
 
 const MainPage: FC = () => {
-  const [discountCodes, setDiscountCodes] = useState<DiscountCode[]>()
+  const [discountCodes, setDiscountCodes] = useState<DiscountCode[]>();
 
   const getDiscounts = async () => {
-    const response = await GetDiscount()
-    const discountCodes = response.body.results
-    console.log(discountCodes)
-    setDiscountCodes(discountCodes)
-  }
-useEffect(() => {
-  getDiscounts()
-}, [])
-  
+    const response = await GetDiscount();
+    const discountCodes = response.body.results;
+    console.log(discountCodes);
+    setDiscountCodes(discountCodes);
+  };
+  useEffect(() => {
+    getDiscounts();
+  }, []);
 
   return (
     <main className="main main-page">
@@ -45,13 +44,11 @@ useEffect(() => {
               text={buttonsText.LOGIN}
             />
           </div>
-          {discountCodes ? (
-            discountCodes.map((code, index) => {
-              return (
-                <DiscountCodeCard key={index} discountCode={code}/>
-              )
-            })
-          ) : ''}
+          {discountCodes
+            ? discountCodes.map((code, index) => {
+                return <DiscountCodeCard key={index} discountCode={code} />;
+              })
+            : ''}
         </div>
       </div>
     </main>

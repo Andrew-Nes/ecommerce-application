@@ -354,8 +354,5 @@ export const CartUpdateFunction = async (
 
 export const GetDiscount = async () => {
   const client = getCurrentClient();
-  return await client
-  .discountCodes()
-  .get()
-  .execute()
+  return await client.discountCodes().get().execute();
 };
