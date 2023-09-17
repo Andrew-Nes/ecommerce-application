@@ -20,6 +20,8 @@ import { SortingVariants, serviceErrors } from '../../../types/formTypes';
 import Cards from '../../Cards/Cards';
 import NotFoundPage from '../../Pages/NotFoundPage/NotFoundPage';
 import { reloadPage } from '../../../utils/apiHelpers';
+import usePagination from '../../../hooks/usePagination';
+import Pagination from '../../Pagination/Pagination';
 
 interface BasicCategoryProps {
   basicCategories: Category[];
@@ -30,6 +32,9 @@ interface BasicCategoryProps {
 const BasicCategory: FC<BasicCategoryProps> = (props: BasicCategoryProps) => {
   const { currentCategoryKey } = useParams();
   const [allProducts, setAllProducts] = useState<ProductProjection[]>([]);
+  const [totalProducts, setTotalProducts] = useState<number>(0);
+  const [productsPerPage, setProductsPerPage] = useState<number>(0);
+
   const [filteredProducts, setFilteredProducts] = useState<ProductProjection[]>(
     []
   );
@@ -39,6 +44,19 @@ const BasicCategory: FC<BasicCategoryProps> = (props: BasicCategoryProps) => {
     SortingVariants.NAME_ASC
   );
   const [searchText, setSearchText] = useState<string>('');
+
+  const {
+    firstContentIndex,
+    // lastContentIndex,
+    nextPage,
+    prevPage,
+    page,
+    setPage,
+    totalPages,
+  } = usePagination({
+    contentPerPage: productsPerPage,
+    count: totalProducts,
+  });
 
   const currentCategory = props.basicCategories.find(
     (category) => category.key === currentCategoryKey
@@ -72,16 +90,25 @@ const BasicCategory: FC<BasicCategoryProps> = (props: BasicCategoryProps) => {
   const redirect = useNavigate();
   /* eslint-disable react-hooks/exhaustive-deps*/
   useEffect(() => {
+    console.log(1);
     if (props.basicCategories.length === 0) {
       return;
     }
+    console.log(1.1);
+    setProductLoading(true);
+    setPage(1);
+    setChosenFilter({});
+    // setTotalProducts(0);
+    // setProductsPerPage(0);
     const fetchData = async () => {
       try {
         const response = await getItems(currentCategoryId, sortingVariant);
         const products = response.body.results;
         setAllProducts(products);
-        setFilteredProducts(products);
-        setProductLoading(false);
+        // setFilteredProducts(products);
+        setTotalProducts(response.body.total || response.body.count);
+        // setProductsPerPage(response.body.limit);
+        // setProductLoading(false);
       } catch (error) {
         const errorResponse = JSON.parse(
           JSON.stringify(error)
@@ -92,23 +119,30 @@ const BasicCategory: FC<BasicCategoryProps> = (props: BasicCategoryProps) => {
         } else {
           redirect(routes.NOTFOUND);
         }
+      } finally {
+        setProductLoading(false);
       }
     };
     fetchData();
-  }, [getItems, props, currentCategory]);
+  }, [getItems, currentCategory]);
 
   useEffect(() => {
+    console.log(2, totalProducts);
     setProductLoading(true);
+
     const fetchData = async () => {
       try {
         const response = await getFilteredItems(
           currentCategoryId,
           sortingVariant,
           searchText,
+          firstContentIndex >= 0 ? firstContentIndex : 0,
           chosenFilter
         );
         const filteredProducts = response.body.results;
         setFilteredProducts(filteredProducts);
+        setTotalProducts(response.body.total || response.body.count);
+        setProductsPerPage(response.body.limit);
         setProductLoading(false);
       } catch (error) {
         const errorResponse = JSON.parse(
@@ -123,7 +157,16 @@ const BasicCategory: FC<BasicCategoryProps> = (props: BasicCategoryProps) => {
       }
     };
     fetchData();
-  }, [getFilteredItems, chosenFilter, sortingVariant, searchText]);
+  }, [chosenFilter, sortingVariant, searchText, firstContentIndex]);
+
+  useEffect(() => {
+    console.log(3, page);
+  }, [page]);
+
+  useEffect(() => {
+    console.log(4, page);
+    setPage(1);
+  }, [chosenFilter]);
 
   if (!currentCategory) {
     return <NotFoundPage />;
@@ -141,13 +184,25 @@ const BasicCategory: FC<BasicCategoryProps> = (props: BasicCategoryProps) => {
           {isProductLoading ? (
             <TailSpin wrapperClass="loader-spinner" />
           ) : (
-            <Cards
-              products={filteredProducts}
-              sortingVariants={sortingVariant}
-              setSortingVariants={setSortingVariant}
-              setSearchText={setSearchText}
-              setProductId={props.setProductId}
-            />
+            <div>
+              <Cards
+                products={filteredProducts}
+                sortingVariants={sortingVariant}
+                setSortingVariants={setSortingVariant}
+                setSearchText={setSearchText}
+                setProductId={props.setProductId}
+                productNumber={totalProducts}
+              />
+              {filteredProducts.length > 0 && (
+                <Pagination
+                  page={page}
+                  totalPages={totalPages}
+                  nextPage={nextPage}
+                  prevPage={prevPage}
+                  setPage={setPage}
+                />
+              )}
+            </div>
           )}
         </div>
       </div>

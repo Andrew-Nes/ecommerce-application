@@ -15,6 +15,7 @@ interface cardsProps {
   setSortingVariants: Dispatch<SetStateAction<string>>;
   setSearchText: Dispatch<SetStateAction<string>>;
   setProductId: Dispatch<SetStateAction<string>>;
+  productNumber: number;
 }
 
 const Cards: FC<cardsProps> = (props: cardsProps) => {
@@ -22,7 +23,7 @@ const Cards: FC<cardsProps> = (props: cardsProps) => {
   return (
     <div className="cards__wrapper">
       <div className="cards__header">
-        <p className="text">{`${props.products.length} Results`}</p>
+        <p className="text">{`${props.productNumber} Results`}</p>
         <SortForm
           setSorting={props.setSortingVariants}
           sortString={props.sortingVariants}
