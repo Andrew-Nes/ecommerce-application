@@ -8,6 +8,7 @@ const noImagePic = '../../../../assets/img/slider-no-image.jpg';
 
 import { routes } from '../../types/routingTypes';
 import { useNavigate } from 'react-router-dom';
+import ButtonAddRemove from '../ButtonAddRemove/ButtonAddRemove';
 
 interface cardsProps {
   products: ProductProjection[];
@@ -39,10 +40,17 @@ const Cards: FC<cardsProps> = (props: cardsProps) => {
               <div
                 className="card"
                 key={product.id}
-                onClick={() => {
-                  props.setProductId(product.id);
-                  window.localStorage.setItem('id', product.id);
-                  redirect(routes.PRODUCT);
+                onClick={(e) => {
+                  if (
+                    !(
+                      e.target ===
+                      e.currentTarget.getElementsByClassName('cart-button')[0]
+                    )
+                  ) {
+                    props.setProductId(product.id);
+                    window.localStorage.setItem('id', product.id);
+                    redirect(routes.PRODUCT);
+                  }
                 }}
               >
                 <img
@@ -83,6 +91,7 @@ const Cards: FC<cardsProps> = (props: cardsProps) => {
                     </p>
                   )}
                 </div>
+                <ButtonAddRemove id={product.id} />
               </div>
             );
           })
