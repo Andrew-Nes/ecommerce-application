@@ -1,4 +1,4 @@
-.cart-button{
+.cart-button {
   border: none;
   border-radius: 15px;
   margin: 5px auto;
@@ -6,13 +6,13 @@
   background-color: #cba662;
 }
 
-.cart-button.add:hover{
+.cart-button.add:hover {
   background-color: rgb(9, 202, 9);
   cursor: pointer;
   transform: scale(1.1);
 }
 
-.cart-button.remove:hover{
+.cart-button.remove:hover {
   background-color: rgb(225, 82, 82);
   cursor: pointer;
   transform: scale(1.1);

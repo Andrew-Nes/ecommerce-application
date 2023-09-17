@@ -7,7 +7,11 @@ import {
 import { CartUpdateAction } from '@commercetools/platform-sdk';
 import './buttonAddRemove.scss';
 
-const ButtonAddRemove: FC<{ id: string }> = (props) => {
+interface buttonAddRemoveProps {
+  id: string;
+}
+
+const ButtonAddRemove: FC<buttonAddRemoveProps> = (props) => {
   const cartId: string = localStorage.getItem('cartId') || '';
   const [isInCart, setIsInCart] = useState(false);
 
