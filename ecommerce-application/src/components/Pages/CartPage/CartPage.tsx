@@ -17,6 +17,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import MyModal from '../../Modal/MyModal';
 import { toast } from 'react-toastify';
 import { errorsMessage } from '../../../types/formTypes';
+import { useCartContext } from '../../../utils/cartContext';
 
 interface CartPageProp {
   loginStateChange: (newValue: boolean) => void;
@@ -32,6 +33,8 @@ const CartPage: FC<CartPageProp> = () => {
   const [isModalActive, setModalActive] = useState(false);
   const [totalPrice, setTotalPrice] = useState<number>();
   const cartId = window.localStorage.getItem('cartId') || '';
+  const { updateCartContextValue } = useCartContext();
+
   async function setCart() {
     try {
       const cart = await GetActiveCart();
@@ -83,6 +86,7 @@ const CartPage: FC<CartPageProp> = () => {
       window.localStorage.setItem('cartId', newCartId);
       setIsUpdateData(true);
       setModalActive(false);
+      updateCartContextValue(0);
     } catch (error) {
       throw new Error('removeCart');
     }
