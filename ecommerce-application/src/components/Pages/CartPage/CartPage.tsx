@@ -20,6 +20,9 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import MyModal from '../../Modal/MyModal';
 import { toast } from 'react-toastify';
 import { errorsMessage } from '../../../types/formTypes';
+import { Link } from 'react-router-dom';
+import { anchorsText } from '../../../types/elementsText';
+import { routes } from '../../../types/routingTypes';
 
 interface CartPageProp {
   loginStateChange: (newValue: boolean) => void;
@@ -162,7 +165,14 @@ const CartPage: FC<CartPageProp> = () => {
                 />
               );
             })
-          : 'Cart is Empty, here will be a link to the catalog'}
+          : (
+          <div>
+            <span className='empty-cart-text'>The cart is empty, go to the catalog page to buy something!</span>
+            <Link to={routes.CATALOG} className="login__anchor">
+              <span className='link-to-cart-text'>{anchorsText.TO_CATALOG}</span>
+            </Link>
+          </div>
+          )}
       </div>
     </div>
   );
