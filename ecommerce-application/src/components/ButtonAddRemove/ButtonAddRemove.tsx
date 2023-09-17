@@ -2,7 +2,8 @@ import { FC, useEffect, useState } from 'react';
 import {
   AddProductToCart,
   CartUpdateFunction,
-  GetCart,
+  GetActiveCart,
+  //GetCart,
 } from '../../api/apiFunctions';
 import { CartUpdateAction } from '@commercetools/platform-sdk';
 import './buttonAddRemove.scss';
@@ -16,13 +17,13 @@ const ButtonAddRemove: FC<buttonAddRemoveProps> = (props) => {
   const [isInCart, setIsInCart] = useState(false);
 
   const addProduct = async () => {
-    await AddProductToCart(cartId, props.id);
+    await AddProductToCart(/*cartId,*/ props.id);
     setIsInCart(true);
   };
 
   const removeProduct = async () => {
     let lineItemId;
-    await GetCart(cartId).then((resp) => {
+    await GetActiveCart().then((resp) => {
       lineItemId = resp.body.lineItems.find((el) => el.productId === props.id)
         ?.id;
     });
@@ -31,12 +32,12 @@ const ButtonAddRemove: FC<buttonAddRemoveProps> = (props) => {
       lineItemId: lineItemId,
       quantity: 0,
     };
-    CartUpdateFunction(cartId, removeAction);
+    CartUpdateFunction(/*cartId, */removeAction);
     setIsInCart(false);
   };
 
   useEffect(() => {
-    GetCart(cartId).then((resp) => {
+    GetActiveCart().then((resp) => {
       if (resp.body.lineItems.find((el) => el.productId === props.id)) {
         setIsInCart(true);
       }

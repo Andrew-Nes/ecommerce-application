@@ -2,7 +2,8 @@ import { FC, useEffect, useState } from 'react';
 import {
   CartUpdateFunction,
   CreateCart,
-  GetActiveCart,
+ // GetActiveCart,
+  GetCart,
   RemoveCart,
 } from '../../../api/apiFunctions';
 import {
@@ -31,10 +32,12 @@ const CartPage: FC<CartPageProp> = () => {
   const [isUpdateData, setIsUpdateData] = useState(false);
   const [isModalActive, setModalActive] = useState(false);
   const [totalPrice, setTotalPrice] = useState<number>();
-  const cartId = window.localStorage.getItem('cartId') || '';
+  //const cartId = window.localStorage.getItem('cartId') || '';
   async function setCart() {
     try {
-      const cart = await GetActiveCart();
+      //const cart = await GetActiveCart();
+      const cartId = window.localStorage.getItem('cartId') || '';
+      const cart = await GetCart(cartId)
       setCartItems(cart.body);
       setTotalPrice(cart.body.totalPrice.centAmount / 100);
     } catch {
@@ -58,7 +61,7 @@ const CartPage: FC<CartPageProp> = () => {
       code: data.promo,
     };
     try {
-      await CartUpdateFunction(cartId, updateAction);
+      await CartUpdateFunction(/*cartId,*/ updateAction);
       setIsUpdateData(true);
       reset();
     } catch (error) {
@@ -76,8 +79,8 @@ const CartPage: FC<CartPageProp> = () => {
 
   const removeCart = async () => {
     try {
-      const cartId = window.localStorage.getItem('cartId') || '';
-      await RemoveCart(cartId);
+     // const cartId = window.localStorage.getItem('cartId') || '';
+      await RemoveCart(/*cartId*/);
       const newCart = await CreateCart();
       const newCartId = newCart.body.id;
       window.localStorage.setItem('cartId', newCartId);

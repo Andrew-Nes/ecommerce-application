@@ -1,13 +1,14 @@
 import {
-  CartDraft,
+  //CartDraft,
   CartResourceIdentifier,
-  CartUpdate,
-  CartUpdateAction,
+ // CartUpdate,
+ // CartUpdateAction,
   createApiBuilderFromCtpClient,
   CustomerChangePassword,
   CustomerDraft,
   MyCartDraft,
   MyCartUpdate,
+  MyCartUpdateAction,
   MyCustomerUpdate,
 } from '@commercetools/platform-sdk';
 import {
@@ -98,7 +99,7 @@ export const loginClient = async (username: string, password: string) => {
     id: window.localStorage.getItem('cartId') || '',
   };
   try {
-    await getCurrentClient()
+    const response = await getCurrentClient()
       .login()
       .post({
         body: {
@@ -111,6 +112,10 @@ export const loginClient = async (username: string, password: string) => {
       })
       .execute();
     tokenStorage.clear();
+    const cartId = response.body.cart?.id || ''
+    const anonymousId = response.body.cart?.anonymousId || ''
+    window.localStorage.setItem('cartId', cartId)
+    window.localStorage.setItem('anonymousId', anonymousId)
     loggedClient = createClientPasswordFlow(username, password);
   } catch (error) {
     loggedClient = undefined;
@@ -225,20 +230,21 @@ export const getProduct = async (ID: string) => {
 };
 
 export const CreateCart = async () => {
-  const cartDraft: CartDraft = {
+  const cartDraft: MyCartDraft = {
     currency: 'USD',
     country: 'US',
   };
+  loggedClient = undefined;
   const client = getCurrentClient();
   const cart = await client.me().carts().post({ body: cartDraft }).execute();
   return cart;
 };
 
-export const CreateMyCart = async (cartDraft: MyCartDraft) => {
+/*export const CreateMyCart = async (cartDraft: MyCartDraft) => {
   const client = getCurrentClient();
   const cart = await client.me().carts().post({ body: cartDraft }).execute();
   window.localStorage.setItem('cart', cart.body.id);
-};
+};*/
 
 export const GetCart = async (cartId: string) => {
   const client = getCurrentClient();
@@ -255,7 +261,7 @@ export const GetActiveCart = async () => {
   return await client.me().activeCart().get().execute();
 };
 
-export const RemoveCart = async (cartId: string) => {
+/*export const RemoveCart = async (cartId: string) => {
   const cartVersion = (await GetCart(cartId)).body.version;
   const client = getCurrentClient();
   return await client
@@ -264,12 +270,26 @@ export const RemoveCart = async (cartId: string) => {
     .delete({ queryArgs: { version: cartVersion } })
     .execute();
 };
-
-export const AddProductToCart = async (cartId: string, productId: string) => {
-  const cartVersion = (await GetActiveCart()).body.version;
+*/
+export const RemoveCart = async (/*cartId: string*/) => {
+  const activeCart = await GetActiveCart();
+  const activeCartVersion = activeCart.body.version
+  const activeCartId = activeCart.body.id
+  const client = getCurrentClient();
+  return await client
+  .me()
+    .carts()
+    .withId({ ID: activeCartId })
+    .delete({ queryArgs: { version: activeCartVersion } })
+    .execute();
+};
+export const AddProductToCart = async (/*cartId: string, */productId: string) => {
+  const activeCart = await GetActiveCart();
+  const activeCartVersion = activeCart.body.version
+  const activeCartId = activeCart.body.id
 
   const cartUpdate: MyCartUpdate = {
-    version: cartVersion,
+    version: activeCartVersion,
     actions: [
       {
         action: 'addLineItem',
@@ -281,14 +301,14 @@ export const AddProductToCart = async (cartId: string, productId: string) => {
   await client
     .me()
     .carts()
-    .withId({ ID: cartId })
+    .withId({ ID: activeCartId })
     .post({
       body: cartUpdate,
     })
     .execute();
 };
 
-export const CartUpdateFunction = async (
+/*export const CartUpdateFunction = async (
   cartId: string,
   updateAction: CartUpdateAction
 ) => {
@@ -302,6 +322,28 @@ export const CartUpdateFunction = async (
   await client
     .carts()
     .withId({ ID: cartId })
+    .post({
+      body: cartUpdate,
+    })
+    .execute();
+};
+*/
+export const CartUpdateFunction = async (
+  //cartId: string,
+  updateAction: MyCartUpdateAction
+) => {
+  const activeCart = await GetActiveCart();
+  const activeCartVersion = activeCart.body.version
+  const activeCartId = activeCart.body.id
+  const cartUpdate: MyCartUpdate = {
+    version: activeCartVersion,
+    actions: [updateAction],
+  };
+  const client = getCurrentClient();
+  await client
+  .me()
+    .carts()
+    .withId({ ID: activeCartId })
     .post({
       body: cartUpdate,
     })

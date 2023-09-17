@@ -16,7 +16,7 @@ const CartItem: FC<CartItemProps> = (props: CartItemProps) => {
   const itemCount = props.cartItem.quantity;
 
   const removeProduct = async () => {
-    const cartId = window.localStorage.getItem('cartId') || '';
+    //const cartId = window.localStorage.getItem('cartId') || '';
 
     try {
       const updateAction: CartUpdateAction = {
@@ -24,21 +24,21 @@ const CartItem: FC<CartItemProps> = (props: CartItemProps) => {
         lineItemId: props.cartItem.id,
         quantity: 0,
       };
-      await CartUpdateFunction(cartId, updateAction);
+      await CartUpdateFunction(/*cartId,*/ updateAction);
       props.isUpdateData(true);
     } catch {
       throw new Error('changeLineItemQuantity');
     }
   };
   const addProductQuantity = async () => {
-    const cartId = window.localStorage.getItem('cartId') || '';
+   // const cartId = window.localStorage.getItem('cartId') || '';
     const updateAction: CartUpdateAction = {
       action: 'changeLineItemQuantity',
       lineItemId: props.cartItem.id,
       quantity: itemCount + 1,
     };
     try {
-      await CartUpdateFunction(cartId, updateAction);
+      await CartUpdateFunction(/*cartId, */updateAction);
       props.isUpdateData(true);
     } catch {
       throw new Error('changeLineItemQuantity');
@@ -46,14 +46,14 @@ const CartItem: FC<CartItemProps> = (props: CartItemProps) => {
   };
 
   const removedProductQuantity = async () => {
-    const cartId = window.localStorage.getItem('cartId') || '';
+    //const cartId = window.localStorage.getItem('cartId') || '';
     const updateAction: CartUpdateAction = {
       action: 'changeLineItemQuantity',
       lineItemId: props.cartItem.id,
       quantity: itemCount - 1,
     };
     try {
-      await CartUpdateFunction(cartId, updateAction);
+      await CartUpdateFunction(/*cartId, */updateAction);
       props.isUpdateData(true);
     } catch {
       throw new Error('changeLineItemQuantity');
