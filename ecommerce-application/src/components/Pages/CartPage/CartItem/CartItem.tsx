@@ -31,14 +31,14 @@ const CartItem: FC<CartItemProps> = (props: CartItemProps) => {
     }
   };
   const addProductQuantity = async () => {
-   // const cartId = window.localStorage.getItem('cartId') || '';
+    // const cartId = window.localStorage.getItem('cartId') || '';
     const updateAction: CartUpdateAction = {
       action: 'changeLineItemQuantity',
       lineItemId: props.cartItem.id,
       quantity: itemCount + 1,
     };
     try {
-      await CartUpdateFunction(/*cartId, */updateAction);
+      await CartUpdateFunction(/*cartId, */ updateAction);
       props.isUpdateData(true);
     } catch {
       throw new Error('changeLineItemQuantity');
@@ -53,7 +53,7 @@ const CartItem: FC<CartItemProps> = (props: CartItemProps) => {
       quantity: itemCount - 1,
     };
     try {
-      await CartUpdateFunction(/*cartId, */updateAction);
+      await CartUpdateFunction(/*cartId, */ updateAction);
       props.isUpdateData(true);
     } catch {
       throw new Error('changeLineItemQuantity');

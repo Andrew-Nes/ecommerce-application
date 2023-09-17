@@ -17,7 +17,7 @@ import tokenStorage from '../../api/tokenStorage';
 const Header: FC<loginStateChangeProp> = ({ loginStateChange }) => {
   const isLoggedIn = useContext(LogInContext);
   const redirect = useNavigate();
-  
+
   async function createNewCart() {
     try {
       const cart = await CreateCart();
@@ -32,8 +32,8 @@ const Header: FC<loginStateChangeProp> = ({ loginStateChange }) => {
     window.localStorage.removeItem('token');
     window.localStorage.removeItem('IsLoggedIn');
     window.localStorage.removeItem('cartId');
-    tokenStorage.clear()
-    createNewCart()
+    tokenStorage.clear();
+    createNewCart();
     redirect(routes.MAIN);
   };
   const path = useLocation();

@@ -32,7 +32,7 @@ const ButtonAddRemove: FC<buttonAddRemoveProps> = (props) => {
       lineItemId: lineItemId,
       quantity: 0,
     };
-    CartUpdateFunction(/*cartId, */removeAction);
+    CartUpdateFunction(/*cartId, */ removeAction);
     setIsInCart(false);
   };
 

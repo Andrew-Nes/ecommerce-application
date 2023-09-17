@@ -2,7 +2,7 @@ import { FC, useEffect, useState } from 'react';
 import {
   CartUpdateFunction,
   CreateCart,
- // GetActiveCart,
+  // GetActiveCart,
   GetCart,
   RemoveCart,
 } from '../../../api/apiFunctions';
@@ -37,7 +37,7 @@ const CartPage: FC<CartPageProp> = () => {
     try {
       //const cart = await GetActiveCart();
       const cartId = window.localStorage.getItem('cartId') || '';
-      const cart = await GetCart(cartId)
+      const cart = await GetCart(cartId);
       setCartItems(cart.body);
       setTotalPrice(cart.body.totalPrice.centAmount / 100);
     } catch {
@@ -79,7 +79,7 @@ const CartPage: FC<CartPageProp> = () => {
 
   const removeCart = async () => {
     try {
-     // const cartId = window.localStorage.getItem('cartId') || '';
+      // const cartId = window.localStorage.getItem('cartId') || '';
       await RemoveCart(/*cartId*/);
       const newCart = await CreateCart();
       const newCartId = newCart.body.id;
