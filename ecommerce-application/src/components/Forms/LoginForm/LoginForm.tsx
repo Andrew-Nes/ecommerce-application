@@ -55,7 +55,9 @@ const LoginForm: FC<LoginProps> = ({ logIn }) => {
     clearErrors();
 
     try {
-      await loginClient(data.email, data.password);
+      const response = await loginClient(data.email, data.password);
+      window.localStorage.setItem('cartId', response.body.cart?.id || '')
+      window.localStorage.setItem('anonymousId', response.body.cart?.anonymousId || '')
       logIn();
       reset();
       toast.success(popupText.LOGIN_SUCCESS, {

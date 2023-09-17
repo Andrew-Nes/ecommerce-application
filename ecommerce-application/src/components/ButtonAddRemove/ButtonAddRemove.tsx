@@ -2,6 +2,7 @@ import { FC, useEffect, useState } from 'react';
 import {
   AddProductToCart,
   CartUpdateFunction,
+  GetActiveCart,
   GetCart,
 } from '../../api/apiFunctions';
 import { CartUpdateAction } from '@commercetools/platform-sdk';
@@ -18,7 +19,7 @@ const ButtonAddRemove: FC<{ id: string }> = (props) => {
 
   const removeProduct = async () => {
     let lineItemId;
-    await GetCart(cartId).then((resp) => {
+    await GetActiveCart().then((resp) => {
       lineItemId = resp.body.lineItems.find((el) => el.productId === props.id)
         ?.id;
     });

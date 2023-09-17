@@ -98,7 +98,7 @@ export const loginClient = async (username: string, password: string) => {
     id: window.localStorage.getItem('cartId') || '',
   };
   try {
-    await getCurrentClient()
+    const response = await getCurrentClient()
       .login()
       .post({
         body: {
@@ -112,6 +112,7 @@ export const loginClient = async (username: string, password: string) => {
       .execute();
     tokenStorage.clear();
     loggedClient = createClientPasswordFlow(username, password);
+    return response
   } catch (error) {
     loggedClient = undefined;
     throw error;
