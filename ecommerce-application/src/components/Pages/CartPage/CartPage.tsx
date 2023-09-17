@@ -154,25 +154,29 @@ const CartPage: FC<CartPageProp> = () => {
         </form>
       </div>
       <div className="cartItems-wrapper">
-        {cartItems?.lineItems.length
-          ? cartItems.lineItems.map((item, index) => {
-              return (
-                <CartItem
-                  cartItem={item}
-                  index={index}
-                  key={index}
-                  isUpdateData={setIsUpdateData}
-                />
-              );
-            })
-          : (
+        {cartItems?.lineItems.length ? (
+          cartItems.lineItems.map((item, index) => {
+            return (
+              <CartItem
+                cartItem={item}
+                index={index}
+                key={index}
+                isUpdateData={setIsUpdateData}
+              />
+            );
+          })
+        ) : (
           <div>
-            <span className='empty-cart-text'>The cart is empty, go to the catalog page to buy something!</span>
+            <span className="empty-cart-text">
+              The cart is empty, go to the catalog page to buy something!
+            </span>
             <Link to={routes.CATALOG} className="login__anchor">
-              <span className='link-to-cart-text'>{anchorsText.TO_CATALOG}</span>
+              <span className="link-to-cart-text">
+                {anchorsText.TO_CATALOG}
+              </span>
             </Link>
           </div>
-          )}
+        )}
       </div>
     </div>
   );
