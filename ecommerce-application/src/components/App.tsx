@@ -51,14 +51,13 @@ const App: FC = () => {
     }
   }
 
-
   /* eslint-disable react-hooks/exhaustive-deps*/
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await getCategories();
         const responseDiscount = await GetDiscount();
-        const discountCodes = responseDiscount.body.results
+        const discountCodes = responseDiscount.body.results;
         const allCategories = response.body.results;
         const mainCategories = allCategories.filter(
           (category) => !category.parent
@@ -91,7 +90,10 @@ const App: FC = () => {
         <Header loginStateChange={logInStateChange} />
         <ToastContainer />
         <Routes>
-          <Route path="/" element={<MainPage discountCodes={discountCodes}/>} />
+          <Route
+            path="/"
+            element={<MainPage discountCodes={discountCodes} />}
+          />
           <Route
             path="login"
             element={<LoginPage loginStateChange={logInStateChange} />}

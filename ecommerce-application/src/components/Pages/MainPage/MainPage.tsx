@@ -10,13 +10,11 @@ import './mainPage.scss';
 import DiscountCodeCard from './DiscountCodeCard/DiscountCodeCard';
 import { DiscountCode } from '@commercetools/platform-sdk';
 
-
 type MainPageProps = {
-  discountCodes: DiscountCode[] | undefined
-}
+  discountCodes: DiscountCode[] | undefined;
+};
 
 const MainPage: FC<MainPageProps> = (props) => {
-
   return (
     <main className="main main-page">
       <div className="wrapper main-page__wrapper">
