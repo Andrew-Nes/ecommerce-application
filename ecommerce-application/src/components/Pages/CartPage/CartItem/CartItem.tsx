@@ -1,4 +1,4 @@
-import { CartUpdateAction, LineItem } from '@commercetools/platform-sdk';
+import { LineItem, MyCartUpdateAction } from '@commercetools/platform-sdk';
 import './CartItem.scss';
 import { CartUpdateFunction } from '../../../../api/apiFunctions';
 import { Dispatch, FC, SetStateAction } from 'react';
@@ -16,29 +16,26 @@ const CartItem: FC<CartItemProps> = (props: CartItemProps) => {
   const itemCount = props.cartItem.quantity;
 
   const removeProduct = async () => {
-    //const cartId = window.localStorage.getItem('cartId') || '';
-
     try {
-      const updateAction: CartUpdateAction = {
+      const updateAction: MyCartUpdateAction = {
         action: 'changeLineItemQuantity',
         lineItemId: props.cartItem.id,
         quantity: 0,
       };
-      await CartUpdateFunction(/*cartId,*/ updateAction);
+      await CartUpdateFunction(updateAction);
       props.isUpdateData(true);
     } catch {
       throw new Error('changeLineItemQuantity');
     }
   };
   const addProductQuantity = async () => {
-    // const cartId = window.localStorage.getItem('cartId') || '';
-    const updateAction: CartUpdateAction = {
+    const updateAction: MyCartUpdateAction = {
       action: 'changeLineItemQuantity',
       lineItemId: props.cartItem.id,
       quantity: itemCount + 1,
     };
     try {
-      await CartUpdateFunction(/*cartId, */ updateAction);
+      await CartUpdateFunction(updateAction);
       props.isUpdateData(true);
     } catch {
       throw new Error('changeLineItemQuantity');
@@ -46,14 +43,13 @@ const CartItem: FC<CartItemProps> = (props: CartItemProps) => {
   };
 
   const removedProductQuantity = async () => {
-    //const cartId = window.localStorage.getItem('cartId') || '';
-    const updateAction: CartUpdateAction = {
+    const updateAction: MyCartUpdateAction = {
       action: 'changeLineItemQuantity',
       lineItemId: props.cartItem.id,
       quantity: itemCount - 1,
     };
     try {
-      await CartUpdateFunction(/*cartId, */ updateAction);
+      await CartUpdateFunction(updateAction);
       props.isUpdateData(true);
     } catch {
       throw new Error('changeLineItemQuantity');

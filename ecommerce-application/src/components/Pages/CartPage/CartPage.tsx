@@ -3,16 +3,14 @@ import {
   CartUpdateFunction,
   CreateCart,
   GetActiveCart,
-  // GetActiveCart,
-  //GetCart,
   RemoveCart,
 } from '../../../api/apiFunctions';
 import {
   Cart,
-  CartUpdateAction,
   ClientResponse,
   ErrorResponse,
   LineItem,
+  MyCartUpdateAction,
 } from '@commercetools/platform-sdk';
 import CartItem from './CartItem/CartItem';
 import './CartPage.scss';
@@ -46,11 +44,8 @@ const CartPage: FC<CartPageProp> = () => {
   const [totalPrice, setTotalPrice] = useState<number>();
   const [totalDiscountPrice, setTotalDiscountPrice] = useState<number>();
 
-  //const cartId = window.localStorage.getItem('cartId') || '';
   async function setCart() {
     try {
-      //const cart = await GetActiveCart();
-      //const cartId = window.localStorage.getItem('cartId') || '';
       const cart = await GetActiveCart();
       const cartDiscountPrice = getLineItemsPrice(cart.body.lineItems) / 100;
       setCartItems(cart.body);
@@ -72,12 +67,12 @@ const CartPage: FC<CartPageProp> = () => {
     mode: 'all',
   });
   const onSubmit: SubmitHandler<PromoFormData> = async (data) => {
-    const updateAction: CartUpdateAction = {
+    const updateAction: MyCartUpdateAction = {
       action: 'addDiscountCode',
       code: data.promo,
     };
     try {
-      await CartUpdateFunction(/*cartId,*/ updateAction);
+      await CartUpdateFunction(updateAction);
       setIsUpdateData(true);
       reset();
     } catch (error) {
@@ -95,8 +90,7 @@ const CartPage: FC<CartPageProp> = () => {
 
   const removeCart = async () => {
     try {
-      // const cartId = window.localStorage.getItem('cartId') || '';
-      await RemoveCart(/*cartId*/);
+      await RemoveCart();
       const newCart = await CreateCart();
       const newCartId = newCart.body.id;
       window.localStorage.setItem('cartId', newCartId);
