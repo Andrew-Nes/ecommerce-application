@@ -8,10 +8,11 @@ import NotFoundPage from './Pages/NotFoundPage/NotFoundPage';
 import RegistrationPage from './Pages/RegistrationPage/RegistrationPage';
 import ProfilePage from './Pages/ProfilePage/ProfilePage';
 import CatalogPage from './Pages/CatalogPage/CatalogPage';
-import { CreateCart, getCategories } from '../api/apiFunctions';
+import { CreateCart, GetDiscount, getCategories } from '../api/apiFunctions';
 import {
   Category,
   ClientResponse,
+  DiscountCode,
   ErrorResponse,
 } from '@commercetools/platform-sdk';
 import BasicCatalog from './Catalog/CatalogElements/BasicCatalog';
@@ -41,7 +42,7 @@ const App: FC = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(
     window.localStorage.getItem('isLoggedIn') === 'true' || false
   );
-
+  const [discountCodes, setDiscountCodes] = useState<DiscountCode[]>();
   const [basicCategories, setBasicCategories] = useState<Category[]>([]);
   const [subCategories, setSubCategories] = useState<Category[]>([]);
   const [productId, setProductId] = useState<string>(
@@ -52,10 +53,10 @@ const App: FC = () => {
     setIsLoggedIn(newValue);
     window.localStorage.setItem('isLoggedIn', newValue.toString());
   }
+
   async function createNewCart() {
     try {
       const cart = await CreateCart();
-      window.localStorage.setItem('anonymousId', cart.body.anonymousId || '');
       window.localStorage.setItem('cartId', cart.body.id);
     } catch {
       throw new Error('crateNewCart');
@@ -67,6 +68,8 @@ const App: FC = () => {
     const fetchData = async () => {
       try {
         const response = await getCategories();
+        const responseDiscount = await GetDiscount();
+        const discountCodes = responseDiscount.body.results;
         const allCategories = response.body.results;
         const mainCategories = allCategories.filter(
           (category) => !category.parent
@@ -74,6 +77,7 @@ const App: FC = () => {
         const childCategories = allCategories.filter(
           (category) => category.parent
         );
+        setDiscountCodes(discountCodes);
         setBasicCategories(mainCategories);
         setSubCategories(childCategories);
         if (!window.localStorage.getItem('cartId')) {
@@ -101,7 +105,10 @@ const App: FC = () => {
           <Header loginStateChange={logInStateChange} />
           <ToastContainer />
           <Routes>
-            <Route path="/" element={<MainPage />} />
+            <Route
+              path="/"
+              element={<MainPage discountCodes={discountCodes} />}
+            />
             <Route
               path="login"
               element={<LoginPage loginStateChange={logInStateChange} />}

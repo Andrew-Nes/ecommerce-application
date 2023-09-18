@@ -1,13 +1,14 @@
 import {
-  CartDraft,
+  //CartDraft,
   CartResourceIdentifier,
-  CartUpdate,
-  CartUpdateAction,
+  // CartUpdate,
+  // CartUpdateAction,
   createApiBuilderFromCtpClient,
   CustomerChangePassword,
   CustomerDraft,
   MyCartDraft,
   MyCartUpdate,
+  MyCartUpdateAction,
   MyCustomerUpdate,
 } from '@commercetools/platform-sdk';
 import {
@@ -34,14 +35,6 @@ function createClientPasswordFlow(
   });
   return apiRoot;
 }
-
-// function createClientCredentialFlow(): ByProjectKeyRequestBuilder {
-//   const client = getAuthClient();
-//   const apiRoot = createApiBuilderFromCtpClient(client).withProjectKey({
-//     projectKey,
-//   });
-//   return apiRoot;
-// }
 
 function createAnonymousFlow() {
   const client = getAnonymousAuthClient();
@@ -72,33 +65,13 @@ function getCurrentClient() {
   return createAnonymousFlow();
 }
 
-/*export const loginClient = async (username: string, password: string) => {
-  tokenStorage.clear();
-  loggedClient = createClientPasswordFlow(username, password);
-  try {
-    await loggedClient
-      .me()
-      .login()
-      .post({
-        body: {
-          email: username,
-          password: password,
-        },
-      })
-      .execute();
-  } catch (error) {
-    loggedClient = undefined;
-    throw error;
-  }
-};*/
-
 export const loginClient = async (username: string, password: string) => {
   const anonCart: CartResourceIdentifier = {
     typeId: 'cart',
     id: window.localStorage.getItem('cartId') || '',
   };
   try {
-    await getCurrentClient()
+    const response = await getCurrentClient()
       .login()
       .post({
         body: {
@@ -111,6 +84,10 @@ export const loginClient = async (username: string, password: string) => {
       })
       .execute();
     tokenStorage.clear();
+    const cartId = response.body.cart?.id || '';
+    const anonymousId = response.body.cart?.anonymousId || '';
+    window.localStorage.setItem('cartId', cartId);
+    window.localStorage.setItem('anonymousId', anonymousId);
     loggedClient = createClientPasswordFlow(username, password);
   } catch (error) {
     loggedClient = undefined;
@@ -228,19 +205,16 @@ export const getProduct = async (ID: string) => {
 };
 
 export const CreateCart = async () => {
-  const cartDraft: CartDraft = {
+  const cartDraft: MyCartDraft = {
     currency: 'USD',
     country: 'US',
   };
+  if (window.localStorage.getItem('isLoggedIn') !== 'true') {
+    loggedClient = undefined;
+  }
   const client = getCurrentClient();
   const cart = await client.me().carts().post({ body: cartDraft }).execute();
   return cart;
-};
-
-export const CreateMyCart = async (cartDraft: MyCartDraft) => {
-  const client = getCurrentClient();
-  const cart = await client.me().carts().post({ body: cartDraft }).execute();
-  window.localStorage.setItem('cart', cart.body.id);
 };
 
 export const GetCart = async (cartId: string) => {
@@ -248,31 +222,31 @@ export const GetCart = async (cartId: string) => {
   return await client.carts().withId({ ID: cartId }).get().execute();
 };
 
-/*export const GetCart = async () => {
-  const client = getCurrentClient();
-  return await client.me().carts().get().execute()
-};*/
-
 export const GetActiveCart = async () => {
   const client = getCurrentClient();
   return await client.me().activeCart().get().execute();
 };
 
-export const RemoveCart = async (cartId: string) => {
-  const cartVersion = (await GetCart(cartId)).body.version;
+export const RemoveCart = async () => {
+  const activeCart = await GetActiveCart();
+  const activeCartVersion = activeCart.body.version;
+  const activeCartId = activeCart.body.id;
   const client = getCurrentClient();
   return await client
+    .me()
     .carts()
-    .withId({ ID: cartId })
-    .delete({ queryArgs: { version: cartVersion } })
+    .withId({ ID: activeCartId })
+    .delete({ queryArgs: { version: activeCartVersion } })
     .execute();
 };
 
-export const AddProductToCart = async (cartId: string, productId: string) => {
-  const cartVersion = (await GetActiveCart()).body.version;
+export const AddProductToCart = async (productId: string) => {
+  const activeCart = await GetActiveCart();
+  const activeCartVersion = activeCart.body.version;
+  const activeCartId = activeCart.body.id;
 
   const cartUpdate: MyCartUpdate = {
-    version: cartVersion,
+    version: activeCartVersion,
     actions: [
       {
         action: 'addLineItem',
@@ -284,29 +258,33 @@ export const AddProductToCart = async (cartId: string, productId: string) => {
   await client
     .me()
     .carts()
-    .withId({ ID: cartId })
+    .withId({ ID: activeCartId })
     .post({
       body: cartUpdate,
     })
     .execute();
 };
 
-export const CartUpdateFunction = async (
-  cartId: string,
-  updateAction: CartUpdateAction
-) => {
-  const cartVersion = (await GetCart(cartId)).body.version;
-
-  const cartUpdate: CartUpdate = {
-    version: cartVersion,
+export const CartUpdateFunction = async (updateAction: MyCartUpdateAction) => {
+  const activeCart = await GetActiveCart();
+  const activeCartVersion = activeCart.body.version;
+  const activeCartId = activeCart.body.id;
+  const cartUpdate: MyCartUpdate = {
+    version: activeCartVersion,
     actions: [updateAction],
   };
   const client = getCurrentClient();
   await client
+    .me()
     .carts()
-    .withId({ ID: cartId })
+    .withId({ ID: activeCartId })
     .post({
       body: cartUpdate,
     })
     .execute();
+};
+
+export const GetDiscount = async () => {
+  const client = getCurrentClient();
+  return await client.discountCodes().get().execute();
 };

@@ -11,17 +11,32 @@ import './header.scss';
 import ProfileIcon from '../../../assets/img/user-profile.svg';
 import RedirectIcon from '../RedirectButton/RedirectIcon';
 import CartIcon from '../../../assets/img/shopping-cart.svg';
+import { CreateCart } from '../../api/apiFunctions';
+import tokenStorage from '../../api/tokenStorage';
 import { useCartContext } from '../../utils/cartContext';
 
 const Header: FC<loginStateChangeProp> = ({ loginStateChange }) => {
   const { cartContextValue } = useCartContext();
   const isLoggedIn = useContext(LogInContext);
   const redirect = useNavigate();
+
+  async function createNewCart() {
+    try {
+      const cart = await CreateCart();
+      window.localStorage.setItem('anonymousId', cart.body.anonymousId || '');
+      window.localStorage.setItem('cartId', cart.body.id);
+    } catch {
+      throw new Error('crateNewCart');
+    }
+  }
   const logout = () => {
     loginStateChange(false);
     window.localStorage.removeItem('token');
     window.localStorage.removeItem('IsLoggedIn');
     window.localStorage.removeItem('cartId');
+    window.localStorage.removeItem('anonymousId');
+    tokenStorage.clear();
+    createNewCart();
     redirect(routes.MAIN);
   };
   const path = useLocation();

@@ -2,7 +2,7 @@ import { FC, useEffect, useState } from 'react';
 import {
   AddProductToCart,
   CartUpdateFunction,
-  GetCart,
+  GetActiveCart,
 } from '../../api/apiFunctions';
 import { CartUpdateAction } from '@commercetools/platform-sdk';
 import './buttonAddRemove.scss';
@@ -14,18 +14,17 @@ interface buttonAddRemoveProps {
 
 const ButtonAddRemove: FC<buttonAddRemoveProps> = (props) => {
   const { cartContextValue, updateCartContextValue } = useCartContext();
-  const cartId: string = localStorage.getItem('cartId') || '';
   const [isInCart, setIsInCart] = useState(false);
 
   const addProduct = async () => {
-    await AddProductToCart(cartId, props.id);
+    await AddProductToCart(props.id);
     setIsInCart(true);
     updateCartContextValue(cartContextValue + 1);
   };
 
   const removeProduct = async () => {
     let lineItemId;
-    await GetCart(cartId).then((resp) => {
+    await GetActiveCart().then((resp) => {
       lineItemId = resp.body.lineItems.find((el) => el.productId === props.id)
         ?.id;
     });
@@ -35,13 +34,13 @@ const ButtonAddRemove: FC<buttonAddRemoveProps> = (props) => {
       lineItemId: lineItemId,
       quantity: 0,
     };
-    CartUpdateFunction(cartId, removeAction);
+    CartUpdateFunction(removeAction);
     setIsInCart(false);
     updateCartContextValue(cartContextValue - 1);
   };
 
   useEffect(() => {
-    GetCart(cartId).then((resp) => {
+    GetActiveCart().then((resp) => {
       if (resp.body.lineItems.find((el) => el.productId === props.id)) {
         setIsInCart(true);
         updateCartContextValue(resp.body.lineItems.length);

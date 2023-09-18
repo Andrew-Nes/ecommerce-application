@@ -17,6 +17,7 @@ enum anchorsText {
   PROFILE = 'Profile',
   ABOUT = 'About us',
   CART = 'Cart',
+  TO_CATALOG = 'To catalog page!',
 }
 
 enum logoText {

@@ -7,8 +7,14 @@ import {
 import { routes } from '../../../types/routingTypes';
 import RedirectButton from '../../RedirectButton/RedirectButton';
 import './mainPage.scss';
+import DiscountCodeCard from './DiscountCodeCard/DiscountCodeCard';
+import { DiscountCode } from '@commercetools/platform-sdk';
 
-const MainPage: FC = () => {
+type MainPageProps = {
+  discountCodes: DiscountCode[] | undefined;
+};
+
+const MainPage: FC<MainPageProps> = (props) => {
   return (
     <main className="main main-page">
       <div className="wrapper main-page__wrapper">
@@ -28,6 +34,15 @@ const MainPage: FC = () => {
               route={routes.LOGIN}
               text={buttonsText.LOGIN}
             />
+          </div>
+          <div className="discount-codes__container">
+            {props.discountCodes
+              ? props.discountCodes.map((code, index) => {
+                  if (code.isActive) {
+                    return <DiscountCodeCard key={index} discountCode={code} />;
+                  }
+                })
+              : ''}
           </div>
         </div>
       </div>
