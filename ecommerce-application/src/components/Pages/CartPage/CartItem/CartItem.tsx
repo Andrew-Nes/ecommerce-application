@@ -1,7 +1,7 @@
 import { LineItem, MyCartUpdateAction } from '@commercetools/platform-sdk';
 import './CartItem.scss';
 import { CartUpdateFunction } from '../../../../api/apiFunctions';
-import { Dispatch, FC, SetStateAction } from 'react';
+import { Dispatch, FC, SetStateAction, useState } from 'react';
 interface CartItemProps {
   cartItem: LineItem;
   index: number;
@@ -10,6 +10,7 @@ interface CartItemProps {
 }
 
 const CartItem: FC<CartItemProps> = (props: CartItemProps) => {
+  const [isLoad, setLoad] = useState(false);
   const itemName = Object.values(props.cartItem.name)[0];
   const itemImage = props.cartItem.variant.images?.[0].url;
   const itemPrice = props.cartItem.price.value.centAmount / 100;
@@ -17,6 +18,7 @@ const CartItem: FC<CartItemProps> = (props: CartItemProps) => {
 
   const removeProduct = async () => {
     try {
+      setLoad(true)
       const updateAction: MyCartUpdateAction = {
         action: 'changeLineItemQuantity',
         lineItemId: props.cartItem.id,
@@ -27,8 +29,12 @@ const CartItem: FC<CartItemProps> = (props: CartItemProps) => {
     } catch {
       throw new Error('changeLineItemQuantity');
     }
+    finally{
+      setLoad(false)
+    }
   };
   const addProductQuantity = async () => {
+    setLoad(true)
     const updateAction: MyCartUpdateAction = {
       action: 'changeLineItemQuantity',
       lineItemId: props.cartItem.id,
@@ -40,9 +46,13 @@ const CartItem: FC<CartItemProps> = (props: CartItemProps) => {
     } catch {
       throw new Error('changeLineItemQuantity');
     }
+    finally{
+      setLoad(false)
+    }
   };
 
   const removedProductQuantity = async () => {
+    setLoad(true)
     const updateAction: MyCartUpdateAction = {
       action: 'changeLineItemQuantity',
       lineItemId: props.cartItem.id,
@@ -53,6 +63,9 @@ const CartItem: FC<CartItemProps> = (props: CartItemProps) => {
       props.isUpdateData(true);
     } catch {
       throw new Error('changeLineItemQuantity');
+    }
+    finally{
+      setLoad(false)
     }
   };
 
@@ -70,12 +83,12 @@ const CartItem: FC<CartItemProps> = (props: CartItemProps) => {
         <button
           className="count-button"
           onClick={removedProductQuantity}
-          disabled={itemCount < 2}
+          disabled={itemCount < 2 || isLoad}
         >
           -
         </button>
         <span className="count-element">{itemCount}</span>
-        <button className="count-button" onClick={addProductQuantity}>
+        <button className="count-button" onClick={addProductQuantity} disabled={isLoad}>
           +
         </button>
       </div>

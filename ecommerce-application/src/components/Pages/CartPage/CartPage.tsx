@@ -38,6 +38,7 @@ const getLineItemsPrice = (lineItems: LineItem[]) => {
 };
 
 const CartPage: FC<CartPageProp> = () => {
+  const [isLoad, setLoad] = useState(false);
   const [cartItems, setCartItems] = useState<Cart | undefined>();
   const [isUpdateData, setIsUpdateData] = useState(false);
   const [isModalActive, setModalActive] = useState(false);
@@ -67,6 +68,7 @@ const CartPage: FC<CartPageProp> = () => {
     mode: 'all',
   });
   const onSubmit: SubmitHandler<PromoFormData> = async (data) => {
+    setLoad(true)
     const updateAction: MyCartUpdateAction = {
       action: 'addDiscountCode',
       code: data.promo,
@@ -86,9 +88,14 @@ const CartPage: FC<CartPageProp> = () => {
         });
       }
     }
+    finally {
+      setLoad(false)
+    }
+
   };
 
   const removeCart = async () => {
+    setLoad(true)
     try {
       await RemoveCart();
       const newCart = await CreateCart();
@@ -99,6 +106,9 @@ const CartPage: FC<CartPageProp> = () => {
     } catch (error) {
       throw new Error('removeCart');
     }
+    finally{
+      setLoad(false)
+    }
   };
 
   return (
@@ -107,7 +117,7 @@ const CartPage: FC<CartPageProp> = () => {
         <div className="delete-cart-modal">
           <h3>Delete current cart?</h3>
           <div className="delete-cart-button__container">
-            <button className="cart_button" onClick={removeCart}>
+            <button className="cart_button" onClick={removeCart} disabled={isLoad}>
               ОК
             </button>
             <button
@@ -143,7 +153,7 @@ const CartPage: FC<CartPageProp> = () => {
           <h3>Promo code:</h3>
           <form className="promo-form" onSubmit={handleSubmit(onSubmit)}>
             <input type="text" {...register('promo')} />
-            <button className="cart_button" type="submit">
+            <button className="cart_button" type="submit" disabled={isLoad}>
               Apply
             </button>
           </form>

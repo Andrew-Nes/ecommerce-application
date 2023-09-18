@@ -17,7 +17,6 @@ const MainPage: FC = () => {
   const getDiscounts = async () => {
     const response = await GetDiscount();
     const discountCodes = response.body.results;
-    console.log(discountCodes);
     setDiscountCodes(discountCodes);
   };
   useEffect(() => {
