@@ -21,6 +21,7 @@ import Subcategory from './Catalog/CategoryElements/Subcategory';
 import ProductPage from './Pages/ProductPage/ProductPage';
 import { serviceErrors } from '../types/formTypes';
 import { reloadPage } from '../utils/apiHelpers';
+import AboutPage from './Pages/AboutPage/AboutPage';
 import CartPage from './Pages/CartPage/CartPage';
 import { CartContextProps } from '../utils/cartContext';
 
@@ -154,6 +155,7 @@ const App: FC = () => {
               </Route>
             </Route>
             <Route path="product" element={<ProductPage id={productId} />} />
+            <Route path="about" element={<AboutPage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </BrowserRouter>

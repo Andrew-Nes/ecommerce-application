@@ -15,6 +15,7 @@ enum anchorsText {
   LOGIN_CLICK = 'Click to login',
   NOT_FOUND_CLICK = 'Go back to main',
   PROFILE = 'Profile',
+  ABOUT = 'About us',
   CART = 'Cart',
 }
 
@@ -31,6 +32,7 @@ enum headingText {
   BILLING_ADDRESS_FORM = 'Billing address',
   NOT_FOUND_PAGE_HEADING = 'Oops! Something went wrong',
   NOT_FOUND_PRODUCT_HEADING = 'What a Cat-astrophe!',
+  ABOUT_PAGE_HEADING = 'Meet our developers!',
 }
 
 enum paragraphText {
