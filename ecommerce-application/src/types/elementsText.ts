@@ -3,6 +3,9 @@ enum buttonsText {
   LOGOUT = 'logout',
   SIGNUP = 'sign up',
   REGISTER = 'register',
+  ADD_TO_CART = 'add to cart',
+  REMOVE_FROM_CART = 'remove from cart',
+  REMOVE_CART = 'remove cart',
 }
 
 enum anchorsText {
@@ -15,7 +18,9 @@ enum anchorsText {
   LOGIN_CLICK = 'Click to login',
   NOT_FOUND_CLICK = 'Go back to main',
   PROFILE = 'Profile',
+  ABOUT = 'About us',
   CART = 'Cart',
+  TO_CATALOG = 'To catalog page!',
 }
 
 enum logoText {
@@ -31,6 +36,7 @@ enum headingText {
   BILLING_ADDRESS_FORM = 'Billing address',
   NOT_FOUND_PAGE_HEADING = 'Oops! Something went wrong',
   NOT_FOUND_PRODUCT_HEADING = 'What a Cat-astrophe!',
+  ABOUT_PAGE_HEADING = 'Meet our developers!',
 }
 
 enum paragraphText {

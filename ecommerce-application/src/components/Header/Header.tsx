@@ -1,32 +1,42 @@
-import { FC, useContext, useEffect } from 'react';
-import { useNavigate, useLocation, Link } from 'react-router-dom';
+import { FC, useContext } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import { anchorsText, buttonsText, logoText } from '../../types/elementsText';
 import { loginStateChangeProp, routes } from '../../types/routingTypes';
 import { LogInContext } from '../App';
 import RedirectButton from '../RedirectButton/RedirectButton';
 import BurgerMenu from './BurgerMenu/BurgerMenu';
-// import HeaderMini from './HeaderMini';
 import Logo from '../../../assets/img/shopLogo.png';
 import './header.scss';
 import ProfileIcon from '../../../assets/img/user-profile.svg';
 import RedirectIcon from '../RedirectButton/RedirectIcon';
 import CartIcon from '../../../assets/img/shopping-cart.svg';
+import { CreateCart } from '../../api/apiFunctions';
+import tokenStorage from '../../api/tokenStorage';
 import { useCartContext } from '../../utils/cartContext';
 
 const Header: FC<loginStateChangeProp> = ({ loginStateChange }) => {
-  const { cartContextValue } = useCartContext();
+  const { cartContextValue, updateCartContextValue } = useCartContext();
   const isLoggedIn = useContext(LogInContext);
   const redirect = useNavigate();
-  const logout = () => {
+
+  async function createNewCart() {
+    try {
+      const cart = await CreateCart();
+      window.localStorage.setItem('cartId', cart.body.id);
+    } catch {
+      throw new Error('crateNewCart');
+    }
+  }
+  const logout = async () => {
     loginStateChange(false);
     window.localStorage.removeItem('token');
     window.localStorage.removeItem('IsLoggedIn');
     window.localStorage.removeItem('cartId');
+    tokenStorage.clear();
+    await createNewCart();
+    updateCartContextValue(0);
     redirect(routes.MAIN);
   };
-  const path = useLocation();
-
-  useEffect(() => {}, [path]);
   return (
     <header className="header">
       <div className="wrapper header__wrapper">
@@ -41,6 +51,11 @@ const Header: FC<loginStateChangeProp> = ({ loginStateChange }) => {
               <li className="list__item" key="catalog">
                 <Link className="list__link" to={routes.CATALOG}>
                   {anchorsText.CATALOG}
+                </Link>
+              </li>
+              <li className="list__item" key="about">
+                <Link className="list__link" to={routes.ABOUT}>
+                  {anchorsText.ABOUT}
                 </Link>
               </li>
             </ul>
@@ -96,9 +111,6 @@ const Header: FC<loginStateChangeProp> = ({ loginStateChange }) => {
       </div>
     </header>
   );
-  // } else {
-  //   return <HeaderMini />;
-  // }
 };
 
 export default Header;

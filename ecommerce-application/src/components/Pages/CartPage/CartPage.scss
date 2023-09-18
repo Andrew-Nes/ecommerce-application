@@ -40,9 +40,13 @@
 }
 
 .promo-code__container {
-  width: fit-content;
+  max-width: 450px;
   border: 2px solid black;
   padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+.promo-code__form {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -57,7 +61,38 @@
   display: flex;
   gap: 10px;
 }
-.cart-total-price {
+.cart-total-price,
+.total-discount-price,
+.total-price {
   font-size: 20px;
   font-weight: 500;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.total-discount-price {
+  color: red;
+}
+.inactive {
+  opacity: 0.6;
+  text-decoration: line-through;
+}
+
+.discounted-price__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.empty-cart-text {
+  font-size: 30px;
+  font-weight: 600;
+}
+
+.link-to-cart-text {
+  font-size: 34px;
+  margin-left: 10px;
+  font-weight: 600;
+  cursor: pointer;
 }

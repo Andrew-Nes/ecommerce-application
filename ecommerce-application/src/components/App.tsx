@@ -8,10 +8,16 @@ import NotFoundPage from './Pages/NotFoundPage/NotFoundPage';
 import RegistrationPage from './Pages/RegistrationPage/RegistrationPage';
 import ProfilePage from './Pages/ProfilePage/ProfilePage';
 import CatalogPage from './Pages/CatalogPage/CatalogPage';
-import { CreateCart, getCategories } from '../api/apiFunctions';
+import {
+  CreateCart,
+  GetActiveCart,
+  GetDiscount,
+  getCategories,
+} from '../api/apiFunctions';
 import {
   Category,
   ClientResponse,
+  DiscountCode,
   ErrorResponse,
 } from '@commercetools/platform-sdk';
 import BasicCatalog from './Catalog/CatalogElements/BasicCatalog';
@@ -21,6 +27,7 @@ import Subcategory from './Catalog/CategoryElements/Subcategory';
 import ProductPage from './Pages/ProductPage/ProductPage';
 import { serviceErrors } from '../types/formTypes';
 import { reloadPage } from '../utils/apiHelpers';
+import AboutPage from './Pages/AboutPage/AboutPage';
 import CartPage from './Pages/CartPage/CartPage';
 import { CartContextProps } from '../utils/cartContext';
 
@@ -40,7 +47,7 @@ const App: FC = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(
     window.localStorage.getItem('isLoggedIn') === 'true' || false
   );
-
+  const [discountCodes, setDiscountCodes] = useState<DiscountCode[]>();
   const [basicCategories, setBasicCategories] = useState<Category[]>([]);
   const [subCategories, setSubCategories] = useState<Category[]>([]);
   const [productId, setProductId] = useState<string>(
@@ -51,10 +58,10 @@ const App: FC = () => {
     setIsLoggedIn(newValue);
     window.localStorage.setItem('isLoggedIn', newValue.toString());
   }
+
   async function createNewCart() {
     try {
       const cart = await CreateCart();
-      window.localStorage.setItem('anonymousId', cart.body.anonymousId || '');
       window.localStorage.setItem('cartId', cart.body.id);
     } catch {
       throw new Error('crateNewCart');
@@ -66,6 +73,8 @@ const App: FC = () => {
     const fetchData = async () => {
       try {
         const response = await getCategories();
+        const responseDiscount = await GetDiscount();
+        const discountCodes = responseDiscount.body.results;
         const allCategories = response.body.results;
         const mainCategories = allCategories.filter(
           (category) => !category.parent
@@ -73,11 +82,18 @@ const App: FC = () => {
         const childCategories = allCategories.filter(
           (category) => category.parent
         );
+        setDiscountCodes(discountCodes);
         setBasicCategories(mainCategories);
         setSubCategories(childCategories);
         if (!window.localStorage.getItem('cartId')) {
-          createNewCart();
+          await createNewCart();
         }
+        const cartResp = await GetActiveCart();
+        const items = cartResp.body.lineItems.reduce(
+          (acc, el) => acc + el.quantity,
+          0
+        );
+        updateCartContextValue(items);
       } catch (error) {
         const errorResponse = JSON.parse(
           JSON.stringify(error)
@@ -100,7 +116,10 @@ const App: FC = () => {
           <Header loginStateChange={logInStateChange} />
           <ToastContainer />
           <Routes>
-            <Route path="/" element={<MainPage />} />
+            <Route
+              path="/"
+              element={<MainPage discountCodes={discountCodes} />}
+            />
             <Route
               path="login"
               element={<LoginPage loginStateChange={logInStateChange} />}
@@ -154,6 +173,7 @@ const App: FC = () => {
               </Route>
             </Route>
             <Route path="product" element={<ProductPage id={productId} />} />
+            <Route path="about" element={<AboutPage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </BrowserRouter>

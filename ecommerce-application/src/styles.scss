@@ -13,13 +13,14 @@ body {
   font-family: 'Roboto', sans-serif;
   font-size: 16px;
   color: black;
+  scroll-behavior: smooth;
+  scrollbar-gutter: stable;
 }
 
 #root {
   background-color: #ffffff;
   margin: 0;
   padding: 0;
-  width: calc(100vw - 17px);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
