@@ -34,7 +34,6 @@ const AboutPage: FC = () => {
         </div>
         <div className="description description__team-members">
           <TeamMemberDescription
-            photoLink={developer1Data.photoLink}
             fullName={developer1Data.fullName}
             role={developer1Data.role}
             bio={developer1Data.bio}
@@ -44,7 +43,6 @@ const AboutPage: FC = () => {
             id={developer1Data.id}
           />
           <TeamMemberDescription
-            photoLink={developer2Data.photoLink}
             fullName={developer2Data.fullName}
             role={developer2Data.role}
             bio={developer2Data.bio}
@@ -54,7 +52,6 @@ const AboutPage: FC = () => {
             id={developer2Data.id}
           />
           <TeamMemberDescription
-            photoLink={developer3Data.photoLink}
             fullName={developer3Data.fullName}
             role={developer3Data.role}
             bio={developer3Data.bio}

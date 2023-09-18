@@ -1,7 +1,6 @@
 import { FC } from 'react';
 
 interface TeamMemberDescriptionProps {
-  photoLink: string;
   fullName: string;
   role: string;
   bio: string[];
