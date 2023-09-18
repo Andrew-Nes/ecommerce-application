@@ -1,0 +1,28 @@
+.pagination {
+  display: flex;
+  flex-direction: row;
+  column-gap: 3px;
+}
+
+.pagination__button {
+  width: 35px;
+  height: 35px;
+  border: 1px solid #cba662;
+  border-radius: 5px;
+  background-color: #f1f1f1;
+  transition: 0.5s;
+  cursor: pointer;
+}
+
+.pagination__button:hover {
+  background-color: #cba662;
+}
+
+.pagination__button:disabled {
+  background-color: #f1f1f1;
+  cursor: auto;
+}
+
+.pagination__button_active {
+  background-color: #cba662;
+}

@@ -21,6 +21,8 @@ import { errorsMessage } from '../../../types/formTypes';
 import { Link } from 'react-router-dom';
 import { anchorsText } from '../../../types/elementsText';
 import { routes } from '../../../types/routingTypes';
+import { useCartContext } from '../../../utils/cartContext';
+
 
 interface CartPageProp {
   loginStateChange: (newValue: boolean) => void;
@@ -44,6 +46,8 @@ const CartPage: FC<CartPageProp> = () => {
   const [isModalActive, setModalActive] = useState(false);
   const [totalPrice, setTotalPrice] = useState<number>();
   const [totalDiscountPrice, setTotalDiscountPrice] = useState<number>();
+  const { updateCartContextValue } = useCartContext();
+
 
   async function setCart() {
     try {
@@ -101,6 +105,7 @@ const CartPage: FC<CartPageProp> = () => {
       window.localStorage.setItem('cartId', newCartId);
       setIsUpdateData(true);
       setModalActive(false);
+      updateCartContextValue(0);
     } catch (error) {
       throw new Error('removeCart');
     } finally {

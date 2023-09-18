@@ -23,10 +23,21 @@ import ProductPage from './Pages/ProductPage/ProductPage';
 import { serviceErrors } from '../types/formTypes';
 import { reloadPage } from '../utils/apiHelpers';
 import CartPage from './Pages/CartPage/CartPage';
+import { CartContextProps } from '../utils/cartContext';
 
 export const LogInContext = createContext(false);
 
+export const CartContext = createContext<CartContextProps | undefined>(
+  undefined
+);
+
 const App: FC = () => {
+  const [cartContextValue, setContextValue] = useState<number>(0);
+
+  const updateCartContextValue = (newValue: number) => {
+    setContextValue(newValue);
+  };
+
   const [isLoggedIn, setIsLoggedIn] = useState(
     window.localStorage.getItem('isLoggedIn') === 'true' || false
   );
@@ -86,70 +97,71 @@ const App: FC = () => {
 
   return (
     <LogInContext.Provider value={isLoggedIn}>
-      <BrowserRouter>
-        <Header loginStateChange={logInStateChange} />
-        <ToastContainer />
-        <Routes>
-          <Route
-            path="/"
-            element={<MainPage discountCodes={discountCodes} />}
-          />
-          <Route
-            path="login"
-            element={<LoginPage loginStateChange={logInStateChange} />}
-          />
-          <Route
-            path="register"
-            element={<RegistrationPage loginStateChange={logInStateChange} />}
-          />
-          <Route
-            path="profile"
-            element={<ProfilePage loginStateChange={logInStateChange} />}
-          />
-          <Route
-            path="cart"
-            element={<CartPage loginStateChange={logInStateChange} />}
-          />
-          <Route
-            path="catalog"
-            element={
-              <CatalogPage
-                basicCategories={basicCategories}
-                subCategories={subCategories}
-              />
-            }
-          >
+      <CartContext.Provider
+        value={{ cartContextValue, updateCartContextValue }}
+      >
+        <BrowserRouter>
+          <Header loginStateChange={logInStateChange} />
+          <ToastContainer />
+          <Routes>
+            <Route path="/" element={<MainPage discountCodes={discountCodes}/>} />
             <Route
-              index
-              element={<BasicCatalog basicCategories={basicCategories} />}
+              path="login"
+              element={<LoginPage loginStateChange={logInStateChange} />}
             />
-            <Route path=":currentCategoryKey" element={<CategoryComponent />}>
+            <Route
+              path="register"
+              element={<RegistrationPage loginStateChange={logInStateChange} />}
+            />
+            <Route
+              path="profile"
+              element={<ProfilePage loginStateChange={logInStateChange} />}
+            />
+            <Route
+              path="cart"
+              element={<CartPage loginStateChange={logInStateChange} />}
+            />
+            <Route
+              path="catalog"
+              element={
+                <CatalogPage
+                  basicCategories={basicCategories}
+                  subCategories={subCategories}
+                />
+              }
+            >
               <Route
                 index
-                element={
-                  <BasicCategory
-                    basicCategories={basicCategories}
-                    subCategories={subCategories}
-                    setProductId={setProductId}
-                  />
-                }
+                element={<BasicCatalog basicCategories={basicCategories} />}
               />
-              <Route
-                path=":currentSubCategoryKey"
-                element={
-                  <Subcategory
-                    mainCategories={basicCategories}
-                    subCategories={subCategories}
-                    setProductId={setProductId}
-                  />
-                }
-              />
+              <Route path=":currentCategoryKey" element={<CategoryComponent />}>
+                <Route
+                  index
+                  element={
+                    <BasicCategory
+                      basicCategories={basicCategories}
+                      subCategories={subCategories}
+                      setProductId={setProductId}
+                    />
+                  }
+                />
+                <Route
+                  path=":currentSubCategoryKey"
+                  element={
+                    <Subcategory
+                      mainCategories={basicCategories}
+                      subCategories={subCategories}
+                      setProductId={setProductId}
+                    />
+                  }
+                />
+              </Route>
             </Route>
-          </Route>
-          <Route path="product" element={<ProductPage id={productId} />} />
-          <Route path="*" element={<NotFoundPage />} />
-        </Routes>
-      </BrowserRouter>
+            <Route path="product" element={<ProductPage id={productId} />} />
+            <Route path="*" element={<NotFoundPage />} />
+          </Routes>
+        </BrowserRouter>
+      </CartContext.Provider>
     </LogInContext.Provider>
   );
 };

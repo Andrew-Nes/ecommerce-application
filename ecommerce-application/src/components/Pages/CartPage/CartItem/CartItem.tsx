@@ -2,6 +2,8 @@ import { LineItem, MyCartUpdateAction } from '@commercetools/platform-sdk';
 import './CartItem.scss';
 import { CartUpdateFunction } from '../../../../api/apiFunctions';
 import { Dispatch, FC, SetStateAction, useState } from 'react';
+import { useCartContext } from '../../../../utils/cartContext';
+
 interface CartItemProps {
   cartItem: LineItem;
   index: number;
@@ -15,6 +17,7 @@ const CartItem: FC<CartItemProps> = (props: CartItemProps) => {
   const itemImage = props.cartItem.variant.images?.[0].url;
   const itemPrice = props.cartItem.price.value.centAmount / 100;
   const itemCount = props.cartItem.quantity;
+  const { cartContextValue, updateCartContextValue } = useCartContext();
 
   const removeProduct = async () => {
     try {
@@ -26,6 +29,7 @@ const CartItem: FC<CartItemProps> = (props: CartItemProps) => {
       };
       await CartUpdateFunction(updateAction);
       props.isUpdateData(true);
+      updateCartContextValue(cartContextValue - 1);
     } catch {
       throw new Error('changeLineItemQuantity');
     } finally {
