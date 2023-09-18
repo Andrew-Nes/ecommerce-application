@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { FC } from 'react';
 import {
   headingText,
   paragraphText,
@@ -7,21 +7,15 @@ import {
 import { routes } from '../../../types/routingTypes';
 import RedirectButton from '../../RedirectButton/RedirectButton';
 import './mainPage.scss';
-import { GetDiscount } from '../../../api/apiFunctions';
-import { DiscountCode } from '@commercetools/platform-sdk';
 import DiscountCodeCard from './DiscountCodeCard/DiscountCodeCard';
+import { DiscountCode } from '@commercetools/platform-sdk';
 
-const MainPage: FC = () => {
-  const [discountCodes, setDiscountCodes] = useState<DiscountCode[]>();
 
-  const getDiscounts = async () => {
-    const response = await GetDiscount();
-    const discountCodes = response.body.results;
-    setDiscountCodes(discountCodes);
-  };
-  useEffect(() => {
-    getDiscounts();
-  }, []);
+type MainPageProps = {
+  discountCodes: DiscountCode[] | undefined
+}
+
+const MainPage: FC<MainPageProps> = (props) => {
 
   return (
     <main className="main main-page">
@@ -44,8 +38,8 @@ const MainPage: FC = () => {
             />
           </div>
           <div className="discount-codes__container">
-            {discountCodes
-              ? discountCodes.map((code, index) => {
+            {props.discountCodes
+              ? props.discountCodes.map((code, index) => {
                   if (code.isActive) {
                     return <DiscountCodeCard key={index} discountCode={code} />;
                   }

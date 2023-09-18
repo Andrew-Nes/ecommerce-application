@@ -18,7 +18,7 @@ const CartItem: FC<CartItemProps> = (props: CartItemProps) => {
 
   const removeProduct = async () => {
     try {
-      setLoad(true)
+      setLoad(true);
       const updateAction: MyCartUpdateAction = {
         action: 'changeLineItemQuantity',
         lineItemId: props.cartItem.id,
@@ -28,13 +28,12 @@ const CartItem: FC<CartItemProps> = (props: CartItemProps) => {
       props.isUpdateData(true);
     } catch {
       throw new Error('changeLineItemQuantity');
-    }
-    finally{
-      setLoad(false)
+    } finally {
+      setLoad(false);
     }
   };
   const addProductQuantity = async () => {
-    setLoad(true)
+    setLoad(true);
     const updateAction: MyCartUpdateAction = {
       action: 'changeLineItemQuantity',
       lineItemId: props.cartItem.id,
@@ -45,14 +44,13 @@ const CartItem: FC<CartItemProps> = (props: CartItemProps) => {
       props.isUpdateData(true);
     } catch {
       throw new Error('changeLineItemQuantity');
-    }
-    finally{
-      setLoad(false)
+    } finally {
+      setLoad(false);
     }
   };
 
   const removedProductQuantity = async () => {
-    setLoad(true)
+    setLoad(true);
     const updateAction: MyCartUpdateAction = {
       action: 'changeLineItemQuantity',
       lineItemId: props.cartItem.id,
@@ -63,9 +61,8 @@ const CartItem: FC<CartItemProps> = (props: CartItemProps) => {
       props.isUpdateData(true);
     } catch {
       throw new Error('changeLineItemQuantity');
-    }
-    finally{
-      setLoad(false)
+    } finally {
+      setLoad(false);
     }
   };
 
@@ -88,7 +85,11 @@ const CartItem: FC<CartItemProps> = (props: CartItemProps) => {
           -
         </button>
         <span className="count-element">{itemCount}</span>
-        <button className="count-button" onClick={addProductQuantity} disabled={isLoad}>
+        <button
+          className="count-button"
+          onClick={addProductQuantity}
+          disabled={isLoad}
+        >
           +
         </button>
       </div>

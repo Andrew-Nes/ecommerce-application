@@ -68,7 +68,7 @@ const CartPage: FC<CartPageProp> = () => {
     mode: 'all',
   });
   const onSubmit: SubmitHandler<PromoFormData> = async (data) => {
-    setLoad(true)
+    setLoad(true);
     const updateAction: MyCartUpdateAction = {
       action: 'addDiscountCode',
       code: data.promo,
@@ -87,15 +87,13 @@ const CartPage: FC<CartPageProp> = () => {
           position: 'bottom-center',
         });
       }
+    } finally {
+      setLoad(false);
     }
-    finally {
-      setLoad(false)
-    }
-
   };
 
   const removeCart = async () => {
-    setLoad(true)
+    setLoad(true);
     try {
       await RemoveCart();
       const newCart = await CreateCart();
@@ -105,9 +103,8 @@ const CartPage: FC<CartPageProp> = () => {
       setModalActive(false);
     } catch (error) {
       throw new Error('removeCart');
-    }
-    finally{
-      setLoad(false)
+    } finally {
+      setLoad(false);
     }
   };
 
@@ -117,7 +114,11 @@ const CartPage: FC<CartPageProp> = () => {
         <div className="delete-cart-modal">
           <h3>Delete current cart?</h3>
           <div className="delete-cart-button__container">
-            <button className="cart_button" onClick={removeCart} disabled={isLoad}>
+            <button
+              className="cart_button"
+              onClick={removeCart}
+              disabled={isLoad}
+            >
               ОК
             </button>
             <button
