@@ -15,7 +15,6 @@ import { CreateCart } from '../../api/apiFunctions';
 import tokenStorage from '../../api/tokenStorage';
 import { useCartContext } from '../../utils/cartContext';
 
-
 const Header: FC<loginStateChangeProp> = ({ loginStateChange }) => {
   const { cartContextValue } = useCartContext();
   const isLoggedIn = useContext(LogInContext);

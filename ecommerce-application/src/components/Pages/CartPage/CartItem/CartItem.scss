@@ -27,3 +27,21 @@
   background-color: #cba662;
   cursor: pointer;
 }
+
+.cart-item-price__container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.price__container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 5px;
+}
+
+.none-active {
+  text-decoration: line-through;
+  opacity: 0.6;
+}

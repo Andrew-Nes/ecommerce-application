@@ -78,7 +78,21 @@ const CartItem: FC<CartItemProps> = (props: CartItemProps) => {
       <h3>{itemName}</h3>
 
       <img src={itemImage} alt="image" width={'100%'} />
-      <strong className="cart-item_price">Price: {itemPrice} $</strong>
+
+      <div className="price__container">
+        <strong className="cart-item_price">Price:</strong>
+        {props.cartItem.price.discounted ? (
+          <div className="cart-item-price__container">
+            <span className="cart-item_price">
+              {props.cartItem.price.discounted.value.centAmount / 100} $
+            </span>
+            <span className="cart-item_price none-active">{itemPrice} $</span>
+          </div>
+        ) : (
+          <strong className="cart-item_price">{itemPrice} $</strong>
+        )}
+      </div>
+
       <div className="count-buttons__container">
         <strong className="cart-item_price">Quantity:</strong>
         <button
@@ -97,6 +111,13 @@ const CartItem: FC<CartItemProps> = (props: CartItemProps) => {
           +
         </button>
       </div>
+      <strong className="cart-item_price">
+        Total price:{' '}
+        {props.cartItem.price.discounted
+          ? (props.cartItem.price.discounted.value.centAmount / 100) * itemCount
+          : itemPrice * itemCount}{' '}
+        $
+      </strong>
     </div>
   );
 };

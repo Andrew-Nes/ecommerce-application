@@ -23,7 +23,6 @@ import { anchorsText } from '../../../types/elementsText';
 import { routes } from '../../../types/routingTypes';
 import { useCartContext } from '../../../utils/cartContext';
 
-
 interface CartPageProp {
   loginStateChange: (newValue: boolean) => void;
 }
@@ -47,7 +46,6 @@ const CartPage: FC<CartPageProp> = () => {
   const [totalPrice, setTotalPrice] = useState<number>();
   const [totalDiscountPrice, setTotalDiscountPrice] = useState<number>();
   const { updateCartContextValue } = useCartContext();
-
 
   async function setCart() {
     try {

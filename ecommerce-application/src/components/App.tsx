@@ -104,7 +104,10 @@ const App: FC = () => {
           <Header loginStateChange={logInStateChange} />
           <ToastContainer />
           <Routes>
-            <Route path="/" element={<MainPage discountCodes={discountCodes}/>} />
+            <Route
+              path="/"
+              element={<MainPage discountCodes={discountCodes} />}
+            />
             <Route
               path="login"
               element={<LoginPage loginStateChange={logInStateChange} />}
