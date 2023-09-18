@@ -118,7 +118,6 @@ const BasicCategory: FC<BasicCategoryProps> = (props: BasicCategoryProps) => {
 
   useEffect(() => {
     setProductLoading(true);
-    console.log('filtered products');
 
     const fetchData = async () => {
       try {

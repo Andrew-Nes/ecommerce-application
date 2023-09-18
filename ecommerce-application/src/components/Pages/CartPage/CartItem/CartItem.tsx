@@ -1,8 +1,17 @@
-import { LineItem, MyCartUpdateAction } from '@commercetools/platform-sdk';
+import {
+  ClientResponse,
+  ErrorResponse,
+  LineItem,
+  MyCartUpdateAction,
+} from '@commercetools/platform-sdk';
 import './CartItem.scss';
 import { CartUpdateFunction } from '../../../../api/apiFunctions';
 import { Dispatch, FC, SetStateAction, useState } from 'react';
 import { useCartContext } from '../../../../utils/cartContext';
+import { serviceErrors } from '../../../../types/formTypes';
+import { reloadPage } from '../../../../utils/apiHelpers';
+import { routes } from '../../../../types/routingTypes';
+import { useNavigate } from 'react-router-dom';
 
 interface CartItemProps {
   cartItem: LineItem;
@@ -18,6 +27,7 @@ const CartItem: FC<CartItemProps> = (props: CartItemProps) => {
   const itemPrice = props.cartItem.price.value.centAmount / 100;
   const itemCount = props.cartItem.quantity;
   const { cartContextValue, updateCartContextValue } = useCartContext();
+  const redirect = useNavigate();
 
   const removeProduct = async () => {
     try {
@@ -30,8 +40,16 @@ const CartItem: FC<CartItemProps> = (props: CartItemProps) => {
       await CartUpdateFunction(updateAction);
       props.isUpdateData(true);
       updateCartContextValue(cartContextValue - itemCount);
-    } catch {
-      throw new Error('changeLineItemQuantity');
+    } catch (error) {
+      const errorResponse = JSON.parse(
+        JSON.stringify(error)
+      ) as ClientResponse<ErrorResponse>;
+      const errorCode = errorResponse.body.statusCode;
+      if (errorCode === serviceErrors.INVALID_TOKEN) {
+        reloadPage();
+      } else {
+        redirect(routes.NOTFOUND);
+      }
     } finally {
       setLoad(false);
     }
@@ -47,8 +65,16 @@ const CartItem: FC<CartItemProps> = (props: CartItemProps) => {
       await CartUpdateFunction(updateAction);
       props.isUpdateData(true);
       updateCartContextValue(cartContextValue + 1);
-    } catch {
-      throw new Error('changeLineItemQuantity');
+    } catch (error) {
+      const errorResponse = JSON.parse(
+        JSON.stringify(error)
+      ) as ClientResponse<ErrorResponse>;
+      const errorCode = errorResponse.body.statusCode;
+      if (errorCode === serviceErrors.INVALID_TOKEN) {
+        reloadPage();
+      } else {
+        redirect(routes.NOTFOUND);
+      }
     } finally {
       setLoad(false);
     }
@@ -65,8 +91,16 @@ const CartItem: FC<CartItemProps> = (props: CartItemProps) => {
       await CartUpdateFunction(updateAction);
       props.isUpdateData(true);
       updateCartContextValue(cartContextValue - 1);
-    } catch {
-      throw new Error('changeLineItemQuantity');
+    } catch (error) {
+      const errorResponse = JSON.parse(
+        JSON.stringify(error)
+      ) as ClientResponse<ErrorResponse>;
+      const errorCode = errorResponse.body.statusCode;
+      if (errorCode === serviceErrors.INVALID_TOKEN) {
+        reloadPage();
+      } else {
+        redirect(routes.NOTFOUND);
+      }
     } finally {
       setLoad(false);
     }

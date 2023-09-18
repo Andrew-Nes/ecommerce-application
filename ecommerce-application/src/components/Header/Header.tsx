@@ -5,7 +5,6 @@ import { loginStateChangeProp, routes } from '../../types/routingTypes';
 import { LogInContext } from '../App';
 import RedirectButton from '../RedirectButton/RedirectButton';
 import BurgerMenu from './BurgerMenu/BurgerMenu';
-// import HeaderMini from './HeaderMini';
 import Logo from '../../../assets/img/shopLogo.png';
 import './header.scss';
 import ProfileIcon from '../../../assets/img/user-profile.svg';
@@ -23,7 +22,6 @@ const Header: FC<loginStateChangeProp> = ({ loginStateChange }) => {
   async function createNewCart() {
     try {
       const cart = await CreateCart();
-      window.localStorage.setItem('anonymousId', cart.body.anonymousId || '');
       window.localStorage.setItem('cartId', cart.body.id);
     } catch {
       throw new Error('crateNewCart');
@@ -34,7 +32,6 @@ const Header: FC<loginStateChangeProp> = ({ loginStateChange }) => {
     window.localStorage.removeItem('token');
     window.localStorage.removeItem('IsLoggedIn');
     window.localStorage.removeItem('cartId');
-    window.localStorage.removeItem('anonymousId');
     tokenStorage.clear();
     await createNewCart();
     updateCartContextValue(0);
@@ -115,9 +112,6 @@ const Header: FC<loginStateChangeProp> = ({ loginStateChange }) => {
       </div>
     </header>
   );
-  // } else {
-  //   return <HeaderMini />;
-  // }
 };
 
 export default Header;
