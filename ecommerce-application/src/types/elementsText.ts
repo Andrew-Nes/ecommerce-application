@@ -16,6 +16,7 @@ enum anchorsText {
   NOT_FOUND_CLICK = 'Go back to main',
   PROFILE = 'Profile',
   ABOUT = 'About us',
+  CART = 'Cart',
 }
 
 enum logoText {

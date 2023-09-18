@@ -1,17 +1,24 @@
-import { Dispatch, FC, SetStateAction } from 'react';
+import { Dispatch, FC, SetStateAction, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Filters, filtersCheckboxes } from '../../../types/categoryTypes';
 
 interface SidebarFormProps {
   filters: Filters[];
   setFilters: Dispatch<SetStateAction<filtersCheckboxes>>;
+  isNew: boolean;
 }
 
 const SidebarForm: FC<SidebarFormProps> = (props: SidebarFormProps) => {
-  const { register, getValues } = useForm({ mode: 'onChange' });
+  const { register, getValues, reset } = useForm({ mode: 'onChange' });
   const onChange = () => {
     props.setFilters(getValues());
   };
+
+  useEffect(() => {
+    if (props.isNew) {
+      reset();
+    }
+  }, [props, reset]);
 
   return (
     <div className="sidebar__element">

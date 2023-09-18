@@ -10,14 +10,18 @@ import Logo from '../../../assets/img/shopLogo.png';
 import './header.scss';
 import ProfileIcon from '../../../assets/img/user-profile.svg';
 import RedirectIcon from '../RedirectButton/RedirectIcon';
+import CartIcon from '../../../assets/img/shopping-cart.svg';
+import { useCartContext } from '../../utils/cartContext';
 
 const Header: FC<loginStateChangeProp> = ({ loginStateChange }) => {
+  const { cartContextValue } = useCartContext();
   const isLoggedIn = useContext(LogInContext);
   const redirect = useNavigate();
   const logout = () => {
     loginStateChange(false);
     window.localStorage.removeItem('token');
     window.localStorage.removeItem('IsLoggedIn');
+    window.localStorage.removeItem('cartId');
     redirect(routes.MAIN);
   };
   const path = useLocation();
@@ -25,6 +29,7 @@ const Header: FC<loginStateChangeProp> = ({ loginStateChange }) => {
   // const existingPaths = Object.values(routes) as string[];
   useEffect(() => {}, [path]);
   // if (existingPaths.includes(location)) {
+  console.log(cartContextValue);
   return (
     <header className="header">
       <div className="wrapper header__wrapper">
@@ -49,6 +54,15 @@ const Header: FC<loginStateChangeProp> = ({ loginStateChange }) => {
             </ul>
           </nav>
           <div className="header__buttons">
+            <div className="icon-container">
+              <div className="items-in-cart">{cartContextValue}</div>
+              <RedirectIcon
+                className="profile_icon cart"
+                alt={'Cart'}
+                route={routes.CART}
+                src={CartIcon}
+              />
+            </div>
             {!isLoggedIn ? (
               <RedirectButton
                 className="button header__button header__button_login"
