@@ -1,5 +1,6 @@
 import { DiscountCode } from '@commercetools/platform-sdk';
 import { FC } from 'react';
+import './discountCodeCard.scss'
 
 interface DiscountCodeCardProps {
   key: number;
@@ -13,10 +14,10 @@ const DiscountCodeCard: FC<DiscountCodeCardProps> = (props) => {
   )[0];
   const discountCode = props.discountCode.code || '';
   return (
-    <div className="discount-code__container">
+    <div className="discount-code__card">
       <h2 className="discount-code_title">{discountTitle}</h2>
       <p className="discount-code_description">{discountDescription}</p>
-      <strong className="discount-code_code">{discountCode}</strong>
+      <strong className="discount-code_code">Code: {discountCode}</strong>
     </div>
   );
 };
