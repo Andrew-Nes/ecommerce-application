@@ -25,11 +25,8 @@ const Header: FC<loginStateChangeProp> = ({ loginStateChange }) => {
     redirect(routes.MAIN);
   };
   const path = useLocation();
-  // const location = window.location.pathname;
-  // const existingPaths = Object.values(routes) as string[];
+
   useEffect(() => {}, [path]);
-  // if (existingPaths.includes(location)) {
-  console.log(cartContextValue);
   return (
     <header className="header">
       <div className="wrapper header__wrapper">
