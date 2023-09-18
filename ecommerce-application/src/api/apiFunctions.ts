@@ -206,7 +206,7 @@ export const CreateCart = async () => {
     currency: 'USD',
     country: 'US',
   };
-  if (!(window.localStorage.getItem('isLoggedIn') === 'true')) {
+  if (window.localStorage.getItem('isLoggedIn') !== 'true') {
     loggedClient = undefined;
   }
   const client = getCurrentClient();
@@ -214,18 +214,15 @@ export const CreateCart = async () => {
   return cart;
 };
 
-
 export const GetCart = async (cartId: string) => {
   const client = getCurrentClient();
   return await client.carts().withId({ ID: cartId }).get().execute();
 };
 
-
 export const GetActiveCart = async () => {
   const client = getCurrentClient();
   return await client.me().activeCart().get().execute();
 };
-
 
 export const RemoveCart = async () => {
   const activeCart = await GetActiveCart();
@@ -240,9 +237,7 @@ export const RemoveCart = async () => {
     .execute();
 };
 
-export const AddProductToCart = async (
-  productId: string
-) => {
+export const AddProductToCart = async (productId: string) => {
   const activeCart = await GetActiveCart();
   const activeCartVersion = activeCart.body.version;
   const activeCartId = activeCart.body.id;
@@ -267,10 +262,7 @@ export const AddProductToCart = async (
     .execute();
 };
 
-export const CartUpdateFunction = async (
-
-  updateAction: MyCartUpdateAction
-) => {
+export const CartUpdateFunction = async (updateAction: MyCartUpdateAction) => {
   const activeCart = await GetActiveCart();
   const activeCartVersion = activeCart.body.version;
   const activeCartId = activeCart.body.id;

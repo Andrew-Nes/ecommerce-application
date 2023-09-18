@@ -32,6 +32,7 @@ const Header: FC<loginStateChangeProp> = ({ loginStateChange }) => {
     window.localStorage.removeItem('token');
     window.localStorage.removeItem('IsLoggedIn');
     window.localStorage.removeItem('cartId');
+    window.localStorage.removeItem('anonymousId');
     tokenStorage.clear();
     createNewCart();
     redirect(routes.MAIN);
