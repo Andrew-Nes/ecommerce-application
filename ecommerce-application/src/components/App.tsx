@@ -8,7 +8,12 @@ import NotFoundPage from './Pages/NotFoundPage/NotFoundPage';
 import RegistrationPage from './Pages/RegistrationPage/RegistrationPage';
 import ProfilePage from './Pages/ProfilePage/ProfilePage';
 import CatalogPage from './Pages/CatalogPage/CatalogPage';
-import { CreateCart, GetDiscount, getCategories } from '../api/apiFunctions';
+import {
+  CreateCart,
+  GetActiveCart,
+  GetDiscount,
+  getCategories,
+} from '../api/apiFunctions';
 import {
   Category,
   ClientResponse,
@@ -81,8 +86,14 @@ const App: FC = () => {
         setBasicCategories(mainCategories);
         setSubCategories(childCategories);
         if (!window.localStorage.getItem('cartId')) {
-          createNewCart();
+          await createNewCart();
         }
+        const cartResp = await GetActiveCart();
+        const items = cartResp.body.lineItems.reduce(
+          (acc, el) => acc + el.quantity,
+          0
+        );
+        updateCartContextValue(items);
       } catch (error) {
         const errorResponse = JSON.parse(
           JSON.stringify(error)

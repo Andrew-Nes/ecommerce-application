@@ -5,13 +5,22 @@ import { loginStateChangeProp, routes } from '../../../types/routingTypes';
 import { LogInContext } from '../../App';
 import LoginForm from '../../Forms/LoginForm/LoginForm';
 import './loginPage.scss';
+import { GetActiveCart } from '../../../api/apiFunctions';
+import { useCartContext } from '../../../utils/cartContext';
 
 const LoginPage: FC<loginStateChangeProp> = ({ loginStateChange }) => {
+  const { updateCartContextValue } = useCartContext();
   const isLoggedIn = useContext(LogInContext);
   const path = useLocation();
   const redirect = useNavigate();
-  function logIn() {
+  async function logIn() {
     loginStateChange(true);
+    const cartResp = await GetActiveCart();
+    const items = cartResp.body.lineItems.reduce(
+      (acc, el) => acc + el.quantity,
+      0
+    );
+    updateCartContextValue(items);
   }
   useEffect(() => {
     if (isLoggedIn) {

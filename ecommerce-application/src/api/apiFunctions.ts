@@ -1,8 +1,5 @@
 import {
-  //CartDraft,
   CartResourceIdentifier,
-  // CartUpdate,
-  // CartUpdateAction,
   createApiBuilderFromCtpClient,
   CustomerChangePassword,
   CustomerDraft,
@@ -85,9 +82,7 @@ export const loginClient = async (username: string, password: string) => {
       .execute();
     tokenStorage.clear();
     const cartId = response.body.cart?.id || '';
-    const anonymousId = response.body.cart?.anonymousId || '';
     window.localStorage.setItem('cartId', cartId);
-    window.localStorage.setItem('anonymousId', anonymousId);
     loggedClient = createClientPasswordFlow(username, password);
   } catch (error) {
     loggedClient = undefined;
@@ -215,11 +210,6 @@ export const CreateCart = async () => {
   const client = getCurrentClient();
   const cart = await client.me().carts().post({ body: cartDraft }).execute();
   return cart;
-};
-
-export const GetCart = async (cartId: string) => {
-  const client = getCurrentClient();
-  return await client.carts().withId({ ID: cartId }).get().execute();
 };
 
 export const GetActiveCart = async () => {

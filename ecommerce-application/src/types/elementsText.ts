@@ -3,6 +3,9 @@ enum buttonsText {
   LOGOUT = 'logout',
   SIGNUP = 'sign up',
   REGISTER = 'register',
+  ADD_TO_CART = 'add to cart',
+  REMOVE_FROM_CART = 'remove from cart',
+  REMOVE_CART = 'remove cart',
 }
 
 enum anchorsText {
