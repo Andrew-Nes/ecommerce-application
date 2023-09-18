@@ -10,6 +10,7 @@ interface SidebarProps {
   childCategories?: Category[];
   filters: Filters[];
   setFilters: Dispatch<SetStateAction<filtersCheckboxes>>;
+  isNew: boolean;
 }
 
 const Sidebar: FC<SidebarProps> = (props: SidebarProps) => {
@@ -40,7 +41,11 @@ const Sidebar: FC<SidebarProps> = (props: SidebarProps) => {
             </ul>
           </div>
         )}
-        <SidebarForm filters={props.filters} setFilters={props.setFilters} />
+        <SidebarForm
+          filters={props.filters}
+          setFilters={props.setFilters}
+          isNew={props.isNew}
+        />
       </div>
     </div>
   );

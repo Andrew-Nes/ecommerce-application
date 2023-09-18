@@ -182,6 +182,7 @@ export const getFilteredItems = async (
   id: string = '',
   sort: string,
   text: string,
+  offset: number,
   filters?: filtersCheckboxes
 ) => {
   const filtersString: string[] = getFiltersString(filters);
@@ -192,7 +193,8 @@ export const getFilteredItems = async (
           priceCurrency: PriceCurrency.DOLLAR,
           priceCountry: PriceCountry.USA,
           filter: [`categories.id:"${id}"`, ...filtersString, priceString],
-          limit: 100,
+          limit: 6,
+          offset,
           sort: `${sort}`,
           ['text.en-US']: `"${text}"`,
         }
@@ -200,7 +202,8 @@ export const getFilteredItems = async (
           priceCurrency: PriceCurrency.DOLLAR,
           priceCountry: PriceCountry.USA,
           filter: [`categories.id:"${id}"`, ...filtersString, priceString],
-          limit: 100,
+          limit: 6,
+          offset,
           sort: `${sort}`,
         };
 

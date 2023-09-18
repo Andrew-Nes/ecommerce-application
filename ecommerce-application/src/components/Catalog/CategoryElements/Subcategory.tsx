@@ -14,12 +14,14 @@ import { Dispatch, FC, SetStateAction, useEffect, useState } from 'react';
 import { getFilteredItems, getItems } from '../../../api/apiFunctions';
 import { TailSpin } from 'react-loader-spinner';
 import Sidebar from '../../Sidebar/Sidebar';
-import { filtersCheckboxes } from '../../../types/categoryTypes';
+import { Filters, filtersCheckboxes } from '../../../types/categoryTypes';
 import createFilterObject from '../../../utils/filterCreation';
 import { SortingVariants, serviceErrors } from '../../../types/formTypes';
 import Cards from '../../Cards/Cards';
 import NotFoundPage from '../../Pages/NotFoundPage/NotFoundPage';
 import { reloadPage } from '../../../utils/apiHelpers';
+import Pagination from '../../Pagination/Pagination';
+import usePagination from '../../../hooks/usePagination';
 
 interface SubcategoryProps {
   mainCategories: Category[];
@@ -30,15 +32,26 @@ interface SubcategoryProps {
 const Subcategory: FC<SubcategoryProps> = (props: SubcategoryProps) => {
   const { currentSubCategoryKey } = useParams();
   const [allProducts, setAllProducts] = useState<ProductProjection[]>([]);
+  const [totalProducts, setTotalProducts] = useState<number>(0);
+  const [productsPerPage, setProductsPerPage] = useState<number>(0);
+
   const [filteredProducts, setFilteredProducts] = useState<ProductProjection[]>(
     []
   );
+  const [isNewCategory, changeIsNewCategory] = useState<boolean>(true);
+  const [filters, setFilters] = useState<Filters[]>([]);
   const [isProductLoading, setProductLoading] = useState<boolean>(true);
   const [chosenFilter, setChosenFilter] = useState<filtersCheckboxes>({});
   const [sortingVariant, setSortingVariant] = useState<string>(
     SortingVariants.NAME_ASC
   );
   const [searchText, setSearchText] = useState<string>('');
+
+  const { firstContentIndex, nextPage, prevPage, page, setPage, totalPages } =
+    usePagination({
+      contentPerPage: productsPerPage,
+      count: totalProducts,
+    });
 
   const currentCategory = props.subCategories.find(
     (category) => category.key === currentSubCategoryKey
@@ -52,8 +65,6 @@ const Subcategory: FC<SubcategoryProps> = (props: SubcategoryProps) => {
   );
   const parentCategoryName = parentCategory?.name[Languages.ENGLISH];
   const parentCategoryKey = parentCategory?.key;
-
-  const filters = createFilterObject(allProducts);
 
   const lists: BreadcrumbsItem[] = [
     {
@@ -78,18 +89,21 @@ const Subcategory: FC<SubcategoryProps> = (props: SubcategoryProps) => {
     },
   ];
   const redirect = useNavigate();
+
   /* eslint-disable react-hooks/exhaustive-deps*/
   useEffect(() => {
     if (props.subCategories.length === 0) {
       return;
     }
+    setProductLoading(true);
+    changeIsNewCategory(true);
+
     const fetchData = async () => {
       try {
         const response = await getItems(currentCategoryId, sortingVariant);
         const products = response.body.results;
         setAllProducts(products);
-        setFilteredProducts(products);
-        setProductLoading(false);
+        setTotalProducts(response.body.total || response.body.count);
       } catch (error) {
         const errorResponse = JSON.parse(
           JSON.stringify(error)
@@ -100,24 +114,30 @@ const Subcategory: FC<SubcategoryProps> = (props: SubcategoryProps) => {
         } else {
           redirect(routes.NOTFOUND);
         }
+      } finally {
+        setProductLoading(false);
+        changeIsNewCategory(false);
       }
     };
     fetchData();
-  }, [getItems, props, currentCategory]);
+  }, [getItems, currentCategory]);
 
   useEffect(() => {
     setProductLoading(true);
+
     const fetchData = async () => {
       try {
         const response = await getFilteredItems(
           currentCategoryId,
           sortingVariant,
           searchText,
+          firstContentIndex >= 0 ? firstContentIndex : 0,
           chosenFilter
         );
         const filteredProducts = response.body.results;
         setFilteredProducts(filteredProducts);
-        setProductLoading(false);
+        setTotalProducts(response.body.total || response.body.count);
+        setProductsPerPage(response.body.limit);
       } catch (error) {
         const errorResponse = JSON.parse(
           JSON.stringify(error)
@@ -128,10 +148,21 @@ const Subcategory: FC<SubcategoryProps> = (props: SubcategoryProps) => {
         } else {
           redirect(routes.NOTFOUND);
         }
+      } finally {
+        setProductLoading(false);
       }
     };
     fetchData();
-  }, [getFilteredItems, chosenFilter, sortingVariant, searchText]);
+  }, [chosenFilter, sortingVariant, searchText, firstContentIndex]);
+
+  useEffect(() => {
+    setFilters(createFilterObject(allProducts));
+    setChosenFilter({});
+  }, [allProducts]);
+
+  useEffect(() => {
+    setPage(1);
+  }, [chosenFilter, searchText]);
 
   if (!currentCategory) {
     return <NotFoundPage />;
@@ -141,17 +172,34 @@ const Subcategory: FC<SubcategoryProps> = (props: SubcategoryProps) => {
       <div className="wrapper catalog-page__wrapper">
         <BreadcrumbsList items={lists} />
         <div className="catalog__content">
-          <Sidebar filters={filters} setFilters={setChosenFilter} />
+          <Sidebar
+            filters={filters}
+            setFilters={setChosenFilter}
+            isNew={isNewCategory}
+          />
           {isProductLoading ? (
             <TailSpin wrapperClass="loader-spinner" />
           ) : (
-            <Cards
-              products={filteredProducts}
-              sortingVariants={sortingVariant}
-              setSortingVariants={setSortingVariant}
-              setSearchText={setSearchText}
-              setProductId={props.setProductId}
-            />
+            <div className="products__wrapper">
+              <Cards
+                products={filteredProducts}
+                sortingVariants={sortingVariant}
+                setSortingVariants={setSortingVariant}
+                searchText={searchText}
+                setSearchText={setSearchText}
+                setProductId={props.setProductId}
+                productNumber={totalProducts}
+              />
+              {filteredProducts.length > 0 && (
+                <Pagination
+                  page={page}
+                  totalPages={totalPages}
+                  nextPage={nextPage}
+                  prevPage={prevPage}
+                  setPage={setPage}
+                />
+              )}
+            </div>
           )}
         </div>
       </div>
