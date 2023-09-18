@@ -59,6 +59,7 @@
 }
 .promo-form {
   display: flex;
+  flex-wrap: wrap;
   gap: 10px;
 }
 .cart-total-price,
