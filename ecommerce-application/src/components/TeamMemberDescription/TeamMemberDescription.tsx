@@ -19,8 +19,10 @@ const TeamMemberDescription: FC<TeamMemberDescriptionProps> = (
       <div className="team-member__info">
         <h4 className="team-member__name text">{props.fullName}</h4>
         <p className="team-member__role text italic">{props.role}</p>
-        {props.bio.map((paragraph) => (
-          <p className="team-member__bio text">{paragraph}</p>
+        {props.bio.map((paragraph, index) => (
+          <p className="team-member__bio text" key={index}>
+            {paragraph}
+          </p>
         ))}
         <p className="team-member__work-made text">
           <span className="bold">Worked on: </span>
