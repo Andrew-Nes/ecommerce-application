@@ -29,7 +29,7 @@ const CartItem: FC<CartItemProps> = (props: CartItemProps) => {
       };
       await CartUpdateFunction(updateAction);
       props.isUpdateData(true);
-      updateCartContextValue(cartContextValue - 1);
+      updateCartContextValue(cartContextValue - itemCount);
     } catch {
       throw new Error('changeLineItemQuantity');
     } finally {
