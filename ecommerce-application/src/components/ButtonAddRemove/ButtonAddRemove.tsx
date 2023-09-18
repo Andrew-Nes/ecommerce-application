@@ -43,7 +43,11 @@ const ButtonAddRemove: FC<buttonAddRemoveProps> = (props) => {
     GetActiveCart().then((resp) => {
       if (resp.body.lineItems.find((el) => el.productId === props.id)) {
         setIsInCart(true);
-        updateCartContextValue(resp.body.lineItems.length);
+        const items = resp.body.lineItems.reduce(
+          (acc, el) => acc + el.quantity,
+          0
+        );
+        updateCartContextValue(items);
       }
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps

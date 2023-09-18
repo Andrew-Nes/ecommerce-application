@@ -1,5 +1,5 @@
-import { FC, useContext, useEffect } from 'react';
-import { useNavigate, useLocation, Link } from 'react-router-dom';
+import { FC, useContext } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import { anchorsText, buttonsText, logoText } from '../../types/elementsText';
 import { loginStateChangeProp, routes } from '../../types/routingTypes';
 import { LogInContext } from '../App';
@@ -16,7 +16,7 @@ import tokenStorage from '../../api/tokenStorage';
 import { useCartContext } from '../../utils/cartContext';
 
 const Header: FC<loginStateChangeProp> = ({ loginStateChange }) => {
-  const { cartContextValue } = useCartContext();
+  const { cartContextValue, updateCartContextValue } = useCartContext();
   const isLoggedIn = useContext(LogInContext);
   const redirect = useNavigate();
 
@@ -29,22 +29,18 @@ const Header: FC<loginStateChangeProp> = ({ loginStateChange }) => {
       throw new Error('crateNewCart');
     }
   }
-  const logout = () => {
+  const logout = async () => {
     loginStateChange(false);
     window.localStorage.removeItem('token');
     window.localStorage.removeItem('IsLoggedIn');
     window.localStorage.removeItem('cartId');
     window.localStorage.removeItem('anonymousId');
     tokenStorage.clear();
-    createNewCart();
+    await createNewCart();
+    updateCartContextValue(0);
     redirect(routes.MAIN);
   };
-  const path = useLocation();
-  // const location = window.location.pathname;
-  // const existingPaths = Object.values(routes) as string[];
-  useEffect(() => {}, [path]);
-  // if (existingPaths.includes(location)) {
-  console.log(cartContextValue);
+
   return (
     <header className="header">
       <div className="wrapper header__wrapper">

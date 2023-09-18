@@ -46,6 +46,7 @@ const CartItem: FC<CartItemProps> = (props: CartItemProps) => {
     try {
       await CartUpdateFunction(updateAction);
       props.isUpdateData(true);
+      updateCartContextValue(cartContextValue + 1);
     } catch {
       throw new Error('changeLineItemQuantity');
     } finally {
@@ -63,6 +64,7 @@ const CartItem: FC<CartItemProps> = (props: CartItemProps) => {
     try {
       await CartUpdateFunction(updateAction);
       props.isUpdateData(true);
+      updateCartContextValue(cartContextValue - 1);
     } catch {
       throw new Error('changeLineItemQuantity');
     } finally {
