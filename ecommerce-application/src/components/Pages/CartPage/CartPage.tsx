@@ -145,13 +145,19 @@ const CartPage: FC<CartPageProp> = () => {
       </div>
 
       <div className="promo-code__container">
-        <h3>Promo code:</h3>
-        <form className="promo-form" onSubmit={handleSubmit(onSubmit)}>
-          <input type="text" {...register('promo')} />
-          <button className="cart_button" type="submit">
-            Apply
-          </button>
-        </form>
+        <div className="promo-code__form">
+          <h3>Promo code:</h3>
+          <form className="promo-form" onSubmit={handleSubmit(onSubmit)}>
+            <input type="text" {...register('promo')} />
+            <button className="cart_button" type="submit">
+              Apply
+            </button>
+          </form>
+        </div>
+        <p className="promo-code_info">
+          When using multiple promo codes, the code with the highest discount is
+          applied
+        </p>
       </div>
       <div className="cartItems-wrapper">
         {cartItems?.lineItems.length ? (

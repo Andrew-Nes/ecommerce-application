@@ -40,9 +40,13 @@
 }
 
 .promo-code__container {
-  width: fit-content;
+  max-width: 450px;
   border: 2px solid black;
   padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+.promo-code__form {
   display: flex;
   flex-direction: row;
   align-items: center;

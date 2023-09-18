@@ -44,14 +44,14 @@ const MainPage: FC = () => {
               text={buttonsText.LOGIN}
             />
           </div>
-          <div className='discount-codes__container'>
+          <div className="discount-codes__container">
             {discountCodes
-            ? discountCodes.map((code, index) => {
-                if (code.isActive) {
-                  return <DiscountCodeCard key={index} discountCode={code} />;
-                }
-              })
-            : ''}
+              ? discountCodes.map((code, index) => {
+                  if (code.isActive) {
+                    return <DiscountCodeCard key={index} discountCode={code} />;
+                  }
+                })
+              : ''}
           </div>
         </div>
       </div>

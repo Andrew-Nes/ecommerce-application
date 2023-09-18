@@ -1,6 +1,6 @@
 import { DiscountCode } from '@commercetools/platform-sdk';
 import { FC } from 'react';
-import './discountCodeCard.scss'
+import './discountCodeCard.scss';
 
 interface DiscountCodeCardProps {
   key: number;
