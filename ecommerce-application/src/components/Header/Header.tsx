@@ -37,7 +37,6 @@ const Header: FC<loginStateChangeProp> = ({ loginStateChange }) => {
     updateCartContextValue(0);
     redirect(routes.MAIN);
   };
-
   return (
     <header className="header">
       <div className="wrapper header__wrapper">
