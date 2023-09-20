@@ -27,6 +27,7 @@ interface BasicCategoryProps {
   basicCategories: Category[];
   subCategories: Category[];
   setProductId: Dispatch<SetStateAction<string>>;
+  loading: boolean;
 }
 
 const BasicCategory: FC<BasicCategoryProps> = (props: BasicCategoryProps) => {
@@ -158,10 +159,10 @@ const BasicCategory: FC<BasicCategoryProps> = (props: BasicCategoryProps) => {
     setPage(1);
   }, [chosenFilter, searchText]);
 
-  if (!currentCategory) {
-    return <NotFoundPage />;
-  }
-  if (props.basicCategories.length > 0) {
+  if (!props.loading) {
+    if (!currentCategory) {
+      return <NotFoundPage />;
+    }
     return (
       <div className="wrapper catalog-page__wrapper">
         <BreadcrumbsList items={lists} />
