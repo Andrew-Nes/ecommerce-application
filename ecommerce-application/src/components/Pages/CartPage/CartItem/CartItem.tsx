@@ -85,9 +85,14 @@ const CartItem: FC<CartItemProps> = (props: CartItemProps) => {
         {props.cartItem.price.discounted ? (
           <div className="cart-item-price__container">
             <span className="cart-item_price">
-              {(props.cartItem.price.discounted.value.centAmount / 100).toFixed(2)} $
+              {(props.cartItem.price.discounted.value.centAmount / 100).toFixed(
+                2
+              )}{' '}
+              $
             </span>
-            <span className="cart-item_price none-active">{itemPrice.toFixed(2)} $</span>
+            <span className="cart-item_price none-active">
+              {itemPrice.toFixed(2)} $
+            </span>
           </div>
         ) : (
           <strong className="cart-item_price">{itemPrice.toFixed(2)} $</strong>
@@ -115,7 +120,10 @@ const CartItem: FC<CartItemProps> = (props: CartItemProps) => {
       <strong className="cart-item_price">
         Total price:{' '}
         {props.cartItem.price.discounted
-          ? ((props.cartItem.price.discounted.value.centAmount / 100) * itemCount).toFixed(2)
+          ? (
+              (props.cartItem.price.discounted.value.centAmount / 100) *
+              itemCount
+            ).toFixed(2)
           : (itemPrice * itemCount).toFixed(2)}{' '}
         $
       </strong>

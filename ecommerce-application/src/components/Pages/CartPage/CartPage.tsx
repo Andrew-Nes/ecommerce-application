@@ -171,8 +171,12 @@ const CartPage: FC<CartPageProp> = () => {
         <strong className="cart-total-price">Total price:</strong>
         {totalPrice !== totalDiscountPrice ? (
           <div className="discounted-price__container">
-            <span className="total-discount-price">{totalDiscountPrice?.toFixed(2)} $</span>
-            <span className="total-price inactive">{totalPrice?.toFixed(2)} $</span>
+            <span className="total-discount-price">
+              {totalDiscountPrice?.toFixed(2)} $
+            </span>
+            <span className="total-price inactive">
+              {totalPrice?.toFixed(2)} $
+            </span>
           </div>
         ) : (
           <span className="total-price">{totalPrice?.toFixed(2)} $</span>
