@@ -26,20 +26,24 @@ const CartItem: FC<CartItemProps> = (props: CartItemProps) => {
   const itemImage = props.cartItem.variant.images?.[0].url;
   const itemPrice = props.cartItem.price.value.centAmount / 100;
   const itemCount = props.cartItem.quantity;
-  const { cartContextValue, updateCartContextValue } = useCartContext();
+  const { updateCartContextValue } = useCartContext();
   const redirect = useNavigate();
 
-  const removeProduct = async () => {
+  const changeProductQuantity = async (quantity: number) => {
+    setLoad(true);
+    const updateAction: MyCartUpdateAction = {
+      action: 'changeLineItemQuantity',
+      lineItemId: props.cartItem.id,
+      quantity: quantity,
+    };
     try {
-      setLoad(true);
-      const updateAction: MyCartUpdateAction = {
-        action: 'changeLineItemQuantity',
-        lineItemId: props.cartItem.id,
-        quantity: 0,
-      };
-      await CartUpdateFunction(updateAction);
+      const response = await CartUpdateFunction(updateAction);
+      const items = response.body.lineItems.reduce(
+        (acc, el) => acc + el.quantity,
+        0
+      );
       props.isUpdateData(true);
-      updateCartContextValue(cartContextValue - itemCount);
+      updateCartContextValue(items);
     } catch (error) {
       const errorResponse = JSON.parse(
         JSON.stringify(error)
@@ -54,56 +58,17 @@ const CartItem: FC<CartItemProps> = (props: CartItemProps) => {
       setLoad(false);
     }
   };
+
+  const removeProduct = async () => {
+    await changeProductQuantity(0);
+  };
+
   const addProductQuantity = async () => {
-    setLoad(true);
-    const updateAction: MyCartUpdateAction = {
-      action: 'changeLineItemQuantity',
-      lineItemId: props.cartItem.id,
-      quantity: itemCount + 1,
-    };
-    try {
-      await CartUpdateFunction(updateAction);
-      props.isUpdateData(true);
-      updateCartContextValue(cartContextValue + 1);
-    } catch (error) {
-      const errorResponse = JSON.parse(
-        JSON.stringify(error)
-      ) as ClientResponse<ErrorResponse>;
-      const errorCode = errorResponse.body.statusCode;
-      if (errorCode === serviceErrors.INVALID_TOKEN) {
-        reloadPage();
-      } else {
-        redirect(routes.NOTFOUND);
-      }
-    } finally {
-      setLoad(false);
-    }
+    await changeProductQuantity(itemCount + 1);
   };
 
   const removedProductQuantity = async () => {
-    setLoad(true);
-    const updateAction: MyCartUpdateAction = {
-      action: 'changeLineItemQuantity',
-      lineItemId: props.cartItem.id,
-      quantity: itemCount - 1,
-    };
-    try {
-      await CartUpdateFunction(updateAction);
-      props.isUpdateData(true);
-      updateCartContextValue(cartContextValue - 1);
-    } catch (error) {
-      const errorResponse = JSON.parse(
-        JSON.stringify(error)
-      ) as ClientResponse<ErrorResponse>;
-      const errorCode = errorResponse.body.statusCode;
-      if (errorCode === serviceErrors.INVALID_TOKEN) {
-        reloadPage();
-      } else {
-        redirect(routes.NOTFOUND);
-      }
-    } finally {
-      setLoad(false);
-    }
+    await changeProductQuantity(itemCount - 1);
   };
 
   return (
@@ -120,12 +85,17 @@ const CartItem: FC<CartItemProps> = (props: CartItemProps) => {
         {props.cartItem.price.discounted ? (
           <div className="cart-item-price__container">
             <span className="cart-item_price">
-              {props.cartItem.price.discounted.value.centAmount / 100} $
+              {(props.cartItem.price.discounted.value.centAmount / 100).toFixed(
+                2
+              )}{' '}
+              $
             </span>
-            <span className="cart-item_price none-active">{itemPrice} $</span>
+            <span className="cart-item_price none-active">
+              {itemPrice.toFixed(2)} $
+            </span>
           </div>
         ) : (
-          <strong className="cart-item_price">{itemPrice} $</strong>
+          <strong className="cart-item_price">{itemPrice.toFixed(2)} $</strong>
         )}
       </div>
 
@@ -150,8 +120,11 @@ const CartItem: FC<CartItemProps> = (props: CartItemProps) => {
       <strong className="cart-item_price">
         Total price:{' '}
         {props.cartItem.price.discounted
-          ? (props.cartItem.price.discounted.value.centAmount / 100) * itemCount
-          : itemPrice * itemCount}{' '}
+          ? (
+              (props.cartItem.price.discounted.value.centAmount / 100) *
+              itemCount
+            ).toFixed(2)
+          : (itemPrice * itemCount).toFixed(2)}{' '}
         $
       </strong>
     </div>

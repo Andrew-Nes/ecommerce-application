@@ -169,21 +169,21 @@ const CartPage: FC<CartPageProp> = (props: CartPageProp) => {
             {buttonsText.REMOVE_CART}
           </button>
         </div>
-
-        <div className="total-price__container">
-          <strong className="cart-total-price">Total price:</strong>
-          {totalPrice !== totalDiscountPrice ? (
-            <div className="discounted-price__container">
-              <span className="total-discount-price">
-                {totalDiscountPrice} $
-              </span>
-              <span className="total-price inactive">{totalPrice} $</span>
-            </div>
-          ) : (
-            <span className="total-price">{totalPrice} $</span>
-          )}
-        </div>
-
+      <div className="total-price__container">
+        <strong className="cart-total-price">Total price:</strong>
+        {totalPrice !== totalDiscountPrice ? (
+          <div className="discounted-price__container">
+            <span className="total-discount-price">
+              {totalDiscountPrice?.toFixed(2)} $
+            </span>
+            <span className="total-price inactive">
+              {totalPrice?.toFixed(2)} $
+            </span>
+          </div>
+        ) : (
+          <span className="total-price">{totalPrice?.toFixed(2)} $</span>
+        )}
+      </div>
         <div className="promo-code__container">
           <div className="promo-code__form">
             <h3>Promo code:</h3>

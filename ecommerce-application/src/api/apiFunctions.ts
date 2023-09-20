@@ -264,7 +264,7 @@ export const CartUpdateFunction = async (updateAction: MyCartUpdateAction) => {
     actions: [updateAction],
   };
   const client = getCurrentClient();
-  await client
+  return await client
     .me()
     .carts()
     .withId({ ID: activeCartId })
