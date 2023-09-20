@@ -26,40 +26,16 @@ const CartItem: FC<CartItemProps> = (props: CartItemProps) => {
   const itemImage = props.cartItem.variant.images?.[0].url;
   const itemPrice = props.cartItem.price.value.centAmount / 100;
   const itemCount = props.cartItem.quantity;
-  const { cartContextValue, updateCartContextValue } = useCartContext();
+  const { updateCartContextValue } = useCartContext();
   const redirect = useNavigate();
 
-  const removeProduct = async () => {
-    try {
-      setLoad(true);
-      const updateAction: MyCartUpdateAction = {
-        action: 'changeLineItemQuantity',
-        lineItemId: props.cartItem.id,
-        quantity: 0,
-      };
-      await CartUpdateFunction(updateAction);
-      props.isUpdateData(true);
-      updateCartContextValue(cartContextValue - itemCount);
-    } catch (error) {
-      const errorResponse = JSON.parse(
-        JSON.stringify(error)
-      ) as ClientResponse<ErrorResponse>;
-      const errorCode = errorResponse.body.statusCode;
-      if (errorCode === serviceErrors.INVALID_TOKEN) {
-        reloadPage();
-      } else {
-        redirect(routes.NOTFOUND);
-      }
-    } finally {
-      setLoad(false);
-    }
-  };
-  const addProductQuantity = async () => {
+
+  const changeProductQuantity = async (quantity: number) => {
     setLoad(true);
     const updateAction: MyCartUpdateAction = {
       action: 'changeLineItemQuantity',
       lineItemId: props.cartItem.id,
-      quantity: itemCount + 1,
+      quantity: quantity,
     };
     try {
       const response = await CartUpdateFunction(updateAction);
@@ -82,36 +58,18 @@ const CartItem: FC<CartItemProps> = (props: CartItemProps) => {
     } finally {
       setLoad(false);
     }
+  };
+
+  const removeProduct = async () => {
+    await changeProductQuantity(0)
+  };
+  
+  const addProductQuantity = async () => {
+    await changeProductQuantity(itemCount + 1)
   };
 
   const removedProductQuantity = async () => {
-    setLoad(true);
-    const updateAction: MyCartUpdateAction = {
-      action: 'changeLineItemQuantity',
-      lineItemId: props.cartItem.id,
-      quantity: itemCount - 1,
-    };
-    try {
-      const response = await CartUpdateFunction(updateAction);
-      props.isUpdateData(true);
-      const items = response.body.lineItems.reduce(
-        (acc, el) => acc + el.quantity,
-        0
-      );
-      updateCartContextValue(items);
-    } catch (error) {
-      const errorResponse = JSON.parse(
-        JSON.stringify(error)
-      ) as ClientResponse<ErrorResponse>;
-      const errorCode = errorResponse.body.statusCode;
-      if (errorCode === serviceErrors.INVALID_TOKEN) {
-        reloadPage();
-      } else {
-        redirect(routes.NOTFOUND);
-      }
-    } finally {
-      setLoad(false);
-    }
+    await changeProductQuantity(itemCount - 1)
   };
 
   return (
