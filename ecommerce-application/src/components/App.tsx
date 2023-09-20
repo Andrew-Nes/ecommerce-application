@@ -39,6 +39,7 @@ export const CartContext = createContext<CartContextProps | undefined>(
 
 const App: FC = () => {
   const [cartContextValue, setContextValue] = useState<number>(0);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const updateCartContextValue = (newValue: number) => {
     setContextValue(newValue);
@@ -102,6 +103,8 @@ const App: FC = () => {
         if (errorCode === serviceErrors.INVALID_TOKEN) {
           reloadPage();
         }
+      } finally {
+        setIsLoading(false);
       }
     };
     fetchData();
@@ -134,7 +137,12 @@ const App: FC = () => {
             />
             <Route
               path="cart"
-              element={<CartPage loginStateChange={logInStateChange} />}
+              element={
+                <CartPage
+                  loginStateChange={logInStateChange}
+                  loading={isLoading}
+                />
+              }
             />
             <Route
               path="catalog"
@@ -157,6 +165,7 @@ const App: FC = () => {
                       basicCategories={basicCategories}
                       subCategories={subCategories}
                       setProductId={setProductId}
+                      loading={isLoading}
                     />
                   }
                 />
@@ -167,6 +176,7 @@ const App: FC = () => {
                       mainCategories={basicCategories}
                       subCategories={subCategories}
                       setProductId={setProductId}
+                      loading={isLoading}
                     />
                   }
                 />

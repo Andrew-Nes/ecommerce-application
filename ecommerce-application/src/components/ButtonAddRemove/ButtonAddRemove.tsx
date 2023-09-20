@@ -16,17 +16,20 @@ import { reloadPage } from '../../utils/apiHelpers';
 import { routes } from '../../types/routingTypes';
 import { useNavigate } from 'react-router-dom';
 import { buttonsText } from '../../types/elementsText';
+import { TailSpin } from 'react-loader-spinner';
 
 interface buttonAddRemoveProps {
   id: string;
 }
 
 const ButtonAddRemove: FC<buttonAddRemoveProps> = (props) => {
+  const [isAddingToCart, setIsAddingToCart] = useState<boolean>(false);
   const { cartContextValue, updateCartContextValue } = useCartContext();
   const [isInCart, setIsInCart] = useState(false);
   const redirect = useNavigate();
 
   const addProduct = async () => {
+    setIsAddingToCart(true);
     try {
       await AddProductToCart(props.id);
       setIsInCart(true);
@@ -41,10 +44,13 @@ const ButtonAddRemove: FC<buttonAddRemoveProps> = (props) => {
       } else {
         redirect(routes.NOTFOUND);
       }
+    } finally {
+      setIsAddingToCart(false);
     }
   };
 
   const removeProduct = async () => {
+    setIsAddingToCart(true);
     try {
       const response = await GetActiveCart();
       const lineItemId = response.body.lineItems.find(
@@ -69,6 +75,8 @@ const ButtonAddRemove: FC<buttonAddRemoveProps> = (props) => {
       } else {
         redirect(routes.NOTFOUND);
       }
+    } finally {
+      setIsAddingToCart(false);
     }
   };
 
@@ -91,9 +99,15 @@ const ButtonAddRemove: FC<buttonAddRemoveProps> = (props) => {
   return (
     <div className="cart-button-container">
       {isInCart ? (
-        <button className="cart-button remove button" onClick={removeProduct}>
-          {buttonsText.REMOVE_FROM_CART}
-        </button>
+        isAddingToCart ? (
+          <TailSpin wrapperClass="loader-spinner loader-spinner_small cart-button add button" />
+        ) : (
+          <button className="cart-button add button" onClick={removeProduct}>
+            {buttonsText.REMOVE_FROM_CART}
+          </button>
+        )
+      ) : isAddingToCart ? (
+        <TailSpin wrapperClass="loader-spinner loader-spinner_small cart-button add button" />
       ) : (
         <button className="cart-button add button" onClick={addProduct}>
           {buttonsText.ADD_TO_CART}
