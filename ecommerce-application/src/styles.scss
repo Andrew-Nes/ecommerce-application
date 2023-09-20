@@ -4,6 +4,7 @@
 
 .main {
   width: 100%;
+  flex: 1;
 }
 
 body {
@@ -58,10 +59,6 @@ a {
 
 .text {
   margin: 0;
-}
-
-.main {
-  flex: 1;
 }
 
 .list {

@@ -27,6 +27,7 @@ interface SubcategoryProps {
   mainCategories: Category[];
   subCategories: Category[];
   setProductId: Dispatch<SetStateAction<string>>;
+  loading: boolean;
 }
 
 const Subcategory: FC<SubcategoryProps> = (props: SubcategoryProps) => {
@@ -164,10 +165,10 @@ const Subcategory: FC<SubcategoryProps> = (props: SubcategoryProps) => {
     setPage(1);
   }, [chosenFilter, searchText]);
 
-  if (!currentCategory) {
-    return <NotFoundPage />;
-  }
-  if (props.subCategories.length > 0) {
+  if (!props.loading) {
+    if (!currentCategory) {
+      return <NotFoundPage />;
+    }
     return (
       <div className="wrapper catalog-page__wrapper">
         <BreadcrumbsList items={lists} />

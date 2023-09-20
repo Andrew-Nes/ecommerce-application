@@ -23,9 +23,11 @@ import { anchorsText, buttonsText } from '../../../types/elementsText';
 import { routes } from '../../../types/routingTypes';
 import { useCartContext } from '../../../utils/cartContext';
 import { reloadPage } from '../../../utils/apiHelpers';
+import { TailSpin } from 'react-loader-spinner';
 
 interface CartPageProp {
   loginStateChange: (newValue: boolean) => void;
+  loading: boolean;
 }
 
 type PromoFormData = {
@@ -39,7 +41,7 @@ const getLineItemsPrice = (lineItems: LineItem[]) => {
   return totalPrice;
 };
 
-const CartPage: FC<CartPageProp> = () => {
+const CartPage: FC<CartPageProp> = (props: CartPageProp) => {
   const [isLoad, setLoad] = useState(false);
   const [cartItems, setCartItems] = useState<Cart | undefined>();
   const [isUpdateData, setIsUpdateData] = useState(false);
@@ -135,38 +137,38 @@ const CartPage: FC<CartPageProp> = () => {
     }
   };
 
-  return (
-    <div className="cart-page__wrapper">
-      <MyModal active={isModalActive} setActive={setModalActive}>
-        <div className="delete-cart-modal">
-          <h3>Delete current cart?</h3>
-          <div className="delete-cart-button__container">
-            <button
-              className="cart_button"
-              onClick={removeCart}
-              disabled={isLoad}
-            >
-              ОК
-            </button>
-            <button
-              className="cart_button"
-              onClick={() => setModalActive(false)}
-            >
-              Back
-            </button>
+  if (!props.loading) {
+    return (
+      <div className="cart-page__wrapper">
+        <MyModal active={isModalActive} setActive={setModalActive}>
+          <div className="delete-cart-modal">
+            <h3>Delete current cart?</h3>
+            <div className="delete-cart-button__container">
+              <button
+                className="cart_button"
+                onClick={removeCart}
+                disabled={isLoad}
+              >
+                ОК
+              </button>
+              <button
+                className="cart_button"
+                onClick={() => setModalActive(false)}
+              >
+                Back
+              </button>
+            </div>
           </div>
+        </MyModal>
+        <div className="cart-page__title-container">
+          <h2>Cart page</h2>
+          <button
+            className="cart_button button"
+            onClick={() => setModalActive(true)}
+          >
+            {buttonsText.REMOVE_CART}
+          </button>
         </div>
-      </MyModal>
-      <div className="cart-page__title-container">
-        <h2>Cart page</h2>
-        <button
-          className="cart_button button"
-          onClick={() => setModalActive(true)}
-        >
-          {buttonsText.REMOVE_CART}
-        </button>
-      </div>
-
       <div className="total-price__container">
         <strong className="cart-total-price">Total price:</strong>
         {totalPrice !== totalDiscountPrice ? (
@@ -182,49 +184,51 @@ const CartPage: FC<CartPageProp> = () => {
           <span className="total-price">{totalPrice?.toFixed(2)} $</span>
         )}
       </div>
-
-      <div className="promo-code__container">
-        <div className="promo-code__form">
-          <h3>Promo code:</h3>
-          <form className="promo-form" onSubmit={handleSubmit(onSubmit)}>
-            <input type="text" {...register('promo')} />
-            <button className="cart_button" type="submit" disabled={isLoad}>
-              Apply
-            </button>
-          </form>
-        </div>
-        <p className="promo-code_info">
-          When using multiple promo codes, the code with the highest discount is
-          applied
-        </p>
-      </div>
-      <div className="cartItems-wrapper">
-        {cartItems?.lineItems.length ? (
-          cartItems.lineItems.map((item, index) => {
-            return (
-              <CartItem
-                cartItem={item}
-                index={index}
-                key={index}
-                isUpdateData={setIsUpdateData}
-              />
-            );
-          })
-        ) : (
-          <div>
-            <span className="empty-cart-text">
-              The cart is empty, go to the catalog page to buy something!
-            </span>
-            <Link to={routes.CATALOG} className="login__anchor">
-              <span className="link-to-cart-text">
-                {anchorsText.TO_CATALOG}
-              </span>
-            </Link>
+        <div className="promo-code__container">
+          <div className="promo-code__form">
+            <h3>Promo code:</h3>
+            <form className="promo-form" onSubmit={handleSubmit(onSubmit)}>
+              <input type="text" {...register('promo')} />
+              <button className="cart_button" type="submit" disabled={isLoad}>
+                Apply
+              </button>
+            </form>
           </div>
-        )}
+          <p className="promo-code_info">
+            When using multiple promo codes, the code with the highest discount
+            is applied
+          </p>
+        </div>
+        <div className="cartItems-wrapper">
+          {cartItems?.lineItems.length ? (
+            cartItems.lineItems.map((item, index) => {
+              return (
+                <CartItem
+                  cartItem={item}
+                  index={index}
+                  key={index}
+                  isUpdateData={setIsUpdateData}
+                />
+              );
+            })
+          ) : (
+            <div>
+              <span className="empty-cart-text">
+                The cart is empty, go to the catalog page to buy something!
+              </span>
+              <Link to={routes.CATALOG} className="login__anchor">
+                <span className="link-to-cart-text">
+                  {anchorsText.TO_CATALOG}
+                </span>
+              </Link>
+            </div>
+          )}
+        </div>
       </div>
-    </div>
-  );
+    );
+  } else {
+    return <TailSpin wrapperClass="loader-spinner" />;
+  }
 };
 
 export default CartPage;
