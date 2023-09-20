@@ -81,18 +81,18 @@ const Cards: FC<cardsProps> = (props: cardsProps) => {
                   <p className="card__price card__price_current text">
                     {product.masterVariant.price?.discounted
                       ? `$${
-                          product.masterVariant.price.discounted.value
-                            .centAmount / 100
+                          (product.masterVariant.price.discounted.value
+                            .centAmount / 100).toFixed(2)
                         }`
                       : `$${
                           product.masterVariant.price
-                            ? product.masterVariant.price.value.centAmount / 100
+                            ? (product.masterVariant.price.value.centAmount / 100).toFixed(2)
                             : ''
                         }`}
                   </p>
                   {product.masterVariant.price?.discounted && (
                     <p className="card__price text">
-                      {`$${product.masterVariant.price.value.centAmount / 100}`}
+                      {`$${(product.masterVariant.price.value.centAmount / 100).toFixed(2)}`}
                     </p>
                   )}
                 </div>

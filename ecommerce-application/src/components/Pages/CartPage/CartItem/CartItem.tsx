@@ -29,7 +29,6 @@ const CartItem: FC<CartItemProps> = (props: CartItemProps) => {
   const { updateCartContextValue } = useCartContext();
   const redirect = useNavigate();
 
-
   const changeProductQuantity = async (quantity: number) => {
     setLoad(true);
     const updateAction: MyCartUpdateAction = {
@@ -61,15 +60,15 @@ const CartItem: FC<CartItemProps> = (props: CartItemProps) => {
   };
 
   const removeProduct = async () => {
-    await changeProductQuantity(0)
+    await changeProductQuantity(0);
   };
-  
+
   const addProductQuantity = async () => {
-    await changeProductQuantity(itemCount + 1)
+    await changeProductQuantity(itemCount + 1);
   };
 
   const removedProductQuantity = async () => {
-    await changeProductQuantity(itemCount - 1)
+    await changeProductQuantity(itemCount - 1);
   };
 
   return (
@@ -86,12 +85,12 @@ const CartItem: FC<CartItemProps> = (props: CartItemProps) => {
         {props.cartItem.price.discounted ? (
           <div className="cart-item-price__container">
             <span className="cart-item_price">
-              {props.cartItem.price.discounted.value.centAmount / 100} $
+              {(props.cartItem.price.discounted.value.centAmount / 100).toFixed(2)} $
             </span>
-            <span className="cart-item_price none-active">{itemPrice} $</span>
+            <span className="cart-item_price none-active">{itemPrice.toFixed(2)} $</span>
           </div>
         ) : (
-          <strong className="cart-item_price">{itemPrice} $</strong>
+          <strong className="cart-item_price">{itemPrice.toFixed(2)} $</strong>
         )}
       </div>
 
@@ -116,8 +115,8 @@ const CartItem: FC<CartItemProps> = (props: CartItemProps) => {
       <strong className="cart-item_price">
         Total price:{' '}
         {props.cartItem.price.discounted
-          ? (props.cartItem.price.discounted.value.centAmount / 100) * itemCount
-          : itemPrice * itemCount}{' '}
+          ? ((props.cartItem.price.discounted.value.centAmount / 100) * itemCount).toFixed(2)
+          : (itemPrice * itemCount).toFixed(2)}{' '}
         $
       </strong>
     </div>
