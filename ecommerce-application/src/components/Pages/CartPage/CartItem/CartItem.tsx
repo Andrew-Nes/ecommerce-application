@@ -62,9 +62,13 @@ const CartItem: FC<CartItemProps> = (props: CartItemProps) => {
       quantity: itemCount + 1,
     };
     try {
-      await CartUpdateFunction(updateAction);
+      const response = await CartUpdateFunction(updateAction);
+      const items = response.body.lineItems.reduce(
+        (acc, el) => acc + el.quantity,
+        0
+      );
       props.isUpdateData(true);
-      updateCartContextValue(cartContextValue + 1);
+      updateCartContextValue(items);
     } catch (error) {
       const errorResponse = JSON.parse(
         JSON.stringify(error)
@@ -88,9 +92,13 @@ const CartItem: FC<CartItemProps> = (props: CartItemProps) => {
       quantity: itemCount - 1,
     };
     try {
-      await CartUpdateFunction(updateAction);
+      const response = await CartUpdateFunction(updateAction);
       props.isUpdateData(true);
-      updateCartContextValue(cartContextValue - 1);
+      const items = response.body.lineItems.reduce(
+        (acc, el) => acc + el.quantity,
+        0
+      );
+      updateCartContextValue(items);
     } catch (error) {
       const errorResponse = JSON.parse(
         JSON.stringify(error)
