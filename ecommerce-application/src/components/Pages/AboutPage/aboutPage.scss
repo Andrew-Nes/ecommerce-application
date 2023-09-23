@@ -1,0 +1,115 @@
+.about-page__wrapper {
+  width: 100%;
+}
+
+.about__heading {
+  text-align: center;
+}
+
+.description__team {
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 5px;
+  text-indent: 10px;
+  text-align: center;
+}
+
+.bold {
+  font-weight: 500;
+}
+
+.italic {
+  font-style: italic;
+}
+
+.logo_rs {
+  width: 80px;
+  height: 80px;
+}
+
+.description__team-members {
+  display: flex;
+  flex-direction: column;
+  row-gap: 30px;
+}
+
+.description__team-member {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: 25px;
+}
+
+.team-member__info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.team-member__name {
+  font-size: 20px;
+  padding: 5px 0;
+  color: #cba662;
+}
+
+.team-member__role {
+  font-weight: 500;
+  padding-bottom: 5px;
+}
+
+.team-member__work-made {
+  padding: 5px 0;
+}
+
+.team-member__link_github > a {
+  font-weight: bold;
+  color: #cba662;
+  transition: 0.5s;
+}
+
+.team-member__link_github > a:hover {
+  color: #909096;
+}
+
+.team-member__photo {
+  width: 200px;
+  height: 200px;
+  border: 1px solid #cba662;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+}
+
+#d3.team-member__photo {
+  background-image: url('../../../../assets/img/developer3_photo.jpg');
+}
+
+#d2.team-member__photo {
+  background-image: url('../../../../assets/img/developer2_photo.jpg');
+}
+
+#d1.team-member__photo {
+  background-image: url('../../../../assets/img/developer1_photo.jpg');
+}
+
+.team-member__info {
+  flex: 1;
+}
+
+.about__footer {
+  padding-top: 25px;
+  display: flex;
+  justify-content: center;
+}
+
+@media screen and (max-width: 550px) {
+  .description__team-member {
+    flex-direction: column;
+  }
+
+  .team-member__info {
+    align-items: center;
+    text-align: center;
+  }
+}
