@@ -1,0 +1,29 @@
+.cart-button-container {
+  min-width: 135px;
+  padding: 5px 0;
+}
+
+.cart-button {
+  border: none;
+  border-radius: 15px;
+  padding: 8px;
+  background-color: #cba662;
+  width: 100%;
+}
+
+.cart-button.add:hover {
+  background-color: rgb(9, 202, 9);
+  cursor: pointer;
+  transform: scale(1.1);
+}
+
+.cart-button.remove:hover {
+  background-color: rgb(225, 82, 82);
+  cursor: pointer;
+  transform: scale(1.1);
+}
+
+.loader-spinner_small > svg {
+  width: 15px;
+  height: 15px;
+}

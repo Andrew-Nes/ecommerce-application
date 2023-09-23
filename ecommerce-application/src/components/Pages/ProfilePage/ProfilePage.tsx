@@ -17,6 +17,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { popupText } from '../../../types/elementsText';
 import { serviceErrors, errorsMessage } from '../../../types/formTypes';
+import { reloadPage } from '../../../utils/apiHelpers';
 
 const ProfilePage: FC<ProfilePageProp> = (props) => {
   const isLoggedIn = useContext(LogInContext);
@@ -61,6 +62,9 @@ const ProfilePage: FC<ProfilePageProp> = (props) => {
         toast.info(errorsMessage.TOAST_SERVER_ERROR, {
           position: 'bottom-center',
         });
+      }
+      if (errorCode === serviceErrors.INVALID_TOKEN) {
+        reloadPage();
       }
     }
   }

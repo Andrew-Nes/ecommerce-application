@@ -93,6 +93,28 @@
   }
 }
 
+.icon-container {
+  position: relative;
+}
+
+.items-in-cart {
+  position: absolute;
+  left: 8px;
+  top: -15px;
+  width: 20px;
+  height: 20px;
+  background-color: #cba662;
+  border-radius: 10px;
+  text-align: center;
+  font-size: 16px;
+  line-height: 22px;
+  font-weight: 600;
+}
+
+.profile_icon.cart {
+  position: relative;
+}
+
 @media screen and (max-width: 550px) {
   .logo__image {
     width: 50px;

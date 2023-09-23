@@ -3,6 +3,8 @@ import './AddressItem.scss';
 import MyModal from '../../../../Modal/MyModal';
 import { AddressItemProps } from '../../../../../types/profilePageTypes';
 import {
+  ClientResponse,
+  ErrorResponse,
   MyCustomerUpdate,
   MyCustomerUpdateAction,
 } from '@commercetools/platform-sdk';
@@ -11,6 +13,8 @@ import EditAddressForm from '../../../../Forms/EditAddressForm/EditAddressForm';
 import SetDefaultButton from './SetDefaultButton/SetDefaultButton';
 import { toast } from 'react-toastify';
 import { popupText } from '../../../../../types/elementsText';
+import { serviceErrors } from '../../../../../types/formTypes';
+import { reloadPage } from '../../../../../utils/apiHelpers';
 
 const AddressItem: FC<AddressItemProps> = (props) => {
   const [isModalActive, setModalActive] = useState(false);
@@ -32,9 +36,17 @@ const AddressItem: FC<AddressItemProps> = (props) => {
         position: 'bottom-center',
       });
     } catch (error) {
-      toast.error(popupText.DELETE_ADDRESS_FAILED, {
-        position: 'bottom-center',
-      });
+      const errorResponse = JSON.parse(
+        JSON.stringify(error)
+      ) as ClientResponse<ErrorResponse>;
+      const errorCode = errorResponse.body.statusCode;
+      if (errorCode === serviceErrors.INVALID_TOKEN) {
+        reloadPage();
+      } else {
+        toast.error(popupText.DELETE_ADDRESS_FAILED, {
+          position: 'bottom-center',
+        });
+      }
     }
   };
 

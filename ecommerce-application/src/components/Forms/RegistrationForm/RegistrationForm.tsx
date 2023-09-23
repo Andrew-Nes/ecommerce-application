@@ -23,6 +23,7 @@ import MyPassInput from './Inputs/MyPassInput';
 import './registrationForm.scss';
 import { validateFields } from './validateFields';
 import 'react-toastify/dist/ReactToastify.css';
+import { reloadPage } from '../../../utils/apiHelpers';
 
 const COUNTRIES: string[] = ['US'];
 const defaultCountryIndex: number = 0;
@@ -84,6 +85,9 @@ const RegistrationForm: FC<LoginProps> = ({ logIn }) => {
         toast.info(errorsMessage.TOAST_SERVER_ERROR, {
           position: 'bottom-center',
         });
+      }
+      if (errorCode === serviceErrors.INVALID_TOKEN) {
+        reloadPage();
       }
     }
   };

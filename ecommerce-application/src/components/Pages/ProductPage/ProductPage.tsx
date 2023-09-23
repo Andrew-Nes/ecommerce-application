@@ -2,11 +2,18 @@ import { FC, useEffect, useState } from 'react';
 import { getProduct } from '../../../api/apiFunctions';
 import Slider from '../../Slider/Slider';
 import './productPage.scss';
-import { ProductProjection } from '@commercetools/platform-sdk';
+import {
+  ClientResponse,
+  ErrorResponse,
+  ProductProjection,
+} from '@commercetools/platform-sdk';
 import { Languages } from '../../../types/commonDataTypes';
 import { useNavigate } from 'react-router-dom';
 import { routes } from '../../../types/routingTypes';
+import { serviceErrors } from '../../../types/formTypes';
+import { reloadPage } from '../../../utils/apiHelpers';
 const noImagePic = '../../../../assets/img/slider-no-image.jpg';
+import ButtonAddRemove from '../../ButtonAddRemove/ButtonAddRemove';
 
 const ProductPage: FC<{ id: string }> = (props) => {
   const [product, setProduct] = useState<ProductProjection>();
@@ -16,8 +23,16 @@ const ProductPage: FC<{ id: string }> = (props) => {
       try {
         const prod = await getProduct(props.id);
         setProduct(prod.body);
-      } catch {
-        redirect(routes.NOTFOUND);
+      } catch (error) {
+        const errorResponse = JSON.parse(
+          JSON.stringify(error)
+        ) as ClientResponse<ErrorResponse>;
+        const errorCode = errorResponse.body.statusCode;
+        if (errorCode === serviceErrors.INVALID_TOKEN) {
+          reloadPage();
+        } else {
+          redirect(routes.NOTFOUND);
+        }
       }
     };
     currentProduct();
@@ -79,6 +94,7 @@ const ProductPage: FC<{ id: string }> = (props) => {
                   })
                 : null}
             </ul>
+            <ButtonAddRemove id={props.id} />
           </div>
         </div>
         {
